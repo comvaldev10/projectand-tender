@@ -7,3 +7,4 @@ router.get('/get_user',authenticate,get_user)
 router.get('/get_user_by_id/:id',authenticate,get_user_by_id)// all user
 router.get('/pending_user/',authenticate,pending_user)
 module.exports = router;
+console.log("aa")
