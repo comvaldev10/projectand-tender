@@ -124,7 +124,7 @@ const terms = async (req, response) => {
 }
 
 const get_projects = async (req, response) => {
-  var sql = "select * from sub_sub_project_sector_schema inner join sub_project_sector_schema on sub_sub_project_sector_schema.sub_sector_id=sub_project_sector_schema.id inner join project_sector_schema on sub_project_sector_schema.sector_id=project_sector_schema.id"
+  var sql = "select project_sector_schema.id as projectid,project_sector_schema.project_sector,sub_project_sector_schema.sub_project_sector as sub_sector,sub_project_sector_schema.id as sub_sector_id,sub_sub_project_sector_schema.id as sub_sub_project_sector_schema_id,sub_sub_project_sector_schema.sub_sub_project_sector from sub_sub_project_sector_schema left join sub_project_sector_schema on sub_sub_project_sector_schema.sub_sector_id=sub_project_sector_schema.id inner join project_sector_schema on sub_project_sector_schema.sector_id=project_sector_schema.id"
   try {
     con.query(sql,(err, res) => {
       if (err)
@@ -153,5 +153,18 @@ const get_tenders = async (req, response) => {
 }
 
 
+const get_user = async (req, response) => {
+  var sql = "select * from user inner join plan_purchase on plan_purchase.id=user.plan_id inner join plan_description on plan_description.plan_id=plan_purchase.id inner join plan_compare_description on plan_compare_description.plan_id=plan_purchase.id inner join company_role_schema on company_role_schema.id-user.role_id where user.id="+req.params.id
+  try {
+    con.query(sql,(err, res) => {
+      if (err)
+        response.send(err);
+      response.send(res)
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
 
-module.exports = { register, register2, register3, add_project, delete_project, add_tender, delete_tender, terms, get_projects,get_tenders };
+module.exports = { register, register2, register3, add_project, delete_project, add_tender, delete_tender, terms, get_projects,get_tenders,get_user};
