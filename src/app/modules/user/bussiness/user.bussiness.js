@@ -26,7 +26,7 @@ const register = async (req, response) => {
   }
 }
 const register2 = async (req, response) => {
-  // console.log(req.files,"aa")
+  console.log(req.files,"aa")
   var data1 = Object.values(req.body)
   data1.push(req.params.id)
   var sql = "UPDATE user SET company_name=?, user_company_role=?, address=?, country=?, city=?, pin_zip=?, mobile_contact=?, office_contact=?, vat_detail=?, vat_date=?, vat_number=?, vat_image=?, purchase_additional_login=?, no_of_login_user=? where id=?"

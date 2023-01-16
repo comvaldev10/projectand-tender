@@ -8,6 +8,7 @@ app.use(
     extended: true
   })
 );
+const path = require('path')
 const routes = require("./route");
 const cors = require("cors");
 require("./src/app/db/mysql");
@@ -23,14 +24,13 @@ var corsOptions = {
 }
 app.use(cors(corsOptions));
 
-// const publicDirectoryPath = path.join(__dirname, '/public')
+const publicDirectoryPath = path.join(__dirname, '/uploads')
 
-// app.use(express.static(publicDirectoryPath))
+app.use(express.static(publicDirectoryPath))
 
 const helmet = require('helmet')
 // const CronJob = require('cron').CronJob;
 var xss = require("xss");
-const path = require('path')
 app.use(helmet.xssFilter())
 app.use(helmet.frameguard())
 
