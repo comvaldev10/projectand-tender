@@ -22,7 +22,6 @@ app.use(cors());
 
 const helmet = require('helmet')
 // const CronJob = require('cron').CronJob;
-
 var xss = require("xss");
 const path = require('path')
 app.use(helmet.xssFilter())

@@ -2,9 +2,20 @@ let express = require('express');
 let router = express.Router(),
 {register,register2,register3,add_project,delete_project,add_tender,delete_tender,terms,get_projects,get_tenders,get_user} = require("../bussiness/user.bussiness");
 const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, './uploads/.'));
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, file.fieldname + '-' + uniqueSuffix)
+    }
+  })
+  const path = require('path')
+const upload = multer({ storage: storage })
+const cpuploads=upload.fields([{ name: 'vat_images', maxCount: 1 }])
 router.post('/register',register)
-router.put('/register2/:id',upload.single('vat_images'),register2)
+router.put('/register2/:id',cpuploads,register2)
 router.get('/register/:id',register3)
 router.put('/add_project/:id',add_project)
 router.delete('/delete_project/:id',delete_project)
