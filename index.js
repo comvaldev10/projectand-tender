@@ -15,7 +15,11 @@ const port = process.env.PORT || 3000;
 routes.map(route => {
   app.use(route.path, route.handler);
 });
-app.use(cors());
+var corsOptions = {
+  origin: '*',
+}
+app.use(cors(corsOptions));
+
 // const publicDirectoryPath = path.join(__dirname, '/public')
 
 // app.use(express.static(publicDirectoryPath))

@@ -1,14 +1,26 @@
 var con = require('../../../db/mysql')
 const register = async (req, response) => {
-  var sql = "INSERT INTO user(name,email,password,confirm_password,plan_id) VALUES ?"
-  var data1 = [Object.values(req.body)]
+  var emailcheck = `select * from user where user.email='${req.body.email}'`
   try {
-    con.query(sql, [data1], (err, res) => {
+    con.query(emailcheck, (err, res) => {
       if (err)
         response.send(err);
-      response.send(res)
+        if(res[0].email)
+        {
+      response.send("already exists")
+        }
+        else  {
+          var sql = "INSERT INTO user(name,email,password,confirm_password,plan_id) VALUES ?"
+          var data1 = [Object.values(req.body)]
+      
+          con.query(sql, [data1], (err, res) => {
+            if (err)
+              response.send(err);
+            response.send(res)
+          })
+        }
     })
-  }
+}
   catch (err) {
     return err
   }
@@ -127,7 +139,7 @@ const terms = async (req, response) => {
 const get_projects = async (req, response) => {
   var sql = "select project_sector_schema.id as projectid,project_sector_schema.project_sector,sub_project_sector_schema.sub_project_sector as sub_sector,sub_project_sector_schema.id as sub_sector_id,sub_sub_project_sector_schema.id as sub_sub_project_sector_schema_id,sub_sub_project_sector_schema.sub_sub_project_sector from sub_sub_project_sector_schema left join sub_project_sector_schema on sub_sub_project_sector_schema.sub_sector_id=sub_project_sector_schema.id inner join project_sector_schema on sub_project_sector_schema.sector_id=project_sector_schema.id"
   try {
-    con.query(sql,(err, res) => {
+    con.query(sql, (err, res) => {
       if (err)
         response.send(err);
       response.send(res)
@@ -142,7 +154,7 @@ const get_projects = async (req, response) => {
 const get_tenders = async (req, response) => {
   var sql = "select * from sub_tender_schema inner join tender_schema on sub_tender_schema.tender_id=tender_schema.id"
   try {
-    con.query(sql,(err, res) => {
+    con.query(sql, (err, res) => {
       if (err)
         response.send(err);
       response.send(res)
@@ -155,9 +167,9 @@ const get_tenders = async (req, response) => {
 
 
 const get_user = async (req, response) => {
-  var sql = "select * from user inner join plan_purchase on plan_purchase.id=user.plan_id inner join plan_description on plan_description.plan_id=plan_purchase.id inner join plan_compare_description on plan_compare_description.plan_id=plan_purchase.id inner join company_role_schema on company_role_schema.id-user.role_id where user.id="+req.params.id
+  var sql = "select * from user inner join plan_purchase on plan_purchase.id=user.plan_id inner join plan_description on plan_description.plan_id=plan_purchase.id inner join plan_compare_description on plan_compare_description.plan_id=plan_purchase.id inner join company_role_schema on company_role_schema.id-user.role_id where user.id=" + req.params.id
   try {
-    con.query(sql,(err, res) => {
+    con.query(sql, (err, res) => {
       if (err)
         response.send(err);
       response.send(res)
@@ -168,4 +180,4 @@ const get_user = async (req, response) => {
   }
 }
 
-module.exports = { register, register2, register3, add_project, delete_project, add_tender, delete_tender, terms, get_projects,get_tenders,get_user};
+module.exports = { register, register2, register3, add_project, delete_project, add_tender, delete_tender, terms, get_projects, get_tenders, get_user };
