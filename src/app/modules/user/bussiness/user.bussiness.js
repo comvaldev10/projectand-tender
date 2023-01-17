@@ -28,11 +28,29 @@ const register = async (req, response) => {
   }
 }
 const register2 = async (req, response) => {
-  console.log(req.files,"aa")
+  if(req.body.vat_detail==''||req.body.vat_detail==undefined)
+  {
+  const obj=
+  {company_name:req.body.company_name,
+    user_company_role:req.body.user_company_role,
+    address:req.body.address,
+    country:req.body.country,
+    city:req.body.city,
+    pin_zip:req.body.pin_zip,
+    mobile_contact:req.body.mobile_contact,
+    office_contact:req.body.office_contact,
+    vat_detail:req.body.vat_detail==undefined||req.body.vat_detail==''||req.body.vat_detail==0||req.body.vat_detail=='0'?'':req.body.vat_detail,
+    vat_date:req.body.vat_date==undefined||req.body.vat_date==''||req.body.vat_date==0||req.body.vat_date=='0'?'':req.body.vat_date,
+    vat_number:req.body.vat_number==undefined||req.body.vat_number==''||req.body.vat_number==0||req.body.vat_number=='0'?'':req.body.vat_number,
+    vat_image:req.body.vat_image==undefined||req.body.vat_image==''||req.body.vat_image==0||req.body.vat_image=='0'?'':req.body.image,
+    purchase_additional_login:req.body.purchase_additional_login==undefined||req.body.purchase_additional_login==''||req.body.purchase_additional_login==0||req.body.purchase_additional_login=='0'?'':req.body.purchase_additional_login,
+    no_of_login_user:req.body.no_of_login_user==undefined||req.body.no_of_login_user==''||req.body.no_of_login_user==0||req.body.no_of_login_user=='0'?'':req.body.no_of_login_user}  
+  }
   var data1 = Object.values(req.body)
   data1.push(req.params.id)
-  var sql = "UPDATE user SET company_name=?, user_company_role=?, address=?, country=?, city=?, pin_zip=?, mobile_contact=?, office_contact=?, vat_detail=?, vat_date=?, vat_number=?, vat_image=?, purchase_additional_login=?, no_of_login_user=? where id=?"
+  var sql = "UPDATE user SET company_name=?, user_company_role=?, address=?, country=?, city=?, pin_zip=?, mobile_contact=?, office_contact=?, vat_detail=?, vat_date=?, vat_number=?, purchase_additional_login=?, no_of_login_user=?,vat_image=? where id=?"
   try {
+    
     con.query(sql, data1, (err, res) => {
       if (err)
         response.json(err);
@@ -169,7 +187,7 @@ const get_tenders = async (req, response) => {
 
 
 const get_user = async (req, response) => {
-  var sql = "select * from user inner join plan_purchase on plan_purchase.id=user.plan_id inner join plan_description on plan_description.plan_id=plan_purchase.id inner join plan_compare_description on plan_compare_description.plan_id=plan_purchase.id inner join company_role_schema on company_role_schema.id-user.role_id where user.id=" + req.params.id
+  var sql = "select * from user inner join plan_purchase on plan_purchase.id=user.plan_id inner join company_role_schema on company_role_schema.id-user.role_id where user.id=" + req.params.id
   try {
     con.query(sql, (err, res) => {
       if (err)

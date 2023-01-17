@@ -15,10 +15,15 @@ var corsOptions = {
     optionsSuccessStatus: 200 
 }
 app.use(cors(corsOptions));
+const path = require('path')
+
+const publicDirectoryPath = path.join(__dirname, '/uploads')
+
+app.use(express.static(publicDirectoryPath))
 const router = express.Router();
 
 
-const path = require('path')
+
 const routes = require("./route");
 
 require("./src/app/db/mysql");
@@ -28,9 +33,6 @@ routes.map(route => {
 });
 
 
-const publicDirectoryPath = path.join(__dirname, '/uploads')
-
-app.use(express.static(publicDirectoryPath))
 
 const helmet = require('helmet')
 // const CronJob = require('cron').CronJob;

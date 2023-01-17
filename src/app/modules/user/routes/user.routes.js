@@ -11,7 +11,6 @@ const storage = multer.diskStorage({
       cb(null, file.fieldname + '-' + uniqueSuffix)
     }
   })
-  const path = require('path')
 const upload = multer({ storage: storage })
 const cpuploads=upload.fields([{ name: 'vat_images', maxCount: 1 }])
 router.post('/register',register)
