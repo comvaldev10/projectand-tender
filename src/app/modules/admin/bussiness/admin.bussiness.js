@@ -11,9 +11,9 @@ const login = async (req,response) => {
   try {
     con.query(sql,(err, res) => {
       if (err)
-        response.send(err);
+        response.json(err);
     if(res[0].id)
- response.send(generate_token(res[0].id))
+ response.json(generate_token(res[0].id))
     })
   }
   catch (err) {
@@ -28,8 +28,8 @@ const get_user = async (req,response) => {//get all user
     try {
       con.query(sql,(err, res) => {
         if (err)
-          response.send(err);
-          response.send(res);
+          response.json(err);
+          response.json(res);
       })
     }
     catch (err) {
@@ -48,8 +48,8 @@ const get_user_by_id = async (req,response) => {//get particular user
      try {
        con.query(sql,(err, res) => {
          if (err)
-           response.send(err);
-           response.send(res);
+           response.json(err);
+           response.json(res);
        })
      }
      catch (err) {
@@ -69,8 +69,8 @@ const pending_user = async (req,response) => {
      try {
        con.query(sql,(err, res) => {
          if (err)
-           response.send(err);
-           response.send(res);
+           response.json(err);
+           response.json(res);
        })
      }
      catch (err) {
@@ -79,7 +79,7 @@ const pending_user = async (req,response) => {
    }
    else
    {
-     req.send("unauthorised user").status(401);
+     req.json1("unauthorised user").status(401);
    }
  }
 module.exports = {login,get_user,get_user_by_id,pending_user};

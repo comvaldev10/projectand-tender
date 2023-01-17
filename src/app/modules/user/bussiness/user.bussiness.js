@@ -4,10 +4,10 @@ const register = async (req, response) => {
   try {
     con.query(emailcheck, (err, res) => {
       if (err)
-        response.send(err);
+        response.json(err);
         if(res[0].email)
         {
-      response.send("already exists")
+      response.json("already exists")
         }
         else  {
           var sql = "INSERT INTO user(name,email,password,confirm_password,plan_id) VALUES ?"
@@ -15,8 +15,8 @@ const register = async (req, response) => {
       
           con.query(sql, [data1], (err, res) => {
             if (err)
-              response.send(err);
-            response.send(res)
+              response.json(err);
+            response.json(res)
           })
         }
     })
@@ -33,8 +33,8 @@ const register2 = async (req, response) => {
   try {
     con.query(sql, data1, (err, res) => {
       if (err)
-        response.send(err);
-      response.send(res)
+        response.json(err);
+      response.json(res)
     })
   }
   catch (err) {
@@ -46,8 +46,8 @@ const register3 = async (req, response) => {
   try {
     con.query(sql, (err, res) => {
       if (err)
-        response.send(err);
-      response.send(res)
+        response.json(err);
+      response.json(res)
     })
   }
   catch (err) {
@@ -64,8 +64,8 @@ const add_project = async (req, response) => {
   try {
     con.query(sql, [data2], (err, res) => {
       if (err)
-        response.send(err);
-      response.send(res)
+        response.json(err);
+      response.json(res)
     })
   }
   catch (err) {
@@ -79,8 +79,8 @@ const delete_project = async (req, response) => {
   try {
     con.query(sql, (err, res) => {
       if (err)
-        response.send(err);
-      response.send(res)
+        response.json(err);
+      response.json(res)
     })
   }
   catch (err) {
@@ -97,8 +97,8 @@ const add_tender = async (req, response) => {
   try {
     con.query(sql, [data2], (err, res) => {
       if (err)
-        response.send(err);
-      response.send(res)
+        response.json(err);
+      response.json(res)
     })
   }
   catch (err) {
@@ -112,8 +112,8 @@ const delete_tender = async (req, response) => {
   try {
     con.query(sql, (err, res) => {
       if (err)
-        response.send(err);
-      response.send(res)
+        response.json(err);
+      response.json(res)
     })
   }
   catch (err) {
@@ -127,8 +127,8 @@ const terms = async (req, response) => {
   try {
     con.query(sql, data1, (err, res) => {
       if (err)
-        response.send(err);
-      response.send(res)
+        response.json(err);
+      response.json(res)
     })
   }
   catch (err) {
@@ -141,8 +141,8 @@ const get_projects = async (req, response) => {
   try {
     con.query(sql, (err, res) => {
       if (err)
-        response.send(err);
-      response.send(res)
+        response.json(err);
+      response.json(res)
     })
   }
   catch (err) {
@@ -156,8 +156,8 @@ const get_tenders = async (req, response) => {
   try {
     con.query(sql, (err, res) => {
       if (err)
-        response.send(err);
-      response.send(res)
+        response.json(err);
+      response.json(res)
     })
   }
   catch (err) {
@@ -171,8 +171,8 @@ const get_user = async (req, response) => {
   try {
     con.query(sql, (err, res) => {
       if (err)
-        response.send(err);
-      response.send(res)
+        response.json(err);
+      response.json(res)
     })
   }
   catch (err) {

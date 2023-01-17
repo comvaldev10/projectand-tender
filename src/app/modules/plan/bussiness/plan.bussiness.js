@@ -5,8 +5,8 @@ const get_plan = async (req, response) => {
   try {
     con.query(sql, [data1], (err, res) => {
       if (err)
-        response.send(err);
-      response.send(res)
+        response.json(err);
+      response.json(res)
     })
   }
   catch (err) {
@@ -19,8 +19,8 @@ const add_plan = async (req, response) => {
     try {
       con.query(sql, [data1], (err, res) => {
         if (err)
-          response.send(err);
-        response.send(res)
+          response.json(err);
+        response.json(res)
       })
     }
     catch (err) {
@@ -33,8 +33,8 @@ const add_plan = async (req, response) => {
     try {
       con.query(sql, [data1], (err, res) => {
         if (err)
-          response.send(err);
-        response.send(res)
+          response.json(err);
+        response.json(res)
       })
     }
     catch (err) {
@@ -47,8 +47,8 @@ const add_plan = async (req, response) => {
     try {
       con.query(sql, [data1], (err, res) => {
         if (err)
-          response.send(err);
-        response.send(res)
+          response.json(err);
+        response.json(res)
       })
     }
     catch (err) {

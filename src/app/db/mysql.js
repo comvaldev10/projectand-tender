@@ -12,10 +12,10 @@ var b={
   "database":"comv_emirates"
 }
 var con = mysql.createConnection({
-  host:b.host,
-  user:b.user,
-  password:b.password,
-  database:b.database
+  host:a.host,
+  user:a.user,
+  password:a.password,
+  database:a.database
 });
 
 con.connect(function(err) {
