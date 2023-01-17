@@ -19,7 +19,7 @@ routes.map(route => {
 var corsOptions = {
   origin: '*',
  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    preflightContinue: false,
+    credentials:true,
     optionsSuccessStatus: 200 
 }
 app.use(cors(corsOptions));
