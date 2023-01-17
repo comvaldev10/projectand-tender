@@ -6,7 +6,6 @@ var generate_token=(id)=>
     return token
 }
 const login = async (req,response) => {
-   
   var sql = `Select * from user where email='${req.body.email}' AND password='${req.body.password}'`
   try {
     con.query(sql,(err, res) => {

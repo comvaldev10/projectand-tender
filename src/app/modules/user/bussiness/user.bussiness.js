@@ -1,23 +1,25 @@
 var con = require('../../../db/mysql')
 const register = async (req, response) => {
+  console.log(req.body,req.body.email,"ss")
   var emailcheck = `select * from user where user.email='${req.body.email}'`
   try {
     con.query(emailcheck, (err, res) => {
       if (err)
         response.json(err);
-        if(res[0].email)
+        if(res[0]?.email)
         {
       response.json("already exists")
         }
         else  {
           var sql = "INSERT INTO user(name,email,password,confirm_password,plan_id) VALUES ?"
           var data1 = [Object.values(req.body)]
-      
+      console.log(data1,"ss")
           con.query(sql, [data1], (err, res) => {
             if (err)
               response.json(err);
+              else{
             response.json(res)
-          })
+        }})
         }
     })
 }
