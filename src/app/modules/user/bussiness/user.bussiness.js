@@ -157,7 +157,33 @@ const terms = async (req, response) => {
 }
 
 const get_projects = async (req, response) => {
-  var sql = "select * from sub_sub_project_sector_schema inner join sub_project_sector_schema on sub_sub_project_sector_schema.sub_sector_id=sub_project_sector_schema.sub_project_id inner join project_sector_schema on sub_project_sector_schema.sector_id=project_sector_schema.project_id"
+  var sql = "select * from project_sector_schema"
+  try {
+    con.query(sql, (err, res) => {
+      if (err)
+        response.json(err);
+      response.json(res)
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+const get_sub_projects = async (req, response) => {
+  var sql = "select * from sub_project_sector_schema"
+  try {
+    con.query(sql, (err, res) => {
+      if (err)
+        response.json(err);
+      response.json(res)
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+const get_sub_sub_projects = async (req, response) => {
+  var sql = "select * from sub_sub_project_sector_schema"
   try {
     con.query(sql, (err, res) => {
       if (err)
@@ -170,9 +196,21 @@ const get_projects = async (req, response) => {
   }
 }
 
-
 const get_tenders = async (req, response) => {
-  var sql = "select * from sub_tender_schema ARRAY join tender_schema on sub_tender_schema.tender_id=tender_schema.tender_id"
+  var sql = "select * from tender_schema"
+  try {
+    con.query(sql, (err, res) => {
+      if (err)
+        response.json(err);
+      response.json(res)
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+const get_sub_tenders = async (req, response) => {
+  var sql = "select * from sub_tender_schema"
   try {
     con.query(sql, (err, res) => {
       if (err)
@@ -200,4 +238,4 @@ const get_user = async (req, response) => {
   }
 }
 
-module.exports = { register, register2, register3, add_project, delete_project, add_tender, delete_tender, terms, get_projects, get_tenders, get_user };
+module.exports = { register, register2, register3, add_project, delete_project, add_tender, delete_tender, terms, get_projects,get_sub_projects,get_sub_sub_projects,get_tenders,get_sub_tenders,get_user };

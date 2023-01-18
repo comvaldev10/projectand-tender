@@ -1,7 +1,6 @@
 var con = require('../../../db/mysql')
 const get_plan = async (req, response) => {
-  console.log("jayate",req.params.id)
-  var sql = "select * from plan_purchase inner join plan_description on plan_description.plan_id=plan_purchase.ppid"
+  var sql = "select * from plan_purchase"
   try {
     con.query(sql, (err, res) => {
       if (err)
@@ -13,9 +12,9 @@ const get_plan = async (req, response) => {
     return err
   }
 }
-const get_plan_des = async (req, response) => {
+const get_plan_id = async (req, response) => {
   console.log("jayate",req.params.id)
-  var sql = "select * from plan_purchase inner join plan_compare_description on plan_compare_description.plan_id=plan_purchase.ppid"
+  var sql = "select * from plan_purchase where plan_purchase_id="+req.params.id
   try {
     con.query(sql, (err, res) => {
       if (err)
@@ -69,4 +68,4 @@ const add_plan = async (req, response) => {
       return err
     }
   }
-module.exports = {get_plan,get_plan_des,edit_plan,delete_plan,add_plan};
+module.exports = {get_plan,get_plan_id,edit_plan,delete_plan,add_plan};
