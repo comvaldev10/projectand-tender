@@ -81,4 +81,73 @@ const pending_user = async (req,response) => {
      req.json1("unauthorised user").status(401);
    }
  }
-module.exports = {login,get_user,get_user_by_id,pending_user};
+ const add_project = async (req,response) => {
+  try{
+  if(req.user.role_id==2)
+{
+  var sql = "INSERT INTO project_sector_schema(project_sector) VALUES ?"
+  var data1 = [Object.values(req.body)]
+     con.query(sql,[data1],(err, res) => {
+       if (err)
+         response.json(err);
+         response.json(res);
+     })
+    }
+ 
+ else
+ {
+   req.json1("unauthorised user").status(401);
+ }
+}
+ catch (err) {
+  return err
+}
+ }
+
+const sub_add_project = async (req,response) => {
+  try{
+  if(req.user.role_id==2)
+{
+  var sql = "INSERT INTO sub_project_sector_schema(sub_roject_sector) VALUES ?"
+  var data1 = [Object.values(req.body)]
+     con.query(sql,[data1],(err, res) => {
+       if (err)
+         response.json(err);
+         response.json(res);
+     })
+    }
+ 
+ else
+ {
+   req.json1("unauthorised user").status(401);
+ }
+}
+ catch (err) {
+  return err
+}
+ }
+ const sub_sub_add_project = async (req,response) => {
+  try{
+  if(req.user.role_id==2)
+{
+  var sql = "INSERT INTO sub_project_sector_schema(sub_sub_roject_sector,sector_id,sub_sector_id) VALUES ?"
+  var data1 = [Object.values(req.body)]
+     con.query(sql,[data1],(err, res) => {
+       if (err)
+         response.json(err);
+         response.json(res);
+     })
+    }
+ 
+ else
+ {
+   req.json1("unauthorised user").status(401);
+ }
+}
+ catch (err) {
+  return err
+}
+ }
+
+
+module.exports = {login,get_user,get_user_by_id,pending_user,add_project,sub_add_project,sub_sub_add_project};
