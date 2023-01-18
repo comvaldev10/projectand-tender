@@ -48,7 +48,7 @@ const register2 = async (req, response) => {
   }  
   var data1 = Object.values(req.body)
   data1.push(req.params.id)
-  var sql = "UPDATE user SET company_name=?, user_company_role=?, address=?, country=?, city=?, pin_zip=?, mobile_contact=?, office_contact=?, vat_detail=?, vat_date=?, vat_number=?, purchase_additional_login=?, no_of_login_user=?,vat_image=?,price=? where id=?"
+  var sql = "UPDATE user SET company_name=?, user_company_role=?, address=?, country=?, city=?, pin_zip=?, mobile_contact=?, office_contact=?, vat_detail=?, vat_date=?, vat_number=?, purchase_additional_login=?, no_of_login_user=?,vat_image=?,price=? where user_id=?"
   try {
     
     con.query(sql, data1, (err, res) => {
@@ -62,7 +62,7 @@ const register2 = async (req, response) => {
   }
 }
 const register3 = async (req, response) => {
-  var sql = "select * from user inner join plan_purchase on plan_purchase.ppid=user.plan_id inner join sector_of_user_schema on sector_of_user_schema.user_id=user.id inner join project_sector_schema on sector_of_user_schema.sector_id=project_sector_schema.pid inner join company_role_schema on company_role_schema.cid=user.id inner join sub_project_sector_schema on sector_of_user_schema.sub_sector_id=sub_project_sector_schema.spssid inner join sub_sub_project_sector_schema on sector_of_user_schema.sub_sub_sector_id=sub_sub_project_sector_schema.sspssid inner join tender_of_user_schema on sector_of_user_schema.user_id=user.id inner join tender_schema on tender_of_user_schema.tender_id=tender_schema.tsid inner join sub_tender_schema on sub_tender_schema.stsid=tender_of_user_schema.sub_tender_id where user.id=" + req.params.id
+  var sql = "select * from user inner join plan_purchase on plan_purchase.plan_purchase_id=user.plan_id inner join sector_of_user_schema on sector_of_user_schema.user_id=user.user_id inner join project_sector_schema on sector_of_user_schema.sector_id=project_sector_schema.project_id inner join company_role_schema on company_role_schema.company_id=user.user_id inner join sub_project_sector_schema on sector_of_user_schema.sub_sector_id=sub_project_sector_schema.sub_project_id inner join sub_sub_project_sector_schema on sector_of_user_schema.sub_sub_sector_id=sub_sub_project_sector_schema.sub_sub_project_id inner join tender_of_user_schema on sector_of_user_schema.user_id=user.user_id inner join tender_schema on tender_of_user_schema.tender_id=tender_schema.tender_id inner join sub_tender_schema on sub_tender_schema.sub_tender_id=tender_of_user_schema.sub_tender_id where user.user_id=" + req.params.id
   try {
     con.query(sql, (err, res) => {
       if (err)
@@ -157,7 +157,7 @@ const terms = async (req, response) => {
 }
 
 const get_projects = async (req, response) => {
-  var sql = "select * from sub_sub_project_sector_schema left join sub_project_sector_schema on sub_sub_project_sector_schema.sub_sector_id=sub_project_sector_schema.spssid inner join project_sector_schema on sub_project_sector_schema.sector_id=project_sector_schema.pid"
+  var sql = "select * from sub_sub_project_sector_schema inner join sub_project_sector_schema on sub_sub_project_sector_schema.sub_sector_id=sub_project_sector_schema.sub_project_id inner join project_sector_schema on sub_project_sector_schema.sector_id=project_sector_schema.project_id"
   try {
     con.query(sql, (err, res) => {
       if (err)
@@ -172,7 +172,7 @@ const get_projects = async (req, response) => {
 
 
 const get_tenders = async (req, response) => {
-  var sql = "select * from sub_tender_schema inner join tender_schema on sub_tender_schema.tender_id=tender_schema.tsid"
+  var sql = "select * from sub_tender_schema ARRAY join tender_schema on sub_tender_schema.tender_id=tender_schema.tender_id"
   try {
     con.query(sql, (err, res) => {
       if (err)
@@ -187,7 +187,7 @@ const get_tenders = async (req, response) => {
 
 
 const get_user = async (req, response) => {
-  var sql = "select * from user inner join plan_purchase on plan_purchase.ppid=user.plan_id where user.id=" + req.params.id
+  var sql = "select * from user inner join company_role_schema on company_role_schema.company_id=user.role_id  inner join plan_purchase on plan_purchase.plan_purchase_id=user.plan_id where user.user_id=" + req.params.id
   try {
     con.query(sql, (err, res) => {
       if (err)
