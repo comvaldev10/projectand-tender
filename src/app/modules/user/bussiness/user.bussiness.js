@@ -48,7 +48,7 @@ const register2 = async (req, response) => {
   }  
   var data1 = Object.values(req.body)
   data1.push(req.params.id)
-  var sql = "UPDATE user SET company_name=?, user_company_role=?, address=?, country=?, city=?, pin_zip=?, mobile_contact=?, office_contact=?, vat_detail=?, vat_date=?, vat_number=?, purchase_additional_login=?, no_of_login_user=?,vat_image=? where id=?"
+  var sql = "UPDATE user SET company_name=?, user_company_role=?, address=?, country=?, city=?, pin_zip=?, mobile_contact=?, office_contact=?, vat_detail=?, vat_date=?, vat_number=?, purchase_additional_login=?, no_of_login_user=?,vat_image=?,price=? where id=?"
   try {
     
     con.query(sql, data1, (err, res) => {
