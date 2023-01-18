@@ -11,8 +11,8 @@ const login = async (req,response) => {
     con.query(sql,(err, res) => {
       if (err)
         response.json(err);
-    if(res[0].id)
- response.json(generate_token(res[0].id))
+    if(res[0]?.id)
+ response.json(generate_token(res[0]?.id))
     })
   }
   catch (err) {
@@ -23,7 +23,7 @@ const login = async (req,response) => {
 const get_user = async (req,response) => {//get all user
    if(req.user.role_id==2)
 {
-    var sql ="select * from user inner join sector_of_user_schema on sector_of_user_schema.user_id=user.id inner join project_sector_schema on sector_of_user_schema.sector_id=project_sector_schema.id inner join company_role_schema on company_role_schema.id=user.id inner join sub_project_sector_schema on sector_of_user_schema.sub_sector_id=sub_project_sector_schema.id inner join sub_sub_project_sector_schema on sector_of_user_schema.sub_sub_sector_id=sub_sub_project_sector_schema.id inner join tender_of_user_schema on sector_of_user_schema.user_id=user.id inner join tender_schema on tender_of_user_schema.tender_id=tender_schema.id inner join sub_tender_schema on sub_tender_schema.id=tender_of_user_schema.sub_tender_id"
+    var sql ="select * from user inner join sector_of_user_schema on sector_of_user_schema.user_id=user.id inner join project_sector_schema on sector_of_user_schema.sector_id=project_sector_schema.pid inner join company_role_schema on company_role_schema.cid=user.id inner join sub_project_sector_schema on sector_of_user_schema.sub_sector_id=sub_project_sector_schema.spssid inner join sub_sub_project_sector_schema on sector_of_user_schema.sub_sub_sector_id=sub_sub_project_sector_schema.sspssid inner join tender_of_user_schema on sector_of_user_schema.user_id=user.id inner join tender_schema on tender_of_user_schema.tender_id=tender_schema.tsid inner join sub_tender_schema on sub_tender_schema.stsid=tender_of_user_schema.sub_tender_id"
     try {
       con.query(sql,(err, res) => {
         if (err)
@@ -43,7 +43,7 @@ const get_user = async (req,response) => {//get all user
 const get_user_by_id = async (req,response) => {//get particular user
     if(req.user.role_id==2)
  {
-     var sql ="select * from user inner join sector_of_user_schema on sector_of_user_schema.user_id=user.id inner join project_sector_schema on sector_of_user_schema.sector_id=project_sector_schema.id inner join company_role_schema on company_role_schema.id=user.id inner join sub_project_sector_schema on sector_of_user_schema.sub_sector_id=sub_project_sector_schema.id inner join sub_sub_project_sector_schema on sector_of_user_schema.sub_sub_sector_id=sub_sub_project_sector_schema.id inner join tender_of_user_schema on sector_of_user_schema.user_id=user.id inner join tender_schema on tender_of_user_schema.tender_id=tender_schema.id inner join sub_tender_schema on sub_tender_schema.id=tender_of_user_schema.sub_tender_id where sector_of_user_schema.user_id="+req.params.id
+  var sql ="select * from user inner join sector_of_user_schema on sector_of_user_schema.user_id=user.id inner join project_sector_schema on sector_of_user_schema.sector_id=project_sector_schema.pid inner join company_role_schema on company_role_schema.cid=user.id inner join sub_project_sector_schema on sector_of_user_schema.sub_sector_id=sub_project_sector_schema.spssid inner join sub_sub_project_sector_schema on sector_of_user_schema.sub_sub_sector_id=sub_sub_project_sector_schema.sspssid inner join tender_of_user_schema on sector_of_user_schema.user_id=user.id inner join tender_schema on tender_of_user_schema.tender_id=tender_schema.tsid inner join sub_tender_schema on sub_tender_schema.stsid=tender_of_user_schema.sub_tender_id where user.id="+req.params.id
      try {
        con.query(sql,(err, res) => {
          if (err)
@@ -64,7 +64,7 @@ const get_user_by_id = async (req,response) => {//get particular user
 const pending_user = async (req,response) => {
     if(req.user.role_id==2)
  {
-     var sql =`select * from user inner join sector_of_user_schema on sector_of_user_schema.user_id=user.id inner join project_sector_schema on sector_of_user_schema.sector_id=project_sector_schema.id inner join company_role_schema on company_role_schema.id=user.id inner join sub_project_sector_schema on sector_of_user_schema.sub_sector_id=sub_project_sector_schema.id inner join sub_sub_project_sector_schema on sector_of_user_schema.sub_sub_sector_id=sub_sub_project_sector_schema.id inner join tender_of_user_schema on sector_of_user_schema.user_id=user.id inner join tender_schema on tender_of_user_schema.tender_id=tender_schema.id inner join sub_tender_schema on sub_tender_schema.id=tender_of_user_schema.sub_tender_id inner join plan_purchase on plan_purchase.id=user.plan_id inner join plan_description on plan_description.plan_id=plan_purchase.id inner join plan_compare_description on plan_compare_description.plan_id=plan_purchase.id inner join company_role_schema on company_role_schema.id-user.role_id where user.subscribed=${0}`
+  var sql =`select * from user inner join sector_of_user_schema on sector_of_user_schema.user_id=user.id inner join project_sector_schema on sector_of_user_schema.sector_id=project_sector_schema.pid inner join company_role_schema on company_role_schema.cid=user.id inner join sub_project_sector_schema on sector_of_user_schema.sub_sector_id=sub_project_sector_schema.spssid inner join sub_sub_project_sector_schema on sector_of_user_schema.sub_sub_sector_id=sub_sub_project_sector_schema.sspssid inner join tender_of_user_schema on sector_of_user_schema.user_id=user.id inner join tender_schema on tender_of_user_schema.tender_id=tender_schema.tsid inner join sub_tender_schema on sub_tender_schema.stsid=tender_of_user_schema.sub_tender_id where user.subscribed=0`
      try {
        con.query(sql,(err, res) => {
          if (err)
