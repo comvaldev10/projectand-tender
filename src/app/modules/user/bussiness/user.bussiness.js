@@ -183,6 +183,7 @@ const get_sub_projects = async (req, response) => {
   }
 }
 const get_sub_sub_projects = async (req, response) => {
+  console.log("aa")
   var sql = "select sub_sub_project_sector_schema.sub_sub_project_id,sub_sub_project_sector_schema.sub_sub_project_sector,sub_project_sector_schema.sub_project_id,sub_project_sector_schema.sub_project_sector,project_sector_schema.project_id,project_sector_schema.project_sector from sub_sub_project_sector_schema inner join sub_project_sector_schema on sub_sub_project_sector_schema.sub_sector_id=sub_project_sector_schema.sub_project_id inner join project_sector_schema on project_sector_schema.project_id=sub_project_sector_schema.sector_id"
   try {
     con.query(sql, (err, res) => {
