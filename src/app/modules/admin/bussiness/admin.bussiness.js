@@ -176,5 +176,151 @@ const sub_add_project = async (req,response) => {
 }
  }
 
-
-module.exports = {login,get_user,get_user_by_id,pending_user,add_project,sub_add_project,sub_sub_add_project,complete_user};
+ const get_project = async (req,response) => {
+  try{
+  if(req.user.role_id==2)
+{
+  var sql = "select * from sector_of_user_schema where user_id="+req.params.id
+     con.query(sql,(err, res) => {
+       if (err)
+         response.json(err);
+         response.json(res);
+     })
+    }
+ 
+ else
+ {
+   req.json("unauthorised user").status(401);
+ }
+}
+ catch (err) {
+  return err
+}
+ }
+ const get_project_by_id = async (req,response) => {
+  try{
+  if(req.user.role_id==2)
+{
+  var sql = "select * from project_sector_schema where project_id="+req.params.id
+     con.query(sql,(err, res) => {
+       if (err)
+         response.json(err);
+         response.json(res);
+     })
+    }
+ 
+ else
+ {
+   req.json("unauthorised user").status(401);
+ }
+}
+ catch (err) {
+  return err
+}
+ }
+ const get_sub_project_by_id = async (req,response) => {
+  try{
+  if(req.user.role_id==2)
+{
+  var sql = "select * from sub_project_sector_schema where sub_project_id="+req.params.id
+     con.query(sql,(err, res) => {
+       if (err)
+         response.json(err);
+         response.json(res);
+     })
+    }
+ 
+ else
+ {
+   req.json("unauthorised user").status(401);
+ }
+}
+ catch (err) {
+  return err
+}
+ }
+ const get_sub_sub_project_by_id = async (req,response) => {
+  try{
+  if(req.user.role_id==2)
+{
+  var sql = "select * from sub_sub_project_sector_schema where sub_sub_project_id="+req.params.id
+     con.query(sql,(err, res) => {
+       if (err)
+         response.json(err);
+         response.json(res);
+     })
+    }
+ 
+ else
+ {
+   req.json("unauthorised user").status(401);
+ }
+}
+ catch (err) {
+  return err
+}
+ }
+ const get_tender = async (req,response) => {
+  try{
+  if(req.user.role_id==2)
+{
+  var sql = "select * from tender_of_user_schema where user_id="+req.params.id
+     con.query(sql,(err, res) => {
+       if (err)
+         response.json(err);
+         response.json(res);
+     })
+    }
+ 
+ else
+ {
+   req.json("unauthorised user").status(401);
+ }
+}
+ catch (err) {
+  return err
+}
+ }
+ const get_tender_by_id = async (req,response) => {
+  try{
+  if(req.user.role_id==2)
+{
+  var sql = "select * from tender_schema where tender_id="+req.params.id
+     con.query(sql,(err, res) => {
+       if (err)
+         response.json(err);
+         response.json(res);
+     })
+    }
+ 
+ else
+ {
+   req.json("unauthorised user").status(401);
+ }
+}
+ catch (err) {
+  return err
+}
+ } 
+ const get_sub_tender_by_id = async (req,response) => {
+  try{
+  if(req.user.role_id==2)
+{
+  var sql = "select * from sub_tender_schema where sub_tender_id="+req.params.id
+     con.query(sql,(err, res) => {
+       if (err)
+         response.json(err);
+         response.json(res);
+     })
+    }
+ 
+ else
+ {
+   req.json("unauthorised user").status(401);
+ }
+}
+ catch (err) {
+  return err
+}
+ } 
+module.exports = {login,get_sub_tender_by_id,get_tender,get_tender_by_id,get_user,get_sub_sub_project_by_id,get_sub_project_by_id,get_user_by_id,pending_user,add_project,sub_add_project,sub_sub_add_project,complete_user,get_project,get_project_by_id};
