@@ -46,7 +46,7 @@ const register2 = async (req, response) => {
     no_of_login_user:req.body?.no_of_login_user==undefined||req.body?.no_of_login_user==''||req.body?.no_of_login_user==0||req.body?.no_of_login_user=='0'?'':req.body?.no_of_login_user,
     price:req.body?.price==undefined||req.body?.price==''||req.body?.price==0||req.body?.price=='0'?'':req.body?.price,
   }  
-  var data1 = Object.values(req.body)
+  var data1 = Object.values(obj)
   data1.push(req.params.id)
   var sql = "UPDATE user SET company_name=?, user_company_role=?, address=?, country=?, city=?, pin_zip=?, mobile_contact=?, office_contact=?, vat_detail=?, vat_date=?, vat_number=?, purchase_additional_login=?, no_of_login_user=?,vat_image=?,price=? where user_id=?"
   try {
@@ -285,4 +285,25 @@ const get_user = async (req, response) => {
   }
 }
 
-module.exports = { register, register2, register3, add_project, delete_project, add_tender, delete_tender, terms, get_projects,get_sub_projects,get_sub_sub_projects,get_tenders,get_sub_tenders,get_user };
+
+const user_plan_update = async (req, response) => {
+  var obj={
+    "price":req.body.price,
+    "plan_id":req.body.plan_id,
+    "no_of_login_user":req.body.no_of_login_user
+  }
+  var data1 = Object.values(obj)
+  data1.push(req.params.id)
+  var sql = "update user set price=?,plan_id=?,no_of_login_user=? where user_id=?"
+  try {
+    con.query(sql,data1,(err, res) => {
+      if (err)
+        response.json(err);
+      response.json(res)
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+module.exports = { register, register2, register3, add_project, delete_project, add_tender, delete_tender, terms, get_projects,get_sub_projects,get_sub_sub_projects,get_tenders,get_sub_tenders,get_user,user_plan_update};

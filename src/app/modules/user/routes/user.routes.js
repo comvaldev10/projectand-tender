@@ -1,6 +1,6 @@
 let express = require('express');
 let router = express.Router(),
-{register,register2,register3,add_project,delete_project,add_tender,delete_tender,terms,get_projects,get_sub_projects,get_sub_sub_projects,get_tenders,get_sub_tenders,get_user} = require("../bussiness/user.bussiness");
+{register,user_plan_update,register2,register3,add_project,delete_project,add_tender,delete_tender,terms,get_projects,get_sub_projects,get_sub_sub_projects,get_tenders,get_sub_tenders,get_user} = require("../bussiness/user.bussiness");
 const multer  = require('multer')
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -27,6 +27,7 @@ router.get('/get_sub_sub_projects',get_sub_sub_projects)
 router.get('/get_tenders',get_tenders)
 router.get('/get_sub_tenders',get_sub_tenders)
 router.get('/get_user/:id',get_user)
+router.put('/user_plan_update/:id',user_plan_update)
 
 module.exports = router;
 
