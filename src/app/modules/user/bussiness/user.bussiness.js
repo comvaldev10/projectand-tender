@@ -164,7 +164,7 @@ req.body.forEach(element => {
       }      
   })
 })
-response.json("add_delete both done")
+response.json({status:'success',data:"add_delete both done"})
 }
 catch(err)
 {
