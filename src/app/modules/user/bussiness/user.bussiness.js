@@ -28,9 +28,9 @@ const register = async (req, response) => {
 }
 const register2 = async (req, response) => {
   console.log(req.files,req.body,"aa")
-  var image=
+  var image=[]
   req.files.forEach((a)=>{
-    image=(a.filename)
+    image.push(a.filename)
   })
   const obj={
     company_name:req.body.company_name,
@@ -44,7 +44,7 @@ const register2 = async (req, response) => {
     vat_detail:req.body?.vat_detail==undefined||req.body?.vat_detail==''||req.body?.vat_detail==0||req.body?.vat_detail=='0'?'0':req.body?.vat_detail,
     vat_date:req.body?.vat_date==undefined||req.body?.vat_date==''||req.body?.vat_date==0||req.body?.vat_date=='0'?'':req.body?.vat_date,
     vat_number:req.body?.vat_number==undefined||req.body?.vat_number==''||req.body?.vat_number==0||req.body?.vat_number=='0'?'':req.body?.vat_number,
-    vat_image:image?image:'',
+    vat_image:JSON.stringify(image)?JSON.stringify(image):'',
     purchase_additional_login:req.body?.purchase_additional_login==undefined||req.body?.purchase_additional_login==''||req.body?.purchase_additional_login==0||req.body?.purchase_additional_login=='0'?0:req.body?.purchase_additional_login,
     no_of_login_user:req.body?.no_of_login_user==undefined||req.body?.no_of_login_user==''||req.body?.no_of_login_user==0||req.body?.no_of_login_user=='0'?'':req.body?.no_of_login_user,
     price:req.body?.price==undefined||req.body?.price==''||req.body?.price==0||req.body?.price=='0'?'':req.body?.price,
