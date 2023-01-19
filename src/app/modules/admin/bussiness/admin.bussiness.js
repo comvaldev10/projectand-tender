@@ -26,7 +26,6 @@ else{
     return err
   }
 }
-
 const get_user = async (req,response) => {//get all user
    if(req.user.role_id==2)
 {
@@ -70,7 +69,7 @@ const get_user_by_id = async (req,response) => {//get particular user
  const complete_user = async (req,response) => {
   if(req?.user?.role_id==2)
 {
-var sql =`select * from user where user.subscribed=1`
+var sql =`select * from user inner join sector_of_user_schema on sector_of_user_schema.user_id=user.user_id where user.subscribed=1`
    try {
      con.query(sql,(err, res) => {
        if (err)
@@ -109,7 +108,7 @@ const pending_user = async (req,response) => {
     console.log("aaa");
      req.json("unauthorised user").status(401);
    }
- }
+}
  const add_project = async (req,response) => {
   try{
   if(req.user.role_id==2)
@@ -132,8 +131,6 @@ const pending_user = async (req,response) => {
   return err
 }
  }
-
-
 const sub_add_project = async (req,response) => {
   try{
   if(req.user.role_id==2)

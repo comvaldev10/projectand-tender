@@ -76,22 +76,53 @@ const register3 = async (req, response) => {
 }
 const add_project = async (req, response) => {
   var data1 = req.params.id
-  var data2 = Object.values(req.body)
-  data2.unshift(data1)
-  var data2 = [data2]
-
-  var sql = "INSERT INTO sector_of_user_schema(user_id,sector_id,sub_sector_id,sub_sub_sector_id) VALUES ?"
-  try {
-    con.query(sql, [data2], (err, res) => {
+req.body.forEach(element => {
+  var sql1="select * from sector_of_user_schema where user_id="+req.params.id+" and sector_id="+element.sector_id+" and sub_sector_id="+element.sub_sector_id+" and sub_sub_sector_id="+element.sub_sub_sector_id
+  con.query(sql1, (err, res) => {
+    if (err)
+      response.json(err);
+      if(!res[0]?.sector_id)
+      {
+        console.log(res,"aa")
+    var data2 = Object.values(element)
+  data2.unshift(req.params.id)
+  var data3 = [data2]
+      var sql = "INSERT INTO sector_of_user_schema(user_id,sector_id,sub_sector_id,sub_sub_sector_id) VALUES ?"
+    con.query(sql, [data3], (err, res1) => {
       if (err)
         response.json(err);
-      response.json(res)
+        console.log(res1)
     })
-  }
-  catch (err) {
-    return err
-  }
-}
+    }
+    else
+    {
+      var sql2 = "DELETE FROM sector_of_user_schema WHERE user_id="+req.params.id+" AND sector_id=" + element.sector_id + " AND sub_sector_id=" + element.sub_sector_id + " AND sub_sub_sector_id=" + element.sub_sub_sector_id
+        con.query(sql2, (err, res2) => {
+          if (err)
+            response.json(err);
+            console.log(res2)
+        })
+      }      
+  })
+})
+response.json("add_delete both done")
+} 
+
+
+
+
+//   var sql = "INSERT INTO sector_of_user_schema(user_id,sector_id,sub_sector_id,sub_sub_sector_id) VALUES ?"
+//   try {
+//     con.query(sql, [data2], (err, res) => {
+//       if (err)
+//         response.json(err);
+//       response.json(res)
+//     })
+//   }
+//   catch (err) {
+//     return err
+//   }
+
 const delete_project = async (req, response) => {
   var data1 = req.params.id
 
@@ -109,6 +140,7 @@ const delete_project = async (req, response) => {
 }
 
 const add_tender = async (req, response) => {
+  
   var data1 = req.params.id
   var data2 = Object.values(req.body)
   data2.unshift(data1)
