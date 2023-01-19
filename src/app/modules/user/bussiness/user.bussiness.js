@@ -27,13 +27,13 @@ const register = async (req, response) => {
   }
 }
 const register2 = async (req, response) => {
-  console.log(req.files,"aa")
-  var image=[]
+  console.log(req.files,req.body,"aa")
+  var image=
   req.files.forEach((a)=>{
-    image.push(a.filename)
+    image=(a.filename)
   })
-  const obj=
-  {company_name:req.body.company_name,
+  const obj={
+    company_name:req.body.company_name,
     user_company_role:req.body.user_company_role,
     address:req.body.address,
     country:req.body.country,
@@ -41,17 +41,17 @@ const register2 = async (req, response) => {
     pin_zip:req.body.pin_zip,
     mobile_contact:req.body.mobile_contact,
     office_contact:req.body.office_contact,
-    vat_detail:req.body?.vat_detail==undefined||req.body?.vat_detail==''||req.body?.vat_detail==0||req.body?.vat_detail=='0'?'':req.body?.vat_detail,
+    vat_detail:req.body?.vat_detail==undefined||req.body?.vat_detail==''||req.body?.vat_detail==0||req.body?.vat_detail=='0'?'0':req.body?.vat_detail,
     vat_date:req.body?.vat_date==undefined||req.body?.vat_date==''||req.body?.vat_date==0||req.body?.vat_date=='0'?'':req.body?.vat_date,
     vat_number:req.body?.vat_number==undefined||req.body?.vat_number==''||req.body?.vat_number==0||req.body?.vat_number=='0'?'':req.body?.vat_number,
-    vat_image:req.body?.vat_image==undefined||req.body?.vat_image==''||req.body?.vat_image==0||req.body?.vat_image=='0'?'':image,
-    purchase_additional_login:req.body?.purchase_additional_login==undefined||req.body?.purchase_additional_login==''||req.body?.purchase_additional_login==0||req.body?.purchase_additional_login=='0'?'':req.body?.purchase_additional_login,
+    vat_image:image?image:'',
+    purchase_additional_login:req.body?.purchase_additional_login==undefined||req.body?.purchase_additional_login==''||req.body?.purchase_additional_login==0||req.body?.purchase_additional_login=='0'?0:req.body?.purchase_additional_login,
     no_of_login_user:req.body?.no_of_login_user==undefined||req.body?.no_of_login_user==''||req.body?.no_of_login_user==0||req.body?.no_of_login_user=='0'?'':req.body?.no_of_login_user,
     price:req.body?.price==undefined||req.body?.price==''||req.body?.price==0||req.body?.price=='0'?'':req.body?.price,
   }  
   var data1 = Object.values(obj)
   data1.push(req.params.id)
-  var sql = "UPDATE user SET company_name=?, user_company_role=?, address=?, country=?, city=?, pin_zip=?, mobile_contact=?, office_contact=?, vat_detail=?, vat_date=?, vat_number=?, purchase_additional_login=?, no_of_login_user=?,vat_image=?,price=? where user_id=?"
+  var sql = "UPDATE user SET company_name=?, user_company_role=?, address=?, country=?, city=?, pin_zip=?, mobile_contact=?, office_contact=?, vat_detail=?, vat_date=?, vat_number=?,vat_image=?,purchase_additional_login=?, no_of_login_user=?,price=? where user_id=?"
   try {
     
     con.query(sql, data1, (err, res) => {

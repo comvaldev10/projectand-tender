@@ -8,10 +8,10 @@ var storage = multer.diskStorage({
   },
   filename: function (request, file, callback) {
     console.log(file);
-    callback(null, file.originalname)
+    callback(null, Date.now()+file.originalname)
   }
 });
-var upload = multer({storage: storage}).array('vat_images', 4);
+var upload = multer({storage: storage}).array('vat_image', 4);
 router.post('/register',register)
 router.put('/register2/:id',upload,register2)
 router.get('/register/:id',register3)
