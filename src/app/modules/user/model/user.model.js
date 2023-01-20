@@ -69,7 +69,46 @@
 //     compare_plan_description_id int null
 //   );
 
-
+// create table what_we_do(what_we_do_id int not null auto_increment primary key,
+//     what_we_do_heading varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     what_we_do_description text COLLATE utf8mb4_unicode_ci not null,
+//     what_we_do_button_name varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     what_we_do_button_link varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     image_heading text COLLATE utf8mb4_unicode_ci not null,
+//     what_we_do_image text COLLATE utf8mb4_unicode_ci not null,
+//     service_we_provide_heading varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     service_we_provide_sub_heading varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     service_we_provide_button_name varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     service_we_provide_button_link varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     third_section_heading1 text COLLATE utf8mb4_unicode_ci not null,
+//     third_section_alt_tag  text COLLATE utf8mb4_unicode_ci not null,
+//     insights_heading varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     insights_button_name varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     insights_button_link varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     insights_description text COLLATE utf8mb4_unicode_ci not null,
+//     lead_and_insights_projects varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     lead_and_insights_tenders varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     lead_and_insights_contractors varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     lead_and_insights_consultants varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     industries_we_serve_heading varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     industries_we_serve_descripion varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     sectors_we_serve_heading varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     sectors_we_serve_description text COLLATE utf8mb4_unicode_ci not null,
+//     sectors_we_serve_sector varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     latest_news_heading varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     latest_news_description text COLLATE utf8mb4_unicode_ci not null,
+//     partner_advertisement_heading text COLLATE utf8mb4_unicode_ci not null,
+//     partner_advertisement_description text COLLATE utf8mb4_unicode_ci not null,
+//     partner_advertisement_button_name text COLLATE utf8mb4_unicode_ci not null,
+//     partner_advertisement_button_link text COLLATE utf8mb4_unicode_ci not null,
+//     partner_advertisement_alt_tag text COLLATE utf8mb4_unicode_ci not null,
+//     partner_advertisement_start_date text COLLATE utf8mb4_unicode_ci not null,
+//     partner_advertisement_end_date text COLLATE utf8mb4_unicode_ci not null,
+//     partner_advertisement_image text COLLATE utf8mb4_unicode_ci not null,
+//     seo_title varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     seo_description text COLLATE utf8mb4_unicode_ci not null,
+//     seo_keyword varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     seo_slug varchar(255) COLLATE utf8mb4_unicode_ci not null);
 
 
 

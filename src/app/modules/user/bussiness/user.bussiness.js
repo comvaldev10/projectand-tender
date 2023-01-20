@@ -309,4 +309,17 @@ const user_plan_update = async (req, response) => {
     return err
   }
 }
-module.exports = { register, register2, register3, add_project, delete_project, add_tender, delete_tender, terms, get_projects,get_sub_projects,get_sub_sub_projects,get_tenders,get_sub_tenders,get_user,user_plan_update};
+
+
+const file_upload = async (req, response) => {
+  try {
+    if(req?.files)
+    {
+      response.json(req.files)
+  }
+}
+  catch (err) {
+    return err
+  }
+}
+module.exports = {file_upload,register, register2, register3, add_project, delete_project, add_tender, delete_tender, terms, get_projects,get_sub_projects,get_sub_sub_projects,get_tenders,get_sub_tenders,get_user,user_plan_update};

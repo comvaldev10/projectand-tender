@@ -1,6 +1,6 @@
 let express = require('express');
 let router = express.Router(),
-{register,user_plan_update,register2,register3,add_project,delete_project,add_tender,delete_tender,terms,get_projects,get_sub_projects,get_sub_sub_projects,get_tenders,get_sub_tenders,get_user} = require("../bussiness/user.bussiness");
+{file_upload,register,user_plan_update,register2,register3,add_project,delete_project,add_tender,delete_tender,terms,get_projects,get_sub_projects,get_sub_sub_projects,get_tenders,get_sub_tenders,get_user} = require("../bussiness/user.bussiness");
 const multer  = require('multer')
 var storage = multer.diskStorage({
   destination: function (request, file, callback) {
@@ -11,8 +11,9 @@ var storage = multer.diskStorage({
     callback(null, Date.now()+file.originalname)
   }
 });
-var upload = multer({storage: storage}).array('vat_image', 4);
+var upload = multer({storage: storage}).array('vat_image', 1000);
 router.post('/register',register)
+router.post('/file_upload',upload,file_upload)
 router.put('/register2/:id',upload,register2)
 router.get('/register/:id',register3)
 router.put('/add_project/:id',add_project)
