@@ -295,18 +295,16 @@ const get_sub_tender_by_id = async (req, response) => {
 }
 const what_we_do1 = async (req, response) => {
   try {
-    if (req.user.role_id == 2) {
+    
       var sql = "select * from what_we_do"
       con.query(sql, (err, res) => {
         if (err)
-          response.json(err);
+         return response.json(err);
         response.json(res);
       })
-    }
+    
 
-    else {
-      req.json("unauthorised user").status(401);
-    }
+   
   }
   catch (err) {
     return err

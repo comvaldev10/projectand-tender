@@ -18,5 +18,5 @@ router.post('/add_project',authenticate,add_project)
 router.post('/sub_add_project',authenticate,sub_add_project)
 router.post('/sub_sub_add_project',authenticate,sub_sub_add_project)
 router.post('/what_we_do',authenticate,what_we_do)
-router.get('/what_we_do',authenticate,what_we_do1)
+router.get('/what_we_do',what_we_do1)
 module.exports = router;
