@@ -316,8 +316,8 @@ const what_we_do = async (req, response) => {
         third_section_heading2: req?.body?.third_section_heading2 ? req?.body?.third_section_heading2 : '',
         third_section_heading3: req?.body?.third_section_heading3 ? req?.body?.third_section_heading3 : '',
         third_section_alt_tag: req?.body?.third_section_alt_tag ? req?.body?.third_section_alt_tag : '',
+        third_section_alt_tag1: req?.body?.third_section_alt_tag1 ? req?.body?.third_section_alt_tag1 : '',
         third_section_alt_tag2: req?.body?.third_section_alt_tag2 ? req?.body?.third_section_alt_tag2 : '',
-        third_section_alt_tag3: req?.body?.third_section_alt_tag3 ? req?.body?.third_section_alt_tag3 : '',
         insights_heading: req?.body?.insights_heading ? req?.body?.insights_heading : '',
         insights_button_name: req?.body?.insights_button_name ? req?.body?.insights_button_name : '',
         insights_button_link: req?.body?.insights_button_link ? req?.body?.insights_button_link : '',
@@ -341,7 +341,7 @@ const what_we_do = async (req, response) => {
       }
       var data1 = [Object.values(obj)]
       console.log(data1,"qq")
-      var sql = "insert into what_we_do(what_we_do_heading,what_we_do_description,what_we_do_button_name,what_we_do_button_link,what_we_do_heading1,what_we_do_heading2,what_we_do_heading3,what_we_do_heading4,what_we_do_heading5,what_we_do_heading6,service_we_provide_heading,service_we_provide_sub_heading,service_we_provide_button_name,service_we_provide_button_link,third_section_heading1,third_section_heading2,third_section_heading3,third_section_alt_tag,third_section_alt_tag2,third_section_alt_tag3,insights_heading,insights_button_name,insights_button_link,insights_description,lead_and_insights_projects,lead_and_insights_tenders,lead_and_insights_contractors,lead_and_insights_consultants,industries_we_serve_heading,industries_we_serve_descripion,sectors_we_serve_heading,sectors_we_serve_description,sectors_we_serve_sector,latest_news_heading,latest_news_description,blank,seo_title,seo_description,seo_keyword,seo_slug) values=?"
+      var sql = "insert into what_we_do(what_we_do_heading,what_we_do_description,what_we_do_button_name,what_we_do_button_link,what_we_do_heading1,what_we_do_heading2,what_we_do_heading3,what_we_do_heading4,what_we_do_heading5,what_we_do_heading6,service_we_provide_heading,service_we_provide_sub_heading,service_we_provide_button_name,service_we_provide_button_link,third_section_heading1,third_section_heading2,third_section_heading3,third_section_alt_tag,third_section_alt_tag1,third_section_alt_tag2,insights_heading,insights_button_name,insights_button_link,insights_description,lead_and_insights_projects,lead_and_insights_tenders,lead_and_insights_contractors,lead_and_insights_consultants,industries_we_serve_heading,industries_we_serve_descripion,sectors_we_serve_heading,sectors_we_serve_description,sectors_we_serve_sector,latest_news_heading,latest_news_description,blank,seo_title,seo_description,seo_keyword,seo_slug) values ?"
       con.query(sql, [data1], (err, res) => {
         if (err)
         {
