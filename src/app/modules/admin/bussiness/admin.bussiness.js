@@ -302,9 +302,6 @@ const what_we_do1 = async (req, response) => {
          return response.json(err);
         response.json(res);
       })
-    
-
-   
   }
   catch (err) {
     return err
