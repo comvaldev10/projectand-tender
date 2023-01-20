@@ -293,6 +293,25 @@ const get_sub_tender_by_id = async (req, response) => {
     return err
   }
 }
+const what_we_do1 = async (req, response) => {
+  try {
+    if (req.user.role_id == 2) {
+      var sql = "select * from what_we_do"
+      con.query(sql, (err, res) => {
+        if (err)
+          response.json(err);
+        response.json(res);
+      })
+    }
+
+    else {
+      req.json("unauthorised user").status(401);
+    }
+  }
+  catch (err) {
+    return err
+  }
+}
 const what_we_do = async (req, response) => {
   try {
     console.log(req.body, "a")
@@ -363,4 +382,4 @@ const what_we_do = async (req, response) => {
     return err
   }
 }
-module.exports = { login, what_we_do, get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id };
+module.exports = { login, what_we_do,what_we_do1, get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id };
