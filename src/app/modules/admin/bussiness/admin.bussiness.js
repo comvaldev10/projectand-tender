@@ -342,6 +342,7 @@ const what_we_do = async (req, response) => {
         industries_we_serve_heading: req?.body?.industries_we_serve_heading ? req?.body?.industries_we_serve_heading : '',
         industries_we_serve_descripion: req?.body?.industries_we_serve_descripion ? req?.body?.industries_we_serve_descripion : '',
         sectors_we_serve_heading: req?.body?.sectors_we_serve_heading ? req?.body?.sectors_we_serve_heading : '',
+        // sectors_we_serve_sub_heading: req?.body?.sectors_we_serve_sub_heading ? req?.body?.sectors_we_serve_sub_heading : '',
         sectors_we_serve_description: req?.body?.sectors_we_serve_description ? req?.body?.sectors_we_serve_description : '',
         sectors_we_serve_sector: req?.body?.sectors_we_serve_sector ? req?.body?.sectors_we_serve_sector : '',
         latest_news_heading: req?.body?.latest_news_heading ? req?.body?.sectors_we_serve_sector : '',
@@ -375,7 +376,6 @@ const what_we_do = async (req, response) => {
         }
         else
         {
-          console.log("sssqq1233")
         response.json(res);
         }
       })
@@ -447,9 +447,10 @@ const what_we_do2 = async (req, response) => {
         third_section_description2:req?.body?.third_section_description2? req?.body?.third_section_description2: '',
         third_section_description3:req?.body?.third_section_description3? req?.body?.third_section_description3 : '',
       }
-      var data1 = [Object.values(obj)]
+      var data1 = Object.values(obj)
       data1.push(req.params.id)
-      var sql = "update what_we_do SET what_we_do_heading?,what_we_do_description?,what_we_do_button_name?,what_we_do_button_link?,what_we_do_heading1?,what_we_do_heading2?,what_we_do_heading3?,what_we_do_heading4?,what_we_do_heading5?,what_we_do_heading6?,service_we_provide_heading?,service_we_provide_sub_heading?,service_we_provide_button_name?,service_we_provide_button_link?,third_section_heading1?,third_section_heading2?,third_section_heading3?,third_section_alt_tag?,third_section_alt_tag1?,third_section_alt_tag2?,insights_heading?,insights_button_name?,insights_button_link?,insights_description?,lead_and_insights_projects?,lead_and_insights_tenders?,lead_and_insights_contractors?,lead_and_insights_consultants?,industries_we_serve_heading?,industries_we_serve_descripion?,sectors_we_serve_heading,sectors_we_serve_description?,sectors_we_serve_sector?,latest_news_heading?,latest_news_description?,blank?,seo_title?,seo_description?,seo_keyword?,seo_slug? where what_we_do_id"
+      console.log(data1,"ss")
+      var sql = "update what_we_do SET what_we_do_heading=? , what_we_do_description=? , what_we_do_button_name=? , what_we_do_button_link=?  ,what_we_do_heading1=? , what_we_do_heading2=? , what_we_do_heading3=? , what_we_do_heading4=? , what_we_do_heading5=? , what_we_do_heading6=? , service_we_provide_heading=? , service_we_provide_sub_heading=? , service_we_provide_button_name=? , service_we_provide_button_link=? , third_section_heading1=? , third_section_heading2=? , third_section_heading3=? , third_section_alt_tag=? , third_section_alt_tag1=? , third_section_alt_tag2=? , insights_heading=? , insights_button_name=? , insights_button_link=? , insights_description=? , lead_and_insights_projects=? , lead_and_insights_tenders=? , lead_and_insights_contractors=? , lead_and_insights_consultants=? , industries_we_serve_heading=? , industries_we_serve_descripion=? , sectors_we_serve_heading=? , sectors_we_serve_description=? , sectors_we_serve_sector=? , latest_news_heading=? , latest_news_description=? , blank=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , what_we_do_image1=? , what_we_do_image2=?, what_we_do_image3=?, what_we_do_image4=?, what_we_do_image5=?, what_we_do_image6=? , third_section_image1=? , third_section_image2=? , third_section_image3=? , third_section_description1=? , third_section_description2=? , third_section_description3=? where what_we_do_id=?"
       con.query(sql, data1, (err, res) => {
         if (err)
          return response.json(err);
