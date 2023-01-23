@@ -355,8 +355,7 @@ const what_we_do = async (req, response) => {
         industries_we_serve_heading: req?.body?.industries_we_serve_heading ? req?.body?.industries_we_serve_heading : '',
         industries_we_serve_descripion: req?.body?.industries_we_serve_descripion ? req?.body?.industries_we_serve_descripion : '',
         sectors_we_serve_heading: req?.body?.sectors_we_serve_heading ? req?.body?.sectors_we_serve_heading : '',
-        // sectors_we_serve_sub_heading: req?.body?.sectors_we_serve_sub_heading ? req?.body?.sectors_we_serve_sub_heading : '',
-        sectors_we_serve_description: req?.body?.sectors_we_serve_description ? req?.body?.sectors_we_serve_description : '',
+       sectors_we_serve_description: req?.body?.sectors_we_serve_description ? req?.body?.sectors_we_serve_description : '',
         sectors_we_serve_sector: req?.body?.sectors_we_serve_sector ? req?.body?.sectors_we_serve_sector : '',
         latest_news_heading: req?.body?.latest_news_heading ? req?.body?.latest_news_heading : '',
         latest_news_description: req?.body?.latest_news_description ? req?.body?.latest_news_description : '',
@@ -481,17 +480,17 @@ const what_we_do2 = async (req, response) => {
 }
 const add_sub_admin = async (req, response) => {//get all user
   if (req.user.role_id == 2) {
-    // var sql = "select * from user"
-    // try {
-    //   con.query(sql, (err, res) => {
-    //     if (err)
-    //       response.json(err);
-    //     response.json(res);
-    //   })
-    // }
-    // catch (err) {
-    //   return err
-    // }
+    var sql = "select * from user"
+    try {
+      con.query(sql, (err, res) => {
+        if (err)
+          response.json(err);
+        response.json(res);
+      })
+    }
+    catch (err) {
+      return err
+    }
   }
   else {
     req.send("unauthorised user").status(200);
