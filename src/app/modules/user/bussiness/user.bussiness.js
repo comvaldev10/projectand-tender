@@ -1,7 +1,6 @@
 var con = require('../../../db/mysql')
 var fs = require('fs');
 const register = async (req, response) => {
-  console.log(req.body,req.body.email,"ss")
   var emailcheck = `select * from user where user.email='${req.body.email}'`
   try {
     con.query(emailcheck, (err, res) => {
@@ -28,7 +27,6 @@ const register = async (req, response) => {
   }
 }
 const register2 = async (req, response) => {
-  console.log(req.files,req.body,"aa")
   var image=[]
   req.files.forEach((a)=>{
     image.push(a.filename)
@@ -89,7 +87,6 @@ req.body.forEach(element => {
       response.json(err);
       if(!res[0]?.sector_id)
       {
-        console.log(res,"aa")
     var data2 = Object.values(element)
   data2.unshift(req.params.id)
   var data3 = [data2]
@@ -97,8 +94,7 @@ req.body.forEach(element => {
     con.query(sql, [data3], (err, res1) => {
       if (err)
         response.json(err);
-        console.log(res1)
-    })
+          })
     }
     else
     {
@@ -106,7 +102,6 @@ req.body.forEach(element => {
         con.query(sql2, (err, res2) => {
           if (err)
             response.json(err);
-            console.log(res2)
         })
       }      
   })
@@ -146,7 +141,6 @@ req.body.forEach(element => {
       response.json(err);
       if(!res[0]?.tender_id)
       {
-        console.log(res,"aa")
     var data2 = Object.values(element)
   data2.unshift(req.params.id)
   var data3 = [data2]
@@ -154,7 +148,6 @@ req.body.forEach(element => {
     con.query(sql, [data3], (err, res1) => {
       if (err)
         response.json(err);
-        console.log(res1)
     })
     }
     else
@@ -163,7 +156,6 @@ req.body.forEach(element => {
         con.query(sql2, (err, res2) => {
           if (err)
             response.json(err);
-            console.log(res2)
         })
       }      
   })
@@ -233,7 +225,6 @@ const get_sub_projects = async (req, response) => {
   }
 }
 const get_sub_sub_projects = async (req, response) => {
-  console.log("aa")
   var sql = "select sub_sub_project_sector_schema.sub_sub_project_id,sub_sub_project_sector_schema.sub_sub_project_sector,sub_project_sector_schema.sub_project_id,sub_project_sector_schema.sub_project_sector,project_sector_schema.project_id,project_sector_schema.project_sector from sub_sub_project_sector_schema inner join sub_project_sector_schema on sub_sub_project_sector_schema.sub_sector_id=sub_project_sector_schema.sub_project_id inner join project_sector_schema on project_sector_schema.project_id=sub_project_sector_schema.sector_id"
   try {
     con.query(sql, (err, res) => {
@@ -330,7 +321,6 @@ const file_delete= async (req, response) => {
     if(req?.body?.file_delete)
     {
       fs.stat('uploads/'+req.body.file_delete,function (err, stats) {
-        console.log(stats);
         if (err) {
             return response.json(err);
         }

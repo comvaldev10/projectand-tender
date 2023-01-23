@@ -6,12 +6,10 @@ var generate_token = (id) => {
 }
 const login = async (req, response) => {
   var sql = `Select * from user where email='${req.body.email}' AND password='${req.body.password}'`
-  console.log(sql, "aa")
   try {
     con.query(sql, (err, res) => {
       if (err)
         response.json(err);
-      console.log(res)
       if (res[0]?.user_id) {
         response.json(generate_token(res[0]?.user_id))
       }
@@ -25,80 +23,78 @@ const login = async (req, response) => {
   }
 }
 const get_user = async (req, response) => {//get all user
-  if (req.user.role_id == 2) {
+  try {
     var sql = "select * from user"
-    try {
+    if (req.user.role_id == 2) {
       con.query(sql, (err, res) => {
         if (err)
           response.json(err);
         response.json(res);
       })
     }
-    catch (err) {
-      return err
+    else {
+      req.send("unauthorised user").status(200);
     }
   }
-  else {
-    req.send("unauthorised user").status(200);
+  catch (err) {
+    return err
   }
 }
 const get_user_by_id = async (req, response) => {//get particular user
-  if (req.user.role_id == 2) {
-    var sql = "select * from user where user_id=" + req.params.id
-    try {
+  try {
+    if (req.user.role_id == 2) {
+      var sql = "select * from user where user_id=" + req.params.id
       con.query(sql, (err, res) => {
         if (err)
           response.json(err);
         response.json(res);
       })
     }
-    catch (err) {
-      return err
+    else {
+      req.send("unauthorised user").status(401);
     }
   }
-  else {
-    req.send("unauthorised user").status(401);
+  catch (err) {
+    return err
   }
 }
 const complete_user = async (req, response) => {
-  if (req?.user?.role_id == 2) {
-    var sql = `select * from user inner join sector_of_user_schema on sector_of_user_schema.user_id=user.user_id where user.subscribed=1`
-    try {
+  try {
+    if (req?.user?.role_id == 2) {
+      var sql = `select * from user inner join sector_of_user_schema on sector_of_user_schema.user_id=user.user_id where user.subscribed=1`
       con.query(sql, (err, res) => {
         if (err)
           response.json(err);
         response.json(res);
       })
     }
-    catch (err) {
-      return err
+
+    else {
+      response.json("unauthorised user").status(401);
     }
   }
-  else {
-    console.log("aaa");
-    response.json("unauthorised user").status(401);
+  catch (err) {
+    return err
   }
 }
 const pending_user = async (req, response) => {
-  console.log(req.user, "aaa")
-  if (req.user.role_id == 2) {
-    var sql = `select * from user where user.subscribed=0`
     try {
+      if (req.user.role_id == 2) {
+        var sql = `select * from user where user.subscribed=0`
       con.query(sql, (err, res) => {
         if (err)
           response.json(err);
         response.json(res);
       })
-    }
+      }   
+  else {
+    req.json("unauthorised user").status(401);
+  }
+}
     catch (err) {
       return err
     }
   }
-  else {
-    console.log("aaa");
-    req.json("unauthorised user").status(401);
-  }
-}
 const add_project = async (req, response) => {
   try {
     if (req.user.role_id == 2) {
@@ -110,7 +106,6 @@ const add_project = async (req, response) => {
         response.json(res);
       })
     }
-
     else {
       req.json("unauthorised user").status(401);
     }
@@ -130,7 +125,6 @@ const sub_add_project = async (req, response) => {
         response.json(res);
       })
     }
-
     else {
       req.json("unauthorised user").status(401);
     }
@@ -150,7 +144,6 @@ const sub_sub_add_project = async (req, response) => {
         response.json(res);
       })
     }
-
     else {
       req.json("unauthorised user").status(401);
     }
@@ -159,7 +152,6 @@ const sub_sub_add_project = async (req, response) => {
     return err
   }
 }
-
 const get_project = async (req, response) => {
   try {
     if (req.user.role_id == 2) {
@@ -170,7 +162,6 @@ const get_project = async (req, response) => {
         response.json(res);
       })
     }
-
     else {
       req.json("unauthorised user").status(401);
     }
@@ -189,7 +180,6 @@ const get_project_by_id = async (req, response) => {
         response.json(res);
       })
     }
-
     else {
       req.json("unauthorised user").status(401);
     }
@@ -208,7 +198,6 @@ const get_sub_project_by_id = async (req, response) => {
         response.json(res);
       })
     }
-
     else {
       req.json("unauthorised user").status(401);
     }
@@ -227,7 +216,6 @@ const get_sub_sub_project_by_id = async (req, response) => {
         response.json(res);
       })
     }
-
     else {
       req.json("unauthorised user").status(401);
     }
@@ -246,7 +234,6 @@ const get_tender = async (req, response) => {
         response.json(res);
       })
     }
-
     else {
       req.json("unauthorised user").status(401);
     }
@@ -265,7 +252,6 @@ const get_tender_by_id = async (req, response) => {
         response.json(res);
       })
     }
-
     else {
       req.json("unauthorised user").status(401);
     }
@@ -284,7 +270,6 @@ const get_sub_tender_by_id = async (req, response) => {
         response.json(res);
       })
     }
-
     else {
       req.json("unauthorised user").status(401);
     }
@@ -295,12 +280,12 @@ const get_sub_tender_by_id = async (req, response) => {
 }
 const what_we_do1 = async (req, response) => {
   try {
-      var sql = "select * from what_we_do"
-      con.query(sql, (err, res) => {
-        if (err)
-         return response.json(err);
-        response.json(res);
-      })
+    var sql = "select * from what_we_do"
+    con.query(sql, (err, res) => {
+      if (err)
+        return response.json(err);
+      response.json(res);
+    })
   }
   catch (err) {
     return err
@@ -308,12 +293,12 @@ const what_we_do1 = async (req, response) => {
 }
 const what_we_do3 = async (req, response) => {
   try {
-      var sql = "select * from what_we_do where what_we_do_id="+req.params.id
-      con.query(sql, (err, res) => {
-        if (err)
-         return response.json(err);
-        response.json(res);
-      })
+    var sql = "select * from what_we_do where what_we_do_id=" + req.params.id
+    con.query(sql, (err, res) => {
+      if (err)
+        return response.json(err);
+      response.json(res);
+    })
   }
   catch (err) {
     return err
@@ -321,89 +306,6 @@ const what_we_do3 = async (req, response) => {
 }
 const what_we_do = async (req, response) => {
   try {
-    console.log(req.body, "a")
-    if (req.user.role_id == 2) {
-      let obj = {
-        what_we_do_heading: req?.body?.what_we_do_heading ? req?.body?.what_we_do_heading : '',
-        what_we_do_description: req?.body?.what_we_do_description ? req?.body?.what_we_do_description : '',
-        what_we_do_button_name: req?.body?.what_we_do_button_name ? req?.body?.what_we_do_button_name : '',
-        what_we_do_button_link: req?.body?.what_we_do_button_link ? req?.body?.what_we_do_button_link : '',
-        what_we_do_heading1: req?.body?.what_we_do_heading1 ? req?.body?.what_we_do_heading1 : '',
-        what_we_do_heading2: req?.body?.what_we_do_heading2 ? req?.body?.what_we_do_heading2 : '',
-        what_we_do_heading3: req?.body?.what_we_do_heading3 ? req?.body?.what_we_do_heading3 : '',
-        what_we_do_heading4: req?.body?.what_we_do_heading4 ? req?.body?.what_we_do_heading4 : '',
-        what_we_do_heading5: req?.body?.what_we_do_heading5 ? req?.body?.what_we_do_heading5 : '',
-        what_we_do_heading6: req?.body?.what_we_do_heading6 ? req?.body?.what_we_do_heading6 : '',
-        service_we_provide_heading: req?.body?.service_we_provide_heading ? req?.body?.service_we_provide_heading : '',
-        service_we_provide_sub_heading: req?.body?.service_we_provide_sub_heading ? req?.body?.service_we_provide_sub_heading : '',
-        service_we_provide_button_name: req?.body?.service_we_provide_button_name ? req?.body?.service_we_provide_button_name : '',
-        service_we_provide_button_link: req?.body?.service_we_provide_button_link ? req?.body?.service_we_provide_button_link : '',
-        third_section_heading1: req?.body?.third_section_heading1 ? req?.body?.third_section_heading1 : '',
-        third_section_heading2: req?.body?.third_section_heading2 ? req?.body?.third_section_heading2 : '',
-        third_section_heading3: req?.body?.third_section_heading3 ? req?.body?.third_section_heading3 : '',
-        third_section_alt_tag: req?.body?.third_section_alt_tag ? req?.body?.third_section_alt_tag : '',
-        third_section_alt_tag1: req?.body?.third_section_alt_tag1 ? req?.body?.third_section_alt_tag1 : '',
-        third_section_alt_tag2: req?.body?.third_section_alt_tag2 ? req?.body?.third_section_alt_tag2 : '',
-        insights_heading: req?.body?.insights_heading ? req?.body?.insights_heading : '',
-        insights_button_name: req?.body?.insights_button_name ? req?.body?.insights_button_name : '',
-        insights_button_link: req?.body?.insights_button_link ? req?.body?.insights_button_link : '',
-        insights_description: req?.body?.insights_description ? req?.body?.insights_description : '',
-        lead_and_insights_projects: req?.body?.lead_and_insights_projects ? req?.body?.lead_and_insights_projects : '',
-        lead_and_insights_tenders: req?.body?.lead_and_insights_tenders ? req?.body?.lead_and_insights_tenders : '',
-        lead_and_insights_contractors: req?.body?.lead_and_insights_contractors ? req?.body?.lead_and_insights_contractors : '',
-        lead_and_insights_consultants: req?.body?.lead_and_insights_consultants ? req?.body?.lead_and_insights_consultants : '',
-        industries_we_serve_heading: req?.body?.industries_we_serve_heading ? req?.body?.industries_we_serve_heading : '',
-        industries_we_serve_descripion: req?.body?.industries_we_serve_descripion ? req?.body?.industries_we_serve_descripion : '',
-        sectors_we_serve_heading: req?.body?.sectors_we_serve_heading ? req?.body?.sectors_we_serve_heading : '',
-       sectors_we_serve_description: req?.body?.sectors_we_serve_description ? req?.body?.sectors_we_serve_description : '',
-        sectors_we_serve_sector: req?.body?.sectors_we_serve_sector ? req?.body?.sectors_we_serve_sector : '',
-        latest_news_heading: req?.body?.latest_news_heading ? req?.body?.latest_news_heading : '',
-        latest_news_description: req?.body?.latest_news_description ? req?.body?.latest_news_description : '',
-        blank: req?.body?.blank ? req?.body?.blank : '',
-        seo_title: req?.body?.seo_title ? req?.body?.seo_title : '',
-        seo_description: req?.body?.seo_description ? req?.body?.seo_description : '',
-        seo_keyword: req?.body?.seo_keyword ? req?.body?.seo_keyword : '',
-        seo_slug: req?.body?.seo_slug ? req?.body?.seo_slug : '',
-        what_we_do_image1:req?.body?.what_we_do_image1 ? req?.body?.what_we_do_image1 : '',
-        what_we_do_image2:req?.body?.what_we_do_image2 ? req?.body?.what_we_do_image2 : '',
-        what_we_do_image3:req?.body?.what_we_do_image3 ? req?.body?.what_we_do_image3 : '',
-        what_we_do_image4:req?.body?.what_we_do_image4 ? req?.body?.what_we_do_image4 : '',
-        what_we_do_image5:req?.body?.what_we_do_image5 ? req?.body?.what_we_do_image5 : '',
-        what_we_do_image6:req?.body?.what_we_do_image6 ? req?.body?.what_we_do_image6 : '',
-        third_section_image1:req?.body?.third_section_image1 ? req?.body?.third_section_image1 : '',
-        third_section_image2:req?.body?.third_section_image2 ? req?.body?.third_section_image2 : '',
-        third_section_image3:req?.body?.third_section_image3 ? req?.body?.third_section_image3 : '',
-        third_section_description1:req?.body?.third_section_description1? req?.body?.third_section_description1 : '',
-        third_section_description2:req?.body?.third_section_description2? req?.body?.third_section_description2: '',
-        third_section_description3:req?.body?.third_section_description3? req?.body?.third_section_description3 : '',
-      }
-      var data1 = [Object.values(obj)]
-      console.log(data1,"qq")
-      var sql = "insert into what_we_do(what_we_do_heading,what_we_do_description,what_we_do_button_name,what_we_do_button_link,what_we_do_heading1,what_we_do_heading2,what_we_do_heading3,what_we_do_heading4,what_we_do_heading5,what_we_do_heading6,service_we_provide_heading,service_we_provide_sub_heading,service_we_provide_button_name,service_we_provide_button_link,third_section_heading1,third_section_heading2,third_section_heading3,third_section_alt_tag,third_section_alt_tag1,third_section_alt_tag2,insights_heading,insights_button_name,insights_button_link,insights_description,lead_and_insights_projects,lead_and_insights_tenders,lead_and_insights_contractors,lead_and_insights_consultants,industries_we_serve_heading,industries_we_serve_descripion,sectors_we_serve_heading,sectors_we_serve_description,sectors_we_serve_sector,latest_news_heading,latest_news_description,blank,seo_title,seo_description,seo_keyword,seo_slug, what_we_do_image1, what_we_do_image2, what_we_do_image3, what_we_do_image4, what_we_do_image5, what_we_do_image6,third_section_image1,third_section_image2,third_section_image3,third_section_description1,third_section_description2,third_section_description3) values ?"
-      con.query(sql, [data1], (err, res) => {
-        if (err)
-        {
-          console.log("sssqq")
-         return response.json(err);
-        }
-        else
-        {
-        response.json(res);
-        }
-      })
-    }
-    else {
-      req.json("unauthorised user").status(401);
-    }
-  }
-  catch (err) {
-    return err
-  }
-}
-
-const what_we_do2 = async (req, response) => {
-  try {
-    console.log(req.body.latest_news_description, req.body.latest_news_heading,"a")
     if (req.user.role_id == 2) {
       let obj = {
         what_we_do_heading: req?.body?.what_we_do_heading ? req?.body?.what_we_do_heading : '',
@@ -446,27 +348,103 @@ const what_we_do2 = async (req, response) => {
         seo_description: req?.body?.seo_description ? req?.body?.seo_description : '',
         seo_keyword: req?.body?.seo_keyword ? req?.body?.seo_keyword : '',
         seo_slug: req?.body?.seo_slug ? req?.body?.seo_slug : '',
-        what_we_do_image1:req?.body?.what_we_do_image1 ? req?.body?.what_we_do_image1 : '',
-        what_we_do_image2:req?.body?.what_we_do_image2 ? req?.body?.what_we_do_image2 : '',
-        what_we_do_image3:req?.body?.what_we_do_image3 ? req?.body?.what_we_do_image3 : '',
-        what_we_do_image4:req?.body?.what_we_do_image4 ? req?.body?.what_we_do_image4 : '',
-        what_we_do_image5:req?.body?.what_we_do_image5 ? req?.body?.what_we_do_image5 : '',
-        what_we_do_image6:req?.body?.what_we_do_image6 ? req?.body?.what_we_do_image6 : '',
-        third_section_image1:req?.body?.third_section_image1 ? req?.body?.third_section_image1 : '',
-        third_section_image2:req?.body?.third_section_image2 ? req?.body?.third_section_image2 : '',
-        third_section_image3:req?.body?.third_section_image3 ? req?.body?.third_section_image3 : '',
-        third_section_description1:req?.body?.third_section_description1? req?.body?.third_section_description1 : '',
-        third_section_description2:req?.body?.third_section_description2? req?.body?.third_section_description2: '',
-        third_section_description3:req?.body?.third_section_description3? req?.body?.third_section_description3 : '',
+        what_we_do_image1: req?.body?.what_we_do_image1 ? req?.body?.what_we_do_image1 : '',
+        what_we_do_image2: req?.body?.what_we_do_image2 ? req?.body?.what_we_do_image2 : '',
+        what_we_do_image3: req?.body?.what_we_do_image3 ? req?.body?.what_we_do_image3 : '',
+        what_we_do_image4: req?.body?.what_we_do_image4 ? req?.body?.what_we_do_image4 : '',
+        what_we_do_image5: req?.body?.what_we_do_image5 ? req?.body?.what_we_do_image5 : '',
+        what_we_do_image6: req?.body?.what_we_do_image6 ? req?.body?.what_we_do_image6 : '',
+        third_section_image1: req?.body?.third_section_image1 ? req?.body?.third_section_image1 : '',
+        third_section_image2: req?.body?.third_section_image2 ? req?.body?.third_section_image2 : '',
+        third_section_image3: req?.body?.third_section_image3 ? req?.body?.third_section_image3 : '',
+        third_section_description1: req?.body?.third_section_description1 ? req?.body?.third_section_description1 : '',
+        third_section_description2: req?.body?.third_section_description2 ? req?.body?.third_section_description2 : '',
+        third_section_description3: req?.body?.third_section_description3 ? req?.body?.third_section_description3 : '',
+      }
+      var data1 = [Object.values(obj)]
+      var sql = "insert into what_we_do(what_we_do_heading,what_we_do_description,what_we_do_button_name,what_we_do_button_link,what_we_do_heading1,what_we_do_heading2,what_we_do_heading3,what_we_do_heading4,what_we_do_heading5,what_we_do_heading6,service_we_provide_heading,service_we_provide_sub_heading,service_we_provide_button_name,service_we_provide_button_link,third_section_heading1,third_section_heading2,third_section_heading3,third_section_alt_tag,third_section_alt_tag1,third_section_alt_tag2,insights_heading,insights_button_name,insights_button_link,insights_description,lead_and_insights_projects,lead_and_insights_tenders,lead_and_insights_contractors,lead_and_insights_consultants,industries_we_serve_heading,industries_we_serve_descripion,sectors_we_serve_heading,sectors_we_serve_description,sectors_we_serve_sector,latest_news_heading,latest_news_description,blank,seo_title,seo_description,seo_keyword,seo_slug, what_we_do_image1, what_we_do_image2, what_we_do_image3, what_we_do_image4, what_we_do_image5, what_we_do_image6,third_section_image1,third_section_image2,third_section_image3,third_section_description1,third_section_description2,third_section_description3) values ?"
+      con.query(sql, [data1], (err, res) => {
+        if (err) {
+          return response.json(err);
+        }
+        else {
+          response.json(res);
+        }
+      })
+    }
+    else {
+      req.json("unauthorised user").status(401);
+    }
+  }
+  catch (err) {
+    return err
+  }
+}
+const what_we_do2 = async (req, response) => {
+  try {
+    if (req.user.role_id == 2) {
+      let obj = {
+        what_we_do_heading: req?.body?.what_we_do_heading ? req?.body?.what_we_do_heading : '',
+        what_we_do_description: req?.body?.what_we_do_description ? req?.body?.what_we_do_description : '',
+        what_we_do_button_name: req?.body?.what_we_do_button_name ? req?.body?.what_we_do_button_name : '',
+        what_we_do_button_link: req?.body?.what_we_do_button_link ? req?.body?.what_we_do_button_link : '',
+        what_we_do_heading1: req?.body?.what_we_do_heading1 ? req?.body?.what_we_do_heading1 : '',
+        what_we_do_heading2: req?.body?.what_we_do_heading2 ? req?.body?.what_we_do_heading2 : '',
+        what_we_do_heading3: req?.body?.what_we_do_heading3 ? req?.body?.what_we_do_heading3 : '',
+        what_we_do_heading4: req?.body?.what_we_do_heading4 ? req?.body?.what_we_do_heading4 : '',
+        what_we_do_heading5: req?.body?.what_we_do_heading5 ? req?.body?.what_we_do_heading5 : '',
+        what_we_do_heading6: req?.body?.what_we_do_heading6 ? req?.body?.what_we_do_heading6 : '',
+        service_we_provide_heading: req?.body?.service_we_provide_heading ? req?.body?.service_we_provide_heading : '',
+        service_we_provide_sub_heading: req?.body?.service_we_provide_sub_heading ? req?.body?.service_we_provide_sub_heading : '',
+        service_we_provide_button_name: req?.body?.service_we_provide_button_name ? req?.body?.service_we_provide_button_name : '',
+        service_we_provide_button_link: req?.body?.service_we_provide_button_link ? req?.body?.service_we_provide_button_link : '',
+        third_section_heading1: req?.body?.third_section_heading1 ? req?.body?.third_section_heading1 : '',
+        third_section_heading2: req?.body?.third_section_heading2 ? req?.body?.third_section_heading2 : '',
+        third_section_heading3: req?.body?.third_section_heading3 ? req?.body?.third_section_heading3 : '',
+        third_section_alt_tag: req?.body?.third_section_alt_tag ? req?.body?.third_section_alt_tag : '',
+        third_section_alt_tag1: req?.body?.third_section_alt_tag1 ? req?.body?.third_section_alt_tag1 : '',
+        third_section_alt_tag2: req?.body?.third_section_alt_tag2 ? req?.body?.third_section_alt_tag2 : '',
+        insights_heading: req?.body?.insights_heading ? req?.body?.insights_heading : '',
+        insights_button_name: req?.body?.insights_button_name ? req?.body?.insights_button_name : '',
+        insights_button_link: req?.body?.insights_button_link ? req?.body?.insights_button_link : '',
+        insights_description: req?.body?.insights_description ? req?.body?.insights_description : '',
+        lead_and_insights_projects: req?.body?.lead_and_insights_projects ? req?.body?.lead_and_insights_projects : '',
+        lead_and_insights_tenders: req?.body?.lead_and_insights_tenders ? req?.body?.lead_and_insights_tenders : '',
+        lead_and_insights_contractors: req?.body?.lead_and_insights_contractors ? req?.body?.lead_and_insights_contractors : '',
+        lead_and_insights_consultants: req?.body?.lead_and_insights_consultants ? req?.body?.lead_and_insights_consultants : '',
+        industries_we_serve_heading: req?.body?.industries_we_serve_heading ? req?.body?.industries_we_serve_heading : '',
+        industries_we_serve_descripion: req?.body?.industries_we_serve_descripion ? req?.body?.industries_we_serve_descripion : '',
+        sectors_we_serve_heading: req?.body?.sectors_we_serve_heading ? req?.body?.sectors_we_serve_heading : '',
+        sectors_we_serve_description: req?.body?.sectors_we_serve_description ? req?.body?.sectors_we_serve_description : '',
+        sectors_we_serve_sector: req?.body?.sectors_we_serve_sector ? req?.body?.sectors_we_serve_sector : '',
+        latest_news_heading: req?.body?.latest_news_heading ? req?.body?.latest_news_heading : '',
+        latest_news_description: req?.body?.latest_news_description ? req?.body?.latest_news_description : '',
+        blank: req?.body?.blank ? req?.body?.blank : '',
+        seo_title: req?.body?.seo_title ? req?.body?.seo_title : '',
+        seo_description: req?.body?.seo_description ? req?.body?.seo_description : '',
+        seo_keyword: req?.body?.seo_keyword ? req?.body?.seo_keyword : '',
+        seo_slug: req?.body?.seo_slug ? req?.body?.seo_slug : '',
+        what_we_do_image1: req?.body?.what_we_do_image1 ? req?.body?.what_we_do_image1 : '',
+        what_we_do_image2: req?.body?.what_we_do_image2 ? req?.body?.what_we_do_image2 : '',
+        what_we_do_image3: req?.body?.what_we_do_image3 ? req?.body?.what_we_do_image3 : '',
+        what_we_do_image4: req?.body?.what_we_do_image4 ? req?.body?.what_we_do_image4 : '',
+        what_we_do_image5: req?.body?.what_we_do_image5 ? req?.body?.what_we_do_image5 : '',
+        what_we_do_image6: req?.body?.what_we_do_image6 ? req?.body?.what_we_do_image6 : '',
+        third_section_image1: req?.body?.third_section_image1 ? req?.body?.third_section_image1 : '',
+        third_section_image2: req?.body?.third_section_image2 ? req?.body?.third_section_image2 : '',
+        third_section_image3: req?.body?.third_section_image3 ? req?.body?.third_section_image3 : '',
+        third_section_description1: req?.body?.third_section_description1 ? req?.body?.third_section_description1 : '',
+        third_section_description2: req?.body?.third_section_description2 ? req?.body?.third_section_description2 : '',
+        third_section_description3: req?.body?.third_section_description3 ? req?.body?.third_section_description3 : '',
       }
       var data1 = Object.values(obj)
       data1.push(req.params.id)
       var sql = "update what_we_do SET what_we_do_heading=? , what_we_do_description=? , what_we_do_button_name=? , what_we_do_button_link=?  ,what_we_do_heading1=? , what_we_do_heading2=? , what_we_do_heading3=? , what_we_do_heading4=? , what_we_do_heading5=? , what_we_do_heading6=? , service_we_provide_heading=? , service_we_provide_sub_heading=? , service_we_provide_button_name=? , service_we_provide_button_link=? , third_section_heading1=? , third_section_heading2=? , third_section_heading3=? , third_section_alt_tag=? , third_section_alt_tag1=? , third_section_alt_tag2=? , insights_heading=? , insights_button_name=? , insights_button_link=? , insights_description=? , lead_and_insights_projects=? , lead_and_insights_tenders=? , lead_and_insights_contractors=? , lead_and_insights_consultants=? , industries_we_serve_heading=? , industries_we_serve_descripion=? , sectors_we_serve_heading=? , sectors_we_serve_description=? , sectors_we_serve_sector=? , latest_news_heading=? , latest_news_description=? , blank=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , what_we_do_image1=? , what_we_do_image2=?, what_we_do_image3=?, what_we_do_image4=?, what_we_do_image5=?, what_we_do_image6=? , third_section_image1=? , third_section_image2=? , third_section_image3=? , third_section_description1=? , third_section_description2=? , third_section_description3=? where what_we_do_id=?"
       con.query(sql, data1, (err, res) => {
         if (err)
-         return response.json(err);
-         response.json({status:'success',data:res})
-        
+          return response.json(err);
+        response.json({ status: 'success', data: res })
+
       })
     }
     else {
@@ -495,29 +473,29 @@ const add_sub_admin = async (req, response) => {//get all user
     req.send("unauthorised user").status(200);
   }
 }
-const add_tender = async (req, response) =>{
-  if (req.user.role_id == 2) { 
+const add_tender = async (req, response) => {
+  if (req.user.role_id == 2) {
     try {
-    if (req.user.role_id == 2) {
-      var sql = "INSERT INTO tender_schema(tender) VALUES ?"
-      var data1 = [Object.values(req.body)]
-      con.query(sql, [data1], (err, res) => {
-        if (err)
-          response.json(err);
-        response.json(res);
-      })
+      if (req.user.role_id == 2) {
+        var sql = "INSERT INTO tender_schema(tender) VALUES ?"
+        var data1 = [Object.values(req.body)]
+        con.query(sql, [data1], (err, res) => {
+          if (err)
+            response.json(err);
+          response.json(res);
+        })
+      }
+      else {
+        req.json("unauthorised user").status(401);
+      }
     }
-    else {
-      req.json("unauthorised user").status(401);
+    catch (err) {
+      return err
     }
   }
-  catch (err) {
-    return err
-  }
 }
-}
-const add_sub_tender = async (req, response) =>{
-    try {
+const add_sub_tender = async (req, response) => {
+  try {
     if (req.user.role_id == 2) {
       var sql = "INSERT INTO sub_tender_schema(sub_tender,tender_id) VALUES ?"
       var data1 = [Object.values(req.body)]
@@ -535,44 +513,43 @@ const add_sub_tender = async (req, response) =>{
     return err
   }
 }
-
-const edit_project_sector= async (req, response) =>{
-    try {
+const edit_project_sector = async (req, response) => {
+  try {
     if (req.user.role_id == 2) {
-      let obj={
-        sector_name:req?.body?.sector_name?req?.body?.sector_name:" " ,
-        alt_tag:req?.body?.alt_tag?req?.body?.alt_tag:" ",
-        listing_page_description:req?.body?.listing_page_description?req?.body?.listing_page_description:" " ,
-        listing_page_image:req?.body?.listing_page_image?req?.body?.listing_page_image:" " ,
-        banner_heading:req?.body?.banner_heading?req?.body?.banner_heading:" ",
-        banner_sub_heading:req?.body?.banner_sub_heading?req?.body?.banner_sub_heading:" ",
-        section_heading:req?.body?.section_heading?req?.body?.section_heading:" ",
-        short_description:req?.body?.short_description?req?.body?.short_description:" ",
-        detailed_description:req?.body?.detailed_description?req?.body?.detailed_description:" ",
-        inner_page_sector_name:req?.body?.inner_page_sector_name?req?.body?.inner_page_sector_name:" ",
-        inner_page_sector_select:req?.body?.inner_page_sector_select?req?.body?.inner_page_sector_select:" ",
-        inner_page_detailed_description:req?.body?.inner_page_detailed_description?req?.body?.inner_page_detailed_description:" ",
-        project_type1:req?.body?.project_type1?req?.body?.project_type1:" ",
-        project_type1_title:req?.body?.project_type1_title?req?.body?.project_type1_title:" ",
-        project_type1_description:req?.body?.project_type1_description?req?.body?.project_type1_description:" " ,
-        project_type2:req?.body?.project_type2?req?.body?.project_type2:" ",
-        project_type2_title:req?.body?.project_type2_title?req?.body?.project_type2_title:" ",
-        project_type2_description:req?.body?.project_type2_description?req?.body?.project_type2_description:" ",
-        graph:req?.body?.graph?req?.body?.graph:" ",
-        graph_description:req?.body?.graph_description?req?.body?.graph_description:" ",
-        industry_report:req?.body?.industry_report?req?.body?.industry_report:"0",
-        lastest_news:req?.body?.lastest_news?req?.body?.lastest_news:" ",
-        lastest_description:req?.body?.lastest_description?req?.body?.lastest_description:" ",
-        seo_title:req?.body?.seo_title?req?.body?.seo_title:" ",
-        seo_description:req?.body?.seo_description?req?.body?.seo_description:" ",
-        seo_keyword:req?.body?.seo_keyword?req?.body?.seo_keyword:" ",
-        seo_slug:req?.body?.seo_slug?req?.body?.seo_slug:" ", 
-        call_to_action_heading:req?.body?.call_to_action_heading?req?.body?.call_to_action_heading:" ",
-        call_to_action_description:req?.body?.call_to_action_description?req?.body?.call_to_action_description:" ",
-        call_to_action_button_name:req?.body?.call_to_action_button_name?req?.body?.call_to_action_button_name:" ",     
-        call_to_action_button_link:req?.body?.call_to_action_button_link?req?.body?.call_to_action_button_link:" "
-        }
-        var data1 = [Object.values(obj)]
+      let obj = {
+        sector_name: req?.body?.sector_name ? req?.body?.sector_name : " ",
+        alt_tag: req?.body?.alt_tag ? req?.body?.alt_tag : " ",
+        listing_page_description: req?.body?.listing_page_description ? req?.body?.listing_page_description : " ",
+        listing_page_image: req?.body?.listing_page_image ? req?.body?.listing_page_image : " ",
+        banner_heading: req?.body?.banner_heading ? req?.body?.banner_heading : " ",
+        banner_sub_heading: req?.body?.banner_sub_heading ? req?.body?.banner_sub_heading : " ",
+        section_heading: req?.body?.section_heading ? req?.body?.section_heading : " ",
+        short_description: req?.body?.short_description ? req?.body?.short_description : " ",
+        detailed_description: req?.body?.detailed_description ? req?.body?.detailed_description : " ",
+        inner_page_sector_name: req?.body?.inner_page_sector_name ? req?.body?.inner_page_sector_name : " ",
+        inner_page_sector_select: req?.body?.inner_page_sector_select ? req?.body?.inner_page_sector_select : " ",
+        inner_page_detailed_description: req?.body?.inner_page_detailed_description ? req?.body?.inner_page_detailed_description : " ",
+        project_type1: req?.body?.project_type1 ? req?.body?.project_type1 : " ",
+        project_type1_title: req?.body?.project_type1_title ? req?.body?.project_type1_title : " ",
+        project_type1_description: req?.body?.project_type1_description ? req?.body?.project_type1_description : " ",
+        project_type2: req?.body?.project_type2 ? req?.body?.project_type2 : " ",
+        project_type2_title: req?.body?.project_type2_title ? req?.body?.project_type2_title : " ",
+        project_type2_description: req?.body?.project_type2_description ? req?.body?.project_type2_description : " ",
+        graph: req?.body?.graph ? req?.body?.graph : " ",
+        graph_description: req?.body?.graph_description ? req?.body?.graph_description : " ",
+        industry_report: req?.body?.industry_report ? req?.body?.industry_report : "0",
+        lastest_news: req?.body?.lastest_news ? req?.body?.lastest_news : " ",
+        lastest_description: req?.body?.lastest_description ? req?.body?.lastest_description : " ",
+        seo_title: req?.body?.seo_title ? req?.body?.seo_title : " ",
+        seo_description: req?.body?.seo_description ? req?.body?.seo_description : " ",
+        seo_keyword: req?.body?.seo_keyword ? req?.body?.seo_keyword : " ",
+        seo_slug: req?.body?.seo_slug ? req?.body?.seo_slug : " ",
+        call_to_action_heading: req?.body?.call_to_action_heading ? req?.body?.call_to_action_heading : " ",
+        call_to_action_description: req?.body?.call_to_action_description ? req?.body?.call_to_action_description : " ",
+        call_to_action_button_name: req?.body?.call_to_action_button_name ? req?.body?.call_to_action_button_name : " ",
+        call_to_action_button_link: req?.body?.call_to_action_button_link ? req?.body?.call_to_action_button_link : " "
+      }
+      var data1 = [Object.values(obj)]
       var sql = "INSERT INTO edit_project_sector(sector_name,alt_tag,listing_page_description,listing_page_image,banner_heading,banner_sub_heading,section_heading,short_description,detailed_description,inner_page_sector_name,inner_page_sector_select,inner_page_detailed_description,project_type1,project_type1_title,project_type1_description,project_type2,project_type2_title,project_type2_description,graph,graph_description,industry_report,lastest_news,lastest_description,seo_title,seo_description,seo_keyword,seo_slug,call_to_action_heading,call_to_action_description,call_to_action_button_name,call_to_action_button_link) VALUES ?"
       var data1 = [Object.values(req.body)]
       con.query(sql, [data1], (err, res) => {
@@ -589,67 +566,67 @@ const edit_project_sector= async (req, response) =>{
     return err
   }
 }
-const edit_project_sector1= async (req, response) =>{
+const edit_project_sector1 = async (req, response) => {
   try {
-  if (req.user.role_id == 2) {
-    let obj={
-      sector_name:req?.body?.sector_name?req?.body?.sector_name:" " ,
-      alt_tag:req?.body?.alt_tag?req?.body?.alt_tag:" ",
-      listing_page_description:req?.body?.listing_page_description?req?.body?.listing_page_description:" " ,
-      listing_page_image:req?.body?.listing_page_image?req?.body?.listing_page_image:" " ,
-      banner_heading:req?.body?.banner_heading?req?.body?.banner_heading:" ",
-      banner_sub_heading:req?.body?.banner_sub_heading?req?.body?.banner_sub_heading:" ",
-      section_heading:req?.body?.section_heading?req?.body?.section_heading:" ",
-      short_description:req?.body?.short_description?req?.body?.short_description:" ",
-      detailed_description:req?.body?.detailed_description?req?.body?.detailed_description:" ",
-      inner_page_sector_name:req?.body?.inner_page_sector_name?req?.body?.inner_page_sector_name:" ",
-      inner_page_sector_select:req?.body?.inner_page_sector_select?req?.body?.inner_page_sector_select:" ",
-      inner_page_detailed_description:req?.body?.inner_page_detailed_description?req?.body?.inner_page_detailed_description:" ",
-      project_type1:req?.body?.project_type1?req?.body?.project_type1:" ",
-      project_type1_title:req?.body?.project_type1_title?req?.body?.project_type1_title:" ",
-      project_type1_description:req?.body?.project_type1_description?req?.body?.project_type1_description:" " ,
-      project_type2:req?.body?.project_type2?req?.body?.project_type2:" ",
-      project_type2_title:req?.body?.project_type2_title?req?.body?.project_type2_title:" ",
-      project_type2_description:req?.body?.project_type2_description?req?.body?.project_type2_description:" ",
-      graph:req?.body?.graph?req?.body?.graph:" ",
-      graph_description:req?.body?.graph_description?req?.body?.graph_description:" ",
-      industry_report:req?.body?.industry_report?req?.body?.industry_report:"0",
-      lastest_news:req?.body?.lastest_news?req?.body?.lastest_news:" ",
-      lastest_description:req?.body?.lastest_description?req?.body?.lastest_description:" ",
-      seo_title:req?.body?.seo_title?req?.body?.seo_title:" ",
-      seo_description:req?.body?.seo_description?req?.body?.seo_description:" ",
-      seo_keyword:req?.body?.seo_keyword?req?.body?.seo_keyword:" ",
-      seo_slug:req?.body?.seo_slug?req?.body?.seo_slug:" ", 
-      call_to_action_heading:req?.body?.call_to_action_heading?req?.body?.call_to_action_heading:" ",
-      call_to_action_description:req?.body?.call_to_action_description?req?.body?.call_to_action_description:" ",
-      call_to_action_button_name:req?.body?.call_to_action_button_name?req?.body?.call_to_action_button_name:" ",     
-      call_to_action_button_link:req?.body?.call_to_action_button_link?req?.body?.call_to_action_button_link:" "
+    if (req.user.role_id == 2) {
+      let obj = {
+        sector_name: req?.body?.sector_name ? req?.body?.sector_name : " ",
+        alt_tag: req?.body?.alt_tag ? req?.body?.alt_tag : " ",
+        listing_page_description: req?.body?.listing_page_description ? req?.body?.listing_page_description : " ",
+        listing_page_image: req?.body?.listing_page_image ? req?.body?.listing_page_image : " ",
+        banner_heading: req?.body?.banner_heading ? req?.body?.banner_heading : " ",
+        banner_sub_heading: req?.body?.banner_sub_heading ? req?.body?.banner_sub_heading : " ",
+        section_heading: req?.body?.section_heading ? req?.body?.section_heading : " ",
+        short_description: req?.body?.short_description ? req?.body?.short_description : " ",
+        detailed_description: req?.body?.detailed_description ? req?.body?.detailed_description : " ",
+        inner_page_sector_name: req?.body?.inner_page_sector_name ? req?.body?.inner_page_sector_name : " ",
+        inner_page_sector_select: req?.body?.inner_page_sector_select ? req?.body?.inner_page_sector_select : " ",
+        inner_page_detailed_description: req?.body?.inner_page_detailed_description ? req?.body?.inner_page_detailed_description : " ",
+        project_type1: req?.body?.project_type1 ? req?.body?.project_type1 : " ",
+        project_type1_title: req?.body?.project_type1_title ? req?.body?.project_type1_title : " ",
+        project_type1_description: req?.body?.project_type1_description ? req?.body?.project_type1_description : " ",
+        project_type2: req?.body?.project_type2 ? req?.body?.project_type2 : " ",
+        project_type2_title: req?.body?.project_type2_title ? req?.body?.project_type2_title : " ",
+        project_type2_description: req?.body?.project_type2_description ? req?.body?.project_type2_description : " ",
+        graph: req?.body?.graph ? req?.body?.graph : " ",
+        graph_description: req?.body?.graph_description ? req?.body?.graph_description : " ",
+        industry_report: req?.body?.industry_report ? req?.body?.industry_report : "0",
+        lastest_news: req?.body?.lastest_news ? req?.body?.lastest_news : " ",
+        lastest_description: req?.body?.lastest_description ? req?.body?.lastest_description : " ",
+        seo_title: req?.body?.seo_title ? req?.body?.seo_title : " ",
+        seo_description: req?.body?.seo_description ? req?.body?.seo_description : " ",
+        seo_keyword: req?.body?.seo_keyword ? req?.body?.seo_keyword : " ",
+        seo_slug: req?.body?.seo_slug ? req?.body?.seo_slug : " ",
+        call_to_action_heading: req?.body?.call_to_action_heading ? req?.body?.call_to_action_heading : " ",
+        call_to_action_description: req?.body?.call_to_action_description ? req?.body?.call_to_action_description : " ",
+        call_to_action_button_name: req?.body?.call_to_action_button_name ? req?.body?.call_to_action_button_name : " ",
+        call_to_action_button_link: req?.body?.call_to_action_button_link ? req?.body?.call_to_action_button_link : " "
       }
       var data1 = Object.values(obj)
       data1.push(req.params.id)
-    var sql = "update edit_project_sector set sector_name=? , alt_tag=? , listing_page_description=? , listing_page_image=? , banner_heading=? , banner_sub_heading=? , section_heading=? , short_description=? , detailed_description=? , inner_page_sector_name=? , inner_page_sector_select=? , inner_page_detailed_description=? , project_type1=? , project_type1_title=? , project_type1_description=? , project_type2=? , project_type2_title=? , project_type2_description=? , graph=? , graph_description=? , industry_report=? , lastest_news=? , lastest_description=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , call_to_action_heading=? , call_to_action_description=? , call_to_action_button_name=? , call_to_action_button_link=? where edit_project_sector_id=?"
-    con.query(sql, data1, (err, res) => {
-      if (err)
-        response.json(err);
-      response.json(res);
-    })
+      var sql = "update edit_project_sector set sector_name=? , alt_tag=? , listing_page_description=? , listing_page_image=? , banner_heading=? , banner_sub_heading=? , section_heading=? , short_description=? , detailed_description=? , inner_page_sector_name=? , inner_page_sector_select=? , inner_page_detailed_description=? , project_type1=? , project_type1_title=? , project_type1_description=? , project_type2=? , project_type2_title=? , project_type2_description=? , graph=? , graph_description=? , industry_report=? , lastest_news=? , lastest_description=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , call_to_action_heading=? , call_to_action_description=? , call_to_action_button_name=? , call_to_action_button_link=? where edit_project_sector_id=?"
+      con.query(sql, data1, (err, res) => {
+        if (err)
+          response.json(err);
+        response.json(res);
+      })
+    }
+    else {
+      req.json("unauthorised user").status(401);
+    }
   }
-  else {
-    req.json("unauthorised user").status(401);
+  catch (err) {
+    return err
   }
-}
-catch (err) {
-  return err
-}
 }
 const edit_project_sector2 = async (req, response) => {
   try {
-      var sql = "select * from edit_project_sector where edit_project_sector_id="+req.params.id
-      con.query(sql, (err, res) => {
-        if (err)
-         return response.json(err);
-        response.json(res);
-      })
+    var sql = "select * from edit_project_sector where edit_project_sector_id=" + req.params.id
+    con.query(sql, (err, res) => {
+      if (err)
+        return response.json(err);
+      response.json(res);
+    })
   }
   catch (err) {
     return err
@@ -657,15 +634,15 @@ const edit_project_sector2 = async (req, response) => {
 }
 const edit_project_sector3 = async (req, response) => {
   try {
-      var sql = "select * from edit_project_sector"
-      con.query(sql, (err, res) => {
-        if (err)
-         return response.json(err);
-        response.json(res);
-      })
+    var sql = "select * from edit_project_sector"
+    con.query(sql, (err, res) => {
+      if (err)
+        return response.json(err);
+      response.json(res);
+    })
   }
   catch (err) {
     return err
   }
 }
-module.exports = {edit_project_sector1,edit_project_sector3,add_tender,add_sub_tender,login,add_sub_admin,what_we_do,what_we_do1,what_we_do2,what_we_do3,get_sub_tender_by_id,get_tender,get_tender_by_id,get_user,get_sub_sub_project_by_id,get_sub_project_by_id,get_user_by_id,pending_user,add_project,sub_add_project,sub_sub_add_project,complete_user,get_project,get_project_by_id,edit_project_sector,edit_project_sector2};
+module.exports = { edit_project_sector1, edit_project_sector3, add_tender, add_sub_tender, login, add_sub_admin, what_we_do, what_we_do1, what_we_do2, what_we_do3, get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id, edit_project_sector, edit_project_sector2 };

@@ -43,7 +43,6 @@ app.use(helmet.frameguard())
 app.get('/', function (req, res) {
   res.status(200).send("Welcome  to app");
 });
-const hostname="comvalitsolutions.tech"
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`connected  ${port}`);
 })

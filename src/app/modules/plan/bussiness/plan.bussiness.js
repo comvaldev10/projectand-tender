@@ -13,7 +13,6 @@ const get_plan = async (req, response) => {
   }
 }
 const get_plan_id = async (req, response) => {
-  console.log("jayate",req.params.id)
   var sql = "select * from plan_purchase where plan_purchase_id="+req.params.id
   try {
     con.query(sql, (err, res) => {

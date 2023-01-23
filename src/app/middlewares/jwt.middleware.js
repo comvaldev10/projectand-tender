@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken')
 exports.authenticate = async (req, res, next) => {
   try {
     const auth = req.header("Authorization");
-    console.log(auth)
     if (!auth)
       return res.json("No token get from user")
     const token = auth.split(" ");
