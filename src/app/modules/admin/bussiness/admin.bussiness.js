@@ -122,7 +122,7 @@ const add_project = async (req, response) => {
 const sub_add_project = async (req, response) => {
   try {
     if (req.user.role_id == 2) {
-      var sql = "INSERT INTO sub_project_sector_schema(sub_roject_sector) VALUES ?"
+      var sql = "INSERT INTO sub_project_sector_schema(sub_project_sector,sector_id) VALUES ?"
       var data1 = [Object.values(req.body)]
       con.query(sql, [data1], (err, res) => {
         if (err)
@@ -142,7 +142,7 @@ const sub_add_project = async (req, response) => {
 const sub_sub_add_project = async (req, response) => {
   try {
     if (req.user.role_id == 2) {
-      var sql = "INSERT INTO sub_project_sector_schema(sub_sub_roject_sector,sector_id,sub_sector_id) VALUES ?"
+      var sql = "INSERT INTO sub_sub_project_sector_schema(sub_sub_project_sector,sub_sector_id) VALUES ?"
       var data1 = [Object.values(req.body)]
       con.query(sql, [data1], (err, res) => {
         if (err)
@@ -440,7 +440,7 @@ const what_we_do2 = async (req, response) => {
         sectors_we_serve_heading: req?.body?.sectors_we_serve_heading ? req?.body?.sectors_we_serve_heading : '',
         sectors_we_serve_description: req?.body?.sectors_we_serve_description ? req?.body?.sectors_we_serve_description : '',
         sectors_we_serve_sector: req?.body?.sectors_we_serve_sector ? req?.body?.sectors_we_serve_sector : '',
-        latest_news_heading: req?.body?.latest_news_heading ? req?.body?.sectors_we_serve_sector : '',
+        latest_news_heading: req?.body?.latest_news_heading ? req?.body?.latest_news_heading : '',
         latest_news_description: req?.body?.latest_news_description ? req?.body?.latest_news_description : '',
         blank: req?.body?.blank ? req?.body?.blank : '',
         seo_title: req?.body?.seo_title ? req?.body?.seo_title : '',
