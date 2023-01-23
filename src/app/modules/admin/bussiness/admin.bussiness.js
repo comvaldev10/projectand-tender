@@ -306,6 +306,19 @@ const what_we_do1 = async (req, response) => {
     return err
   }
 }
+const what_we_do3 = async (req, response) => {
+  try {
+      var sql = "select * from what_we_do where what_we_do_id="+req.params.id
+      con.query(sql, (err, res) => {
+        if (err)
+         return response.json(err);
+        response.json(res);
+      })
+  }
+  catch (err) {
+    return err
+  }
+}
 const what_we_do = async (req, response) => {
   try {
     console.log(req.body, "a")
@@ -466,4 +479,22 @@ const what_we_do2 = async (req, response) => {
     return err
   }
 }
-module.exports = { login, what_we_do,what_we_do1,what_we_do2, get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id };
+const add_sub_admin = async (req, response) => {//get all user
+  if (req.user.role_id == 2) {
+    var sql = "select * from user"
+    try {
+      con.query(sql, (err, res) => {
+        if (err)
+          response.json(err);
+        response.json(res);
+      })
+    }
+    catch (err) {
+      return err
+    }
+  }
+  else {
+    req.send("unauthorised user").status(200);
+  }
+}
+module.exports = { login,add_sub_admin,what_we_do,what_we_do1,what_we_do2,what_we_do3,get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id };
