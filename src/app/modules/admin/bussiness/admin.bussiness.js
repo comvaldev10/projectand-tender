@@ -358,7 +358,7 @@ const what_we_do = async (req, response) => {
         // sectors_we_serve_sub_heading: req?.body?.sectors_we_serve_sub_heading ? req?.body?.sectors_we_serve_sub_heading : '',
         sectors_we_serve_description: req?.body?.sectors_we_serve_description ? req?.body?.sectors_we_serve_description : '',
         sectors_we_serve_sector: req?.body?.sectors_we_serve_sector ? req?.body?.sectors_we_serve_sector : '',
-        latest_news_heading: req?.body?.latest_news_heading ? req?.body?.sectors_we_serve_sector : '',
+        latest_news_heading: req?.body?.latest_news_heading ? req?.body?.latest_news_heading : '',
         latest_news_description: req?.body?.latest_news_description ? req?.body?.latest_news_description : '',
         blank: req?.body?.blank ? req?.body?.blank : '',
         seo_title: req?.body?.seo_title ? req?.body?.seo_title : '',
@@ -481,20 +481,60 @@ const what_we_do2 = async (req, response) => {
 }
 const add_sub_admin = async (req, response) => {//get all user
   if (req.user.role_id == 2) {
-    var sql = "select * from user"
-    try {
-      con.query(sql, (err, res) => {
-        if (err)
-          response.json(err);
-        response.json(res);
-      })
-    }
-    catch (err) {
-      return err
-    }
+    // var sql = "select * from user"
+    // try {
+    //   con.query(sql, (err, res) => {
+    //     if (err)
+    //       response.json(err);
+    //     response.json(res);
+    //   })
+    // }
+    // catch (err) {
+    //   return err
+    // }
   }
   else {
     req.send("unauthorised user").status(200);
   }
 }
-module.exports = { login,add_sub_admin,what_we_do,what_we_do1,what_we_do2,what_we_do3,get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id };
+const add_tender = async (req, response) =>{
+  if (req.user.role_id == 2) { 
+    try {
+    if (req.user.role_id == 2) {
+      var sql = "INSERT INTO tender_schema(tender) VALUES ?"
+      var data1 = [Object.values(req.body)]
+      con.query(sql, [data1], (err, res) => {
+        if (err)
+          response.json(err);
+        response.json(res);
+      })
+    }
+    else {
+      req.json("unauthorised user").status(401);
+    }
+  }
+  catch (err) {
+    return err
+  }
+}
+}
+const add_sub_tender = async (req, response) =>{
+    try {
+    if (req.user.role_id == 2) {
+      var sql = "INSERT INTO sub_tender_schema(sub_tender,tender_id) VALUES ?"
+      var data1 = [Object.values(req.body)]
+      con.query(sql, [data1], (err, res) => {
+        if (err)
+          response.json(err);
+        response.json(res);
+      })
+    }
+    else {
+      req.json("unauthorised user").status(401);
+    }
+  }
+  catch (err) {
+    return err
+  }
+}
+module.exports = {add_tender,add_sub_tender,login,add_sub_admin,what_we_do,what_we_do1,what_we_do2,what_we_do3,get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id };
