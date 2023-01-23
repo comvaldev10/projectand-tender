@@ -536,4 +536,112 @@ const add_sub_tender = async (req, response) =>{
     return err
   }
 }
-module.exports = {add_tender,add_sub_tender,login,add_sub_admin,what_we_do,what_we_do1,what_we_do2,what_we_do3,get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id };
+
+const edit_project_sector= async (req, response) =>{
+    try {
+    if (req.user.role_id == 2) {
+      let obj={
+        sector_name:req?.body?.sector_name?req?.body?.sector_name:" " ,
+        alt_tag:req?.body?.alt_tag?req?.body?.alt_tag:" ",
+        listing_page_description:req?.body?.listing_page_description?req?.body?.listing_page_description:" " ,
+        listing_page_image:req?.body?.listing_page_image?req?.body?.listing_page_image:" " ,
+        banner_heading:req?.body?.banner_heading?req?.body?.banner_heading:" ",
+        banner_sub_heading:req?.body?.banner_sub_heading?req?.body?.banner_sub_heading:" ",
+        section_heading:req?.body?.section_heading?req?.body?.section_heading:" ",
+        short_description:req?.body?.short_description?req?.body?.short_description:" ",
+        detailed_description:req?.body?.detailed_description?req?.body?.detailed_description:" ",
+        inner_page_sector_name:req?.body?.inner_page_sector_name?req?.body?.inner_page_sector_name:" ",
+        inner_page_sector_select:req?.body?.inner_page_sector_select?req?.body?.inner_page_sector_select:" ",
+        inner_page_detailed_description:req?.body?.inner_page_detailed_description?req?.body?.inner_page_detailed_description:" ",
+        project_type1:req?.body?.project_type1?req?.body?.project_type1:" ",
+        project_type1_title:req?.body?.project_type1_title?req?.body?.project_type1_title:" ",
+        project_type1_description:req?.body?.project_type1_description?req?.body?.project_type1_description:" " ,
+        project_type2:req?.body?.project_type2?req?.body?.project_type2:" ",
+        project_type2_title:req?.body?.project_type2_title?req?.body?.project_type2_title:" ",
+        project_type2_description:req?.body?.project_type2_description?req?.body?.project_type2_description:" ",
+        graph:req?.body?.graph?req?.body?.graph:" ",
+        graph_description:req?.body?.graph_description?req?.body?.graph_description:" ",
+        industry_report:req?.body?.industry_report?req?.body?.industry_report:"0",
+        lastest_news:req?.body?.lastest_news?req?.body?.lastest_news:" ",
+        lastest_description:req?.body?.lastest_description?req?.body?.lastest_description:" ",
+        seo_title:req?.body?.seo_title?req?.body?.seo_title:" ",
+        seo_description:req?.body?.seo_description?req?.body?.seo_description:" ",
+        seo_keyword:req?.body?.seo_keyword?req?.body?.seo_keyword:" ",
+        seo_slug:req?.body?.seo_slug?req?.body?.seo_slug:" ", 
+        call_to_action_heading:req?.body?.call_to_action_heading?req?.body?.call_to_action_heading:" ",
+        call_to_action_description:req?.body?.call_to_action_description?req?.body?.call_to_action_description:" ",
+        call_to_action_button_name:req?.body?.call_to_action_button_name?req?.body?.call_to_action_button_name:" ",     
+        call_to_action_button_link:req?.body?.call_to_action_button_link?req?.body?.call_to_action_button_link:" "
+        }
+        var data1 = [Object.values(obj)]
+      var sql = "INSERT INTO edit_project_sector(sector_name,alt_tag,listing_page_description,listing_page_image,banner_heading,banner_sub_heading,section_heading,short_description,detailed_description,inner_page_sector_name,inner_page_sector_select,inner_page_detailed_description,project_type1,project_type1_title,project_type1_description,project_type2,project_type2_title,project_type2_description,graph,graph_description,industry_report,lastest_news,lastest_description,seo_title,seo_description,seo_keyword,seo_slug,call_to_action_heading,call_to_action_description,call_to_action_button_name,call_to_action_button_link) VALUES ?"
+      var data1 = [Object.values(req.body)]
+      con.query(sql, [data1], (err, res) => {
+        if (err)
+          response.json(err);
+        response.json(res);
+      })
+    }
+    else {
+      req.json("unauthorised user").status(401);
+    }
+  }
+  catch (err) {
+    return err
+  }
+}
+const edit_project_sector1= async (req, response) =>{
+  try {
+  if (req.user.role_id == 2) {
+    let obj={
+      sector_name:req?.body?.sector_name?req?.body?.sector_name:" " ,
+      alt_tag:req?.body?.alt_tag?req?.body?.alt_tag:" ",
+      listing_page_description:req?.body?.listing_page_description?req?.body?.listing_page_description:" " ,
+      listing_page_image:req?.body?.listing_page_image?req?.body?.listing_page_image:" " ,
+      banner_heading:req?.body?.banner_heading?req?.body?.banner_heading:" ",
+      banner_sub_heading:req?.body?.banner_sub_heading?req?.body?.banner_sub_heading:" ",
+      section_heading:req?.body?.section_heading?req?.body?.section_heading:" ",
+      short_description:req?.body?.short_description?req?.body?.short_description:" ",
+      detailed_description:req?.body?.detailed_description?req?.body?.detailed_description:" ",
+      inner_page_sector_name:req?.body?.inner_page_sector_name?req?.body?.inner_page_sector_name:" ",
+      inner_page_sector_select:req?.body?.inner_page_sector_select?req?.body?.inner_page_sector_select:" ",
+      inner_page_detailed_description:req?.body?.inner_page_detailed_description?req?.body?.inner_page_detailed_description:" ",
+      project_type1:req?.body?.project_type1?req?.body?.project_type1:" ",
+      project_type1_title:req?.body?.project_type1_title?req?.body?.project_type1_title:" ",
+      project_type1_description:req?.body?.project_type1_description?req?.body?.project_type1_description:" " ,
+      project_type2:req?.body?.project_type2?req?.body?.project_type2:" ",
+      project_type2_title:req?.body?.project_type2_title?req?.body?.project_type2_title:" ",
+      project_type2_description:req?.body?.project_type2_description?req?.body?.project_type2_description:" ",
+      graph:req?.body?.graph?req?.body?.graph:" ",
+      graph_description:req?.body?.graph_description?req?.body?.graph_description:" ",
+      industry_report:req?.body?.industry_report?req?.body?.industry_report:"0",
+      lastest_news:req?.body?.lastest_news?req?.body?.lastest_news:" ",
+      lastest_description:req?.body?.lastest_description?req?.body?.lastest_description:" ",
+      seo_title:req?.body?.seo_title?req?.body?.seo_title:" ",
+      seo_description:req?.body?.seo_description?req?.body?.seo_description:" ",
+      seo_keyword:req?.body?.seo_keyword?req?.body?.seo_keyword:" ",
+      seo_slug:req?.body?.seo_slug?req?.body?.seo_slug:" ", 
+      call_to_action_heading:req?.body?.call_to_action_heading?req?.body?.call_to_action_heading:" ",
+      call_to_action_description:req?.body?.call_to_action_description?req?.body?.call_to_action_description:" ",
+      call_to_action_button_name:req?.body?.call_to_action_button_name?req?.body?.call_to_action_button_name:" ",     
+      call_to_action_button_link:req?.body?.call_to_action_button_link?req?.body?.call_to_action_button_link:" "
+      }
+      var data1 = [Object.values(obj)]
+    var sql = "update edit_project_sector set sector_name=?,alt_tag=?,listing_page_description,listing_page_image,banner_heading,banner_sub_heading,section_heading,short_description,detailed_description,inner_page_sector_name,inner_page_sector_select,inner_page_detailed_description,project_type1,project_type1_title,project_type1_description,project_type2,project_type2_title,project_type2_description,graph,graph_description,industry_report,lastest_news,lastest_description,seo_title,seo_description,seo_keyword,seo_slug,call_to_action_heading,call_to_action_description,call_to_action_button_name,call_to_action_button_link) VALUES ?"
+    var data1 = [Object.values(req.body)]
+    con.query(sql, [data1], (err, res) => {
+      if (err)
+        response.json(err);
+      response.json(res);
+    })
+  }
+  else {
+    req.json("unauthorised user").status(401);
+  }
+}
+catch (err) {
+  return err
+}
+}
+
+module.exports = {edit_project_sector1,add_tender,add_sub_tender,login,add_sub_admin,what_we_do,what_we_do1,what_we_do2,what_we_do3,get_sub_tender_by_id,get_tender,get_tender_by_id,get_user,get_sub_sub_project_by_id,get_sub_project_by_id,get_user_by_id,pending_user,add_project,sub_add_project,sub_sub_add_project,complete_user,get_project,get_project_by_id,edit_project_sector};

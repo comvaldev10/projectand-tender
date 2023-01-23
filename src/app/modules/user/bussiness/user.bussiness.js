@@ -1,4 +1,5 @@
 var con = require('../../../db/mysql')
+var fs = require('fs');
 const register = async (req, response) => {
   console.log(req.body,req.body.email,"ss")
   var emailcheck = `select * from user where user.email='${req.body.email}'`
@@ -322,4 +323,32 @@ const file_upload = async (req, response) => {
     return err
   }
 }
-module.exports = {file_upload,register, register2, register3, add_project, delete_project, add_tender, delete_tender, terms, get_projects,get_sub_projects,get_sub_sub_projects,get_tenders,get_sub_tenders,get_user,user_plan_update};
+
+
+const file_delete= async (req, response) => {
+  try {
+    if(req?.body?.file_delete)
+    {
+      fs.stat('uploads/'+req.body.file_delete,function (err, stats) {
+        console.log(stats);
+        if (err) {
+            return response.json(err);
+        }
+        fs.unlink('uploads/'+req.body.file_delete,function(err){
+             if(err) 
+             return response.json(err)
+             response.json('file deleted successfully');
+        });  
+     });
+  }
+  else
+  {
+    return response.json("cannot take file")
+  }
+}
+  catch (err) {
+    return err
+  }
+}
+
+module.exports = {file_delete,file_upload,register, register2, register3, add_project, delete_project, add_tender, delete_tender, terms, get_projects,get_sub_projects,get_sub_sub_projects,get_tenders,get_sub_tenders,get_user,user_plan_update};
