@@ -461,7 +461,6 @@ const what_we_do2 = async (req, response) => {
       }
       var data1 = Object.values(obj)
       data1.push(req.params.id)
-      console.log(data1,"ss")
       var sql = "update what_we_do SET what_we_do_heading=? , what_we_do_description=? , what_we_do_button_name=? , what_we_do_button_link=?  ,what_we_do_heading1=? , what_we_do_heading2=? , what_we_do_heading3=? , what_we_do_heading4=? , what_we_do_heading5=? , what_we_do_heading6=? , service_we_provide_heading=? , service_we_provide_sub_heading=? , service_we_provide_button_name=? , service_we_provide_button_link=? , third_section_heading1=? , third_section_heading2=? , third_section_heading3=? , third_section_alt_tag=? , third_section_alt_tag1=? , third_section_alt_tag2=? , insights_heading=? , insights_button_name=? , insights_button_link=? , insights_description=? , lead_and_insights_projects=? , lead_and_insights_tenders=? , lead_and_insights_contractors=? , lead_and_insights_consultants=? , industries_we_serve_heading=? , industries_we_serve_descripion=? , sectors_we_serve_heading=? , sectors_we_serve_description=? , sectors_we_serve_sector=? , latest_news_heading=? , latest_news_description=? , blank=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , what_we_do_image1=? , what_we_do_image2=?, what_we_do_image3=?, what_we_do_image4=?, what_we_do_image5=?, what_we_do_image6=? , third_section_image1=? , third_section_image2=? , third_section_image3=? , third_section_description1=? , third_section_description2=? , third_section_description3=? where what_we_do_id=?"
       con.query(sql, data1, (err, res) => {
         if (err)
@@ -626,10 +625,10 @@ const edit_project_sector1= async (req, response) =>{
       call_to_action_button_name:req?.body?.call_to_action_button_name?req?.body?.call_to_action_button_name:" ",     
       call_to_action_button_link:req?.body?.call_to_action_button_link?req?.body?.call_to_action_button_link:" "
       }
-      var data1 = [Object.values(obj)]
-    var sql = "update edit_project_sector set sector_name=?,alt_tag=?,listing_page_description,listing_page_image,banner_heading,banner_sub_heading,section_heading,short_description,detailed_description,inner_page_sector_name,inner_page_sector_select,inner_page_detailed_description,project_type1,project_type1_title,project_type1_description,project_type2,project_type2_title,project_type2_description,graph,graph_description,industry_report,lastest_news,lastest_description,seo_title,seo_description,seo_keyword,seo_slug,call_to_action_heading,call_to_action_description,call_to_action_button_name,call_to_action_button_link) VALUES ?"
-    var data1 = [Object.values(req.body)]
-    con.query(sql, [data1], (err, res) => {
+      var data1 = Object.values(obj)
+      data1.push(req.params.id)
+    var sql = "update edit_project_sector set sector_name=? , alt_tag=? , listing_page_description=? , listing_page_image=? , banner_heading=? , banner_sub_heading=? , section_heading=? , short_description=? , detailed_description=? , inner_page_sector_name=? , inner_page_sector_select=? , inner_page_detailed_description=? , project_type1=? , project_type1_title=? , project_type1_description=? , project_type2=? , project_type2_title=? , project_type2_description=? , graph=? , graph_description=? , industry_report=? , lastest_news=? , lastest_description=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , call_to_action_heading=? , call_to_action_description=? , call_to_action_button_name=? , call_to_action_button_link=? where edit_project_sector_id=?"
+    con.query(sql, data1, (err, res) => {
       if (err)
         response.json(err);
       response.json(res);
@@ -643,5 +642,30 @@ catch (err) {
   return err
 }
 }
-
-module.exports = {edit_project_sector1,add_tender,add_sub_tender,login,add_sub_admin,what_we_do,what_we_do1,what_we_do2,what_we_do3,get_sub_tender_by_id,get_tender,get_tender_by_id,get_user,get_sub_sub_project_by_id,get_sub_project_by_id,get_user_by_id,pending_user,add_project,sub_add_project,sub_sub_add_project,complete_user,get_project,get_project_by_id,edit_project_sector};
+const edit_project_sector2 = async (req, response) => {
+  try {
+      var sql = "select * from edit_project_sector where edit_project_sector_id="+req.params.id
+      con.query(sql, (err, res) => {
+        if (err)
+         return response.json(err);
+        response.json(res);
+      })
+  }
+  catch (err) {
+    return err
+  }
+}
+const edit_project_sector3 = async (req, response) => {
+  try {
+      var sql = "select * from edit_project_sector"
+      con.query(sql, (err, res) => {
+        if (err)
+         return response.json(err);
+        response.json(res);
+      })
+  }
+  catch (err) {
+    return err
+  }
+}
+module.exports = {edit_project_sector1,edit_project_sector3,add_tender,add_sub_tender,login,add_sub_admin,what_we_do,what_we_do1,what_we_do2,what_we_do3,get_sub_tender_by_id,get_tender,get_tender_by_id,get_user,get_sub_sub_project_by_id,get_sub_project_by_id,get_user_by_id,pending_user,add_project,sub_add_project,sub_sub_add_project,complete_user,get_project,get_project_by_id,edit_project_sector,edit_project_sector2};
