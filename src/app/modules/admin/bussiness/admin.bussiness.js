@@ -403,7 +403,7 @@ const what_we_do = async (req, response) => {
 
 const what_we_do2 = async (req, response) => {
   try {
-    console.log(req.body, "a")
+    console.log(req.body.latest_news_description, req.body.latest_news_heading,"a")
     if (req.user.role_id == 2) {
       let obj = {
         what_we_do_heading: req?.body?.what_we_do_heading ? req?.body?.what_we_do_heading : '',
