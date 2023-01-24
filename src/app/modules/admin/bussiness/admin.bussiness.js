@@ -685,7 +685,6 @@ const update_sub_project = async (req, response) => {
     return err
   }
 }
-
 const update_sub_sub_project = async (req, response) => {
   try {
     let obj = {
@@ -705,7 +704,6 @@ const update_sub_sub_project = async (req, response) => {
     return err
   }
 }
-
 const update_tender = async (req, response) => {
   try {
     let obj = {
@@ -724,7 +722,6 @@ const update_tender = async (req, response) => {
     return err
   }
 }
-
 const update_sub_tender = async (req, response) => {
   try {
     let obj = {
@@ -744,7 +741,6 @@ const update_sub_tender = async (req, response) => {
     return err
   }
 }
-
 const delete_sub_tender = async (req, response) => {
   try {
     var sql = "DELETE FROM sub_tender_schema where sub_tender_id=" + req.params.id
@@ -763,7 +759,6 @@ const delete_sub_tender = async (req, response) => {
     return err
   }
 }
-
 const delete_tender = async (req, response) => {
   try {
     var sql1 = "DELETE FROM tender_schema where tender_id=" + req.params.id
@@ -787,7 +782,6 @@ const delete_tender = async (req, response) => {
     return err
   }
 }
-
 const delete_project = async (req, response) => {
   try {
     var sql1 = "DELETE FROM project_sector_schema where project_id=" + req.params.id
