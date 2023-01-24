@@ -1,5 +1,6 @@
 var con = require('../../../db/mysql')
 var jwt = require('jsonwebtoken');
+const { json } = require('body-parser');
 var generate_token = (id) => {
   var token = jwt.sign({ id: id }, 'shhhhh');
   return token
@@ -78,23 +79,23 @@ const complete_user = async (req, response) => {
   }
 }
 const pending_user = async (req, response) => {
-    try {
-      if (req.user.role_id == 2) {
-        var sql = `select * from user where user.subscribed=0`
+  try {
+    if (req.user.role_id == 2) {
+      var sql = `select * from user where user.subscribed=0`
       con.query(sql, (err, res) => {
         if (err)
           response.json(err);
         response.json(res);
       })
-      }   
-  else {
-    req.json("unauthorised user").status(401);
-  }
-}
-    catch (err) {
-      return err
+    }
+    else {
+      req.json("unauthorised user").status(401);
     }
   }
+  catch (err) {
+    return err
+  }
+}
 const add_project = async (req, response) => {
   try {
     if (req.user.role_id == 2) {
@@ -647,4 +648,217 @@ const edit_project_sector3 = async (req, response) => {
     return err
   }
 }
-module.exports = { edit_project_sector1, edit_project_sector3, add_tender, add_sub_tender, login, add_sub_admin, what_we_do, what_we_do1, what_we_do2, what_we_do3, get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id, edit_project_sector, edit_project_sector2 };
+const update_project = async (req, response) => {
+  console.log(req.body, req.params)
+  try {
+    let obj = {
+      project_sector: req?.body?.project_sector ? req?.body?.project_sector : ""
+    }
+    var data1 = Object.values(obj)
+    data1.push(req.params.id)
+    var sql = "update project_sector_schema set project_sector=? where project_id=?"
+    con.query(sql, data1, (err, res) => {
+      if (err)
+        return response.json(err);
+      response.json(res);
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+const update_sub_project = async (req, response) => {
+  try {
+    let obj = {
+      sub_project_sector: req?.body?.sub_project_sector ? req?.body?.sub_project_sector : "",
+      sector_id: req?.body?.sector_id ? req?.body?.sector_id : ""
+    }
+    var data1 = Object.values(obj)
+    data1.push(req.params.id)
+    var sql = "update sub_project_sector_schema set sub_project_sector=? , sector_id=? where sub_project_id=?"
+    con.query(sql, data1, (err, res) => {
+      if (err)
+        return response.json(err);
+      response.json(res);
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+
+const update_sub_sub_project = async (req, response) => {
+  try {
+    let obj = {
+      sub_sub_project_sector: req?.body?.sub_sub_project_sector ? req?.body?.sub_sub_project_sector : "",
+      sub_sector_id: req?.body?.sub_sector_id ? req?.body?.sub_sector_id : ""
+    }
+    var data1 = Object.values(obj)
+    data1.push(req.params.id)
+    var sql = "update sub_sub_project_sector_schema set sub_sub_project_sector=? , sub_sector_id=? where sub_sub_project_id=?"
+    con.query(sql, data1, (err, res) => {
+      if (err)
+        return response.json(err);
+      response.json(res);
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+
+const update_tender = async (req, response) => {
+  try {
+    let obj = {
+      tender: req?.body?.tender ? req?.body?.tender : "",
+    }
+    var data1 = Object.values(obj)
+    data1.push(req.params.id)
+    var sql = "update tender_schema set tender=? where tender_id=?"
+    con.query(sql, data1, (err, res) => {
+      if (err)
+        return response.json(err);
+      response.json(res);
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+
+const update_sub_tender = async (req, response) => {
+  try {
+    let obj = {
+      sub_tender: req?.body?.sub_tender ? req?.body?.sub_tender : "",
+      tender_id: req?.body?.tender_id ? req?.body?.tender_id : "",
+    }
+    var data1 = Object.values(obj)
+    data1.push(req.params.id)
+    var sql = "update sub_tender_schema set sub_tender=? , tender_id=?  where sub_tender_id=?"
+    con.query(sql, data1, (err, res) => {
+      if (err)
+        return response.json(err);
+      response.json(res);
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+
+const delete_sub_tender = async (req, response) => {
+  try {
+    var sql = "DELETE FROM sub_tender_schema where sub_tender_id=" + req.params.id
+    con.query(sql, (err, res) => {
+      if (err)
+        return response.json(err);
+      var sql1 = "DELETE FROM tender_of_user_schema where sub_tender_id=" + req.params.id
+      con.query(sql1, (err, res1) => {
+        if (err)
+          return response.json(err);
+        response.json(res1);
+      })
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+
+const delete_tender = async (req, response) => {
+  console.log(req.params.id, "aa")
+  try {
+    var sql1 = "DELETE FROM tender_schema where tender_id=" + req.params.id
+    con.query(sql1, (err, res) => {
+      if (err)
+        return response.json(err);
+      var sql = "DELETE FROM sub_tender_schema where tender_id=" + req.params.id
+      con.query(sql, (err, res1) => {
+        if (err)
+          return response.json(err);
+        var sql2 = "DELETE FROM tender_of_user_schema where tender_id=" + req.params.id
+        con.query(sql2, (err, res1) => {
+          if (err)
+            return response.json(err);
+          response.json(res1);
+        })
+      })
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+
+const delete_project = async (req, response) => {
+  console.log(req.params.id, "aa")
+  try {
+    var sql1 = "DELETE FROM project_sector_schema where project_id=" + req.params.id
+    con.query(sql1, (err, res) => {
+      if (err)
+        return response.json(err);
+      var sql3 = "DELETE FROM sub_sub_project_sector_schema where sub_sector_id IN (select sub_project_id as sub_sector_id from sub_project_sector_schema where sector_id=" + req.params.id + ")"
+      con.query(sql3, (err, res4) => {
+        if (err)
+          return response.json(err);
+        response.json(res4);
+      })
+      var sql = "DELETE FROM sub_project_sector_schema where sector_id=" + req.params.id
+      con.query(sql, (err, res1) => {
+        if (err)
+          return response.json(err);
+        var sql5 = "DELETE FROM sector_of_user_schema where sector_id=" + req.params.id
+        con.query(sql5, (err, res4) => {
+          if (err)
+            return response.json(err);
+          response.json(res4);
+        })
+      })
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+const delete_sub_project = async (req, response) => {
+  try {
+    var sql1 = "DELETE FROM sub_project_sector_schema where sub_project_id=" + req.params.id
+    con.query(sql1, (err, res) => {
+      if (err)
+        return response.json(err);
+      var sql = "DELETE FROM sub_sub_project_sector_schema where sub_sector_id=" + req.params.id
+      con.query(sql, (err, res1) => {
+        if (err)
+          return response.json(err);
+        var sql5 = "DELETE FROM sector_of_user_schema where sub_sector_id=" + req.params.id
+        con.query(sql5, (err, res2) => {
+          if (err)
+            return response.json(err);
+          response.json(res2)
+        })
+      })
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+const delete_sub_sub_project = async (req, response) => {
+  try {
+    var sql = "DELETE FROM sub_sub_project_sector_schema where sub_sub_project_id=" + req.params.id
+    con.query(sql, (err, res1) => {
+      if (err)
+        return response.json(err);
+      var sql5 = "DELETE FROM sector_of_user_schema where sub_sub_sector_id=" + req.params.id
+      con.query(sql5, (err, res2) => {
+        if (err)
+          return response.json(err);
+        response.json(res2)
+      })
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+module.exports = { delete_sub_project, delete_tender, delete_sub_tender, update_sub_tender, update_tender, update_sub_project, update_sub_sub_project, update_project, edit_project_sector1, edit_project_sector3, add_tender, add_sub_tender, login, add_sub_admin, what_we_do, what_we_do1, what_we_do2, what_we_do3, get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id, edit_project_sector, edit_project_sector2, delete_project, delete_sub_sub_project };
