@@ -1,6 +1,5 @@
 var con = require('../../../db/mysql')
 var jwt = require('jsonwebtoken');
-const { json } = require('body-parser');
 var generate_token = (id) => {
   var token = jwt.sign({ id: id }, 'shhhhh');
   return token
