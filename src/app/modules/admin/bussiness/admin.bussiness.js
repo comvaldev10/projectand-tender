@@ -649,7 +649,6 @@ const edit_project_sector3 = async (req, response) => {
   }
 }
 const update_project = async (req, response) => {
-  console.log(req.body, req.params)
   try {
     let obj = {
       project_sector: req?.body?.project_sector ? req?.body?.project_sector : ""
@@ -766,7 +765,6 @@ const delete_sub_tender = async (req, response) => {
 }
 
 const delete_tender = async (req, response) => {
-  console.log(req.params.id, "aa")
   try {
     var sql1 = "DELETE FROM tender_schema where tender_id=" + req.params.id
     con.query(sql1, (err, res) => {
@@ -791,7 +789,6 @@ const delete_tender = async (req, response) => {
 }
 
 const delete_project = async (req, response) => {
-  console.log(req.params.id, "aa")
   try {
     var sql1 = "DELETE FROM project_sector_schema where project_id=" + req.params.id
     con.query(sql1, (err, res) => {
