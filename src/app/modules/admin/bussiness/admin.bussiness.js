@@ -851,4 +851,137 @@ const delete_sub_sub_project = async (req, response) => {
     return err
   }
 }
-module.exports = { delete_sub_project, delete_tender, delete_sub_tender, update_sub_tender, update_tender, update_sub_project, update_sub_sub_project, update_project, edit_project_sector1, edit_project_sector3, add_tender, add_sub_tender, login, add_sub_admin, what_we_do, what_we_do1, what_we_do2, what_we_do3, get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id, edit_project_sector, edit_project_sector2, delete_project, delete_sub_sub_project };
+const edit_project_sub_sector = async (req, response) => {
+  try {
+    if (req.user.role_id == 2) {
+      let obj = {
+        alt_tag: req?.body?.alt_tag ? req?.body?.alt_tag : " ",
+        page_image: req?.body?.page_image ? req?.body?.page_image : " ",
+        banner_heading: req?.body?.banner_heading ? req?.body?.banner_heading : " ",
+        banner_sub_heading: req?.body?.banner_sub_heading ? req?.body?.banner_sub_heading : " ",
+        section_heading: req?.body?.section_heading ? req?.body?.section_heading : " ",
+        short_description: req?.body?.short_description ? req?.body?.short_description : " ",
+        detailed_description: req?.body?.detailed_description ? req?.body?.detailed_description : " ",
+        product_sector_name: req?.body?.product_sector_name ? req?.body?.product_sector_name : " ",
+        product_sector_select: req?.body?.product_sector_select ? req?.body?.product_sector_select : " ",
+        product_detailed_description: req?.body?.product_detailed_description ? req?.body?.product_detailed_description : " ",
+        project_type1: req?.body?.project_type1 ? req?.body?.project_type1 : " ",
+        project_type1_title: req?.body?.project_type1_title ? req?.body?.project_type1_title : " ",
+        project_type1_description: req?.body?.project_type1_description ? req?.body?.project_type1_description : " ",
+        project_type2: req?.body?.project_type2 ? req?.body?.project_type2 : " ",
+        project_type2_title: req?.body?.project_type2_title ? req?.body?.project_type2_title : " ",
+        project_type2_description: req?.body?.project_type2_description ? req?.body?.project_type2_description : " ",
+        lastest_sub_title: req?.body?.lastest_sub_title ? req?.body?.lastest_sub_title : " ",
+        seo_title: req?.body?.seo_title ? req?.body?.seo_title : " ",
+        seo_description: req?.body?.seo_description ? req?.body?.seo_description : " ",
+        seo_keyword: req?.body?.seo_keyword ? req?.body?.seo_keyword : " ",
+        seo_slug: req?.body?.seo_slug ? req?.body?.seo_slug : " ",
+        call_to_action_sub_title: req?.body?.call_to_action_sub_title ? req?.body?.call_to_action_sub_title : " ",
+        call_to_action_button_name: req?.body?.call_to_action_button_name ? req?.body?.call_to_action_button_name : " ",
+        call_to_action_button_link: req?.body?.call_to_action_button_link ? req?.body?.call_to_action_button_link : " ",
+        call_to_action_bar: req?.body?.call_to_action_bar ? req?.body?.call_to_action_bar : "0"
+      }
+      var data1 = [Object.values(obj)]
+      var sql = "INSERT INTO edit_project_sub_sector(alt_tag,page_image,banner_heading,banner_sub_heading,section_heading,short_description,detailed_description,product_sector_name,product_sector_select,product_detailed_description,project_type1,project_type1_title,project_type1_description,project_type2,project_type2_title,project_type2_description,lastest_sub_title,seo_title,seo_description,seo_keyword,seo_slug,call_to_action_sub_title,call_to_action_button_name,call_to_action_button_link,call_to_action_bar) VALUES ?"
+      var data1 = [Object.values(req.body)]
+      con.query(sql, [data1], (err, res) => {
+        if (err)
+          response.json(err);
+        response.json(res);
+      })
+    }
+    else {
+      req.json("unauthorised user").status(401);
+    }
+  }
+  catch (err) {
+    return err
+  }
+}
+const edit_project_sub_sector1 = async (req, response) => {
+  try {
+    if (req.user.role_id == 2) {
+      let obj = {
+        alt_tag: req?.body?.alt_tag ? req?.body?.alt_tag : " ",
+        page_image: req?.body?.page_image ? req?.body?.page_image : " ",
+        banner_heading: req?.body?.banner_heading ? req?.body?.banner_heading : " ",
+        banner_sub_heading: req?.body?.banner_sub_heading ? req?.body?.banner_sub_heading : " ",
+        section_heading: req?.body?.section_heading ? req?.body?.section_heading : " ",
+        short_description: req?.body?.short_description ? req?.body?.short_description : " ",
+        detailed_description: req?.body?.detailed_description ? req?.body?.detailed_description : " ",
+        product_sector_name: req?.body?.product_sector_name ? req?.body?.product_sector_name : " ",
+        product_sector_select: req?.body?.product_sector_select ? req?.body?.product_sector_select : " ",
+        product_detailed_description: req?.body?.product_detailed_description ? req?.body?.product_detailed_description : " ",
+        project_type1: req?.body?.project_type1 ? req?.body?.project_type1 : " ",
+        project_type1_title: req?.body?.project_type1_title ? req?.body?.project_type1_title : " ",
+        project_type1_description: req?.body?.project_type1_description ? req?.body?.project_type1_description : " ",
+        project_type2: req?.body?.project_type2 ? req?.body?.project_type2 : " ",
+        project_type2_title: req?.body?.project_type2_title ? req?.body?.project_type2_title : " ",
+        project_type2_description: req?.body?.project_type2_description ? req?.body?.project_type2_description : " ",
+        lastest_sub_title: req?.body?.lastest_sub_title ? req?.body?.lastest_sub_title : " ",
+        seo_title: req?.body?.seo_title ? req?.body?.seo_title : " ",
+        seo_description: req?.body?.seo_description ? req?.body?.seo_description : " ",
+        seo_keyword: req?.body?.seo_keyword ? req?.body?.seo_keyword : " ",
+        seo_slug: req?.body?.seo_slug ? req?.body?.seo_slug : " ",
+        call_to_action_sub_title: req?.body?.call_to_action_sub_title ? req?.body?.call_to_action_sub_title : " ",
+        call_to_action_button_name: req?.body?.call_to_action_button_name ? req?.body?.call_to_action_button_name : " ",
+        call_to_action_button_link: req?.body?.call_to_action_button_link ? req?.body?.call_to_action_button_link : " ",
+        call_to_action_bar: req?.body?.call_to_action_bar ? req?.body?.call_to_action_bar : "0"
+      }
+      var data1 = Object.values(obj)
+      data1.push(req.params.id)
+      var sql = "update edit_project_sub_sector set alt_tag=? , page_image=? , banner_heading=? , banner_sub_heading=? , section_heading=? , short_description=? , detailed_description=? , product_sector_name=? , product_sector_select=? , product_detailed_description=? , project_type1=? , project_type1_title=? , project_type1_description=? , project_type2=? , project_type2_title=? , project_type2_description=? , lastest_sub_title=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , call_to_action_sub_title=? , call_to_action_button_name=? , call_to_action_button_link=? , call_to_action_bar=? where edit_project_sub_sector_id=?"
+      con.query(sql, data1, (err, res) => {
+        if (err)
+          response.json(err);
+        response.json(res);
+      })
+    }
+    else {
+      req.json("unauthorised user").status(401);
+    }
+  }
+  catch (err) {
+    return err
+  }
+}
+const edit_project_sub_sector2 = async (req, response) => {
+  try {
+    var sql = "select * from edit_project_sub_sector where edit_project_sub_sector_id=" + req.params.id
+    con.query(sql, (err, res) => {
+      if (err)
+        return response.json(err);
+      response.json(res);
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+const edit_project_sub_sector3 = async (req, response) => {
+  try {
+    var sql = "select * from edit_project_sub_sector"
+    con.query(sql, (err, res) => {
+      if (err)
+        return response.json(err);
+      response.json(res);
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+const edit_project_sub_sector4 = async (req, response) => {
+  try {
+    var sql = "delete from edit_project_sub_sector where edit_project_sub_sector_id="+req.params.id
+    con.query(sql, (err, res) => {
+      if (err)
+        return response.json(err);
+      response.json(res);
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+module.exports = {edit_project_sub_sector4,edit_project_sub_sector,edit_project_sub_sector1,edit_project_sub_sector2,edit_project_sub_sector3, delete_sub_project, delete_tender, delete_sub_tender, update_sub_tender, update_tender, update_sub_project, update_sub_sub_project, update_project, edit_project_sector1, edit_project_sector3, add_tender, add_sub_tender, login, add_sub_admin, what_we_do, what_we_do1, what_we_do2, what_we_do3, get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id, edit_project_sector, edit_project_sector2, delete_project, delete_sub_sub_project };

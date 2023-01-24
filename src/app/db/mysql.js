@@ -3,7 +3,7 @@ var a={
   "host":"localhost",
   "user":"root",
   "password":"jayate",
-  "database":"projectandtender"
+  "database":"comv_emirates"
 }
 var b={
   "host":'181.215.78.45',

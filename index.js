@@ -21,8 +21,28 @@ const publicDirectoryPath = path.join(__dirname, '/uploads')
 
 app.use(express.static(publicDirectoryPath))
 const router = express.Router();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./1.json');
+const swaggerDocument2 = require('./2.json');
+const swaggerDocument3 = require('./3.json');
+const swaggerJsdoc = require('swagger-jsdoc');
 
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Hello World',
+      version: '1.0.0',
+    },
+  },
+  apis: ['1.json'], // files containing annotations as above
+};
 
+const openapiSpecification = swaggerJsdoc(options);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument2));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument3));
 
 const routes = require("./route");
 
