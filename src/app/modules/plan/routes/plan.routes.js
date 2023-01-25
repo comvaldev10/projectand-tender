@@ -6,5 +6,5 @@ router.post('/add_plan',authenticate,add_plan)
 router.put('/update_plan/:id',authenticate,edit_plan)
 router.get('/get_plan/',get_plan)
 router.get('/get_plan/:id',get_plan_id)
-router.delete('/delete_id',authenticate,delete_plan)
+router.delete('/delete_plan/:id',authenticate,delete_plan)
 module.exports = router;
