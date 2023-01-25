@@ -202,3 +202,6 @@
 //       call_to_action_button_link varchar(255) COLLATE utf8mb4_unicode_ci,
 //       call_to_action_bar tinyint(1) COLLATE utf8mb4_unicode_ci
 //     );
+// create table site_details(id int not null auto_increment primary key,
+//     site_country varchar(255) COLLATE utf8mb4_unicode_ci not null,
+//     site_link varchar(255) COLLATE utf8mb4_unicode_ci not null)

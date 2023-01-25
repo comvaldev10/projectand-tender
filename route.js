@@ -1,6 +1,7 @@
 const user_route = require("./src/app/modules/user/routes/user.routes");
 const plan_route=require('./src/app/modules/plan/routes/plan.routes')
 const admin_route=require('./src/app/modules/admin/routes/admin.routes')
+const site_route=require('./src/app/modules/site_details/routes/site_details.routes')
 module.exports = [{
     path: "/api/user",
     handler: user_route
@@ -13,5 +14,8 @@ module.exports = [{
     path: "/api/admin",
     handler: admin_route
   },
-
+  {
+    path: "/api/site",
+    handler: site_route
+  },
 ]
