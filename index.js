@@ -7,6 +7,11 @@ app.use(
     extended: true
   })
 );
+const router = express.Router();
+const routes = require("./route");
+routes.map(route => {
+  app.use(route.path, route.handler);
+});
 const cors = require("cors");
 var corsOptions = {
   origin: '*',
@@ -20,14 +25,10 @@ const path = require('path')
 const publicDirectoryPath = path.join(__dirname, '/uploads')
 
 app.use(express.static(publicDirectoryPath))
-const router = express.Router();
-const routes = require("./route");
 
 require("./src/app/db/mysql");
 const port = process.env.PORT || 3000;
-routes.map(route => {
-  app.use(route.path, route.handler);
-});
+
 
 
 

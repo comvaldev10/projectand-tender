@@ -548,10 +548,13 @@ const edit_project_sector = async (req, response) => {
         call_to_action_description: req?.body?.call_to_action_description ? req?.body?.call_to_action_description : " ",
         call_to_action_button_name: req?.body?.call_to_action_button_name ? req?.body?.call_to_action_button_name : " ",
         call_to_action_button_link: req?.body?.call_to_action_button_link ? req?.body?.call_to_action_button_link : " ",
-        call_to_action_bar: req?.body?.call_to_action_bar ? req?.body?.call_to_action_bar : "0"
+        call_to_action_bar: req?.body?.call_to_action_bar ? req?.body?.call_to_action_bar : "0",
+        site_id:req?.body?.site_id ? req?.body?.site_id : "",
+        graph_check:req?.body?.graph_check ? req?.body?.graph_check : "0",
+        inner_page_check:req?.body?.inner_page_check ? req?.body?.inner_page_check : "0"
       }
       var data1 = [Object.values(obj)]
-      var sql = "INSERT INTO edit_project_sector(sector_name,alt_tag,listing_page_description,listing_page_image,banner_heading,banner_sub_heading,section_heading,short_description,detailed_description,inner_page_sector_name,inner_page_sector_select,inner_page_detailed_description,project_type1,project_type1_title,project_type1_description,project_type2,project_type2_title,project_type2_description,graph,graph_description,industry_report,lastest_news,lastest_description,seo_title,seo_description,seo_keyword,seo_slug,call_to_action_heading,call_to_action_description,call_to_action_button_name,call_to_action_button_link,call_to_action_bar) VALUES ?"
+      var sql = "INSERT INTO edit_project_sector(sector_name,alt_tag,listing_page_description,listing_page_image,banner_heading,banner_sub_heading,section_heading,short_description,detailed_description,inner_page_sector_name,inner_page_sector_select,inner_page_detailed_description,project_type1,project_type1_title,project_type1_description,project_type2,project_type2_title,project_type2_description,graph,graph_description,industry_report,lastest_news,lastest_description,seo_title,seo_description,seo_keyword,seo_slug,call_to_action_heading,call_to_action_description,call_to_action_button_name,call_to_action_button_link,call_to_action_bar,site_id,graph_check,inner_page_check) VALUES ?"
       var data1 = [Object.values(req.body)]
       con.query(sql, [data1], (err, res) => {
         if (err)
@@ -602,11 +605,14 @@ const edit_project_sector1 = async (req, response) => {
         call_to_action_description: req?.body?.call_to_action_description ? req?.body?.call_to_action_description : " ",
         call_to_action_button_name: req?.body?.call_to_action_button_name ? req?.body?.call_to_action_button_name : " ",
         call_to_action_button_link: req?.body?.call_to_action_button_link ? req?.body?.call_to_action_button_link : " ",
-        call_to_action_bar: req?.body?.call_to_action_bar ? req?.body?.call_to_action_bar : "0"
+        call_to_action_bar: req?.body?.call_to_action_bar ? req?.body?.call_to_action_bar : "0",
+        site_id:req?.body?.site_id ? req?.body?.site_id : "",
+        graph_check:req?.body?.graph_check ? req?.body?.graph_check : "0",
+        inner_page_check:req?.body?.inner_page_check ? req?.body?.inner_page_check : "0"
       }
       var data1 = Object.values(obj)
       data1.push(req.params.id)
-      var sql = "update edit_project_sector set sector_name=? , alt_tag=? , listing_page_description=? , listing_page_image=? , banner_heading=? , banner_sub_heading=? , section_heading=? , short_description=? , detailed_description=? , inner_page_sector_name=? , inner_page_sector_select=? , inner_page_detailed_description=? , project_type1=? , project_type1_title=? , project_type1_description=? , project_type2=? , project_type2_title=? , project_type2_description=? , graph=? , graph_description=? , industry_report=? , lastest_news=? , lastest_description=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , call_to_action_heading=? , call_to_action_description=? , call_to_action_button_name=? , call_to_action_button_link=? , call_to_action_bar=? where edit_project_sector_id=?"
+      var sql = "update edit_project_sector set sector_name=? , alt_tag=? , listing_page_description=? , listing_page_image=? , banner_heading=? , banner_sub_heading=? , section_heading=? , short_description=? , detailed_description=? , inner_page_sector_name=? , inner_page_sector_select=? , inner_page_detailed_description=? , project_type1=? , project_type1_title=? , project_type1_description=? , project_type2=? , project_type2_title=? , project_type2_description=? , graph=? , graph_description=? , industry_report=? , lastest_news=? , lastest_description=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , call_to_action_heading=? , call_to_action_description=? , call_to_action_button_name=? , call_to_action_button_link=? , call_to_action_bar=? , site_id=? , graph_check=? , inner_page_check=? where edit_project_sector_id=?"
       con.query(sql, data1, (err, res) => {
         if (err)
           response.json(err);

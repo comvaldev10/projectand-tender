@@ -205,3 +205,18 @@
 // create table site_details(id int not null auto_increment primary key,
 //     site_country varchar(255) COLLATE utf8mb4_unicode_ci not null,
 //     site_link varchar(255) COLLATE utf8mb4_unicode_ci not null)
+
+// create table bussiness_news(bussiness_news_id int not null auto_increment primary key,
+//     bussiness_news_title varchar(255) COLLATE utf8mb4_unicode_ci,
+//   bussiness_news_select_sector varchar(255) COLLATE utf8mb4_unicode_ci,
+//   bussiness_news_country varchar(255) COLLATE utf8mb4_unicode_ci,
+//   bussiness_news_date text COLLATE utf8mb4_unicode_ci,
+//   bussiness_news_alt_tag text COLLATE utf8mb4_unicode_ci,
+//   bussiness_news_description text COLLATE utf8mb4_unicode_ci,
+//   bussiness_news_project text COLLATE utf8mb4_unicode_ci,
+//   bussiness_news_tender text COLLATE utf8mb4_unicode_ci,
+//   bussiness_news_companies text COLLATE utf8mb4_unicode_ci,
+//   seo_title varchar(255) COLLATE utf8mb4_unicode_ci,
+//   seo_description text COLLATE utf8mb4_unicode_ci,
+//   seo_keyword varchar(255) COLLATE utf8mb4_unicode_ci,
+//   seo_slug varchar(255) COLLATE utf8mb4_unicode_ci);
