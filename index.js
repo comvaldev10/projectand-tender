@@ -7,11 +7,7 @@ app.use(
     extended: true
   })
 );
-const router = express.Router();
-const routes = require("./route");
-routes.map(route => {
-  app.use(route.path, route.handler);
-});
+
 const cors = require("cors");
 var corsOptions = {
   origin: '*',
@@ -21,6 +17,12 @@ var corsOptions = {
 }
 app.use(cors(corsOptions));
 const path = require('path')
+const router = express.Router();
+const routes = require("./route");
+
+routes.map(route => {
+  app.use(route.path, route.handler);
+});
 
 const publicDirectoryPath = path.join(__dirname, '/uploads')
 
@@ -28,10 +30,6 @@ app.use(express.static(publicDirectoryPath))
 
 require("./src/app/db/mysql");
 const port = process.env.PORT || 3000;
-
-
-
-
 const helmet = require('helmet')
 // const CronJob = require('cron').CronJob;
 var xss = require("xss");
