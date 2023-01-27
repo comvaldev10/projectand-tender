@@ -1,6 +1,6 @@
 var con = require('../../../db/mysql')
 const get_bussiness_news = async (req, response) => {
-  var sql = "select * from bussiness_news_"
+  var sql = "select * from bussiness_news"
   try {
     con.query(sql, (err, res) => {
       if (err)
@@ -13,7 +13,7 @@ const get_bussiness_news = async (req, response) => {
   }
 }
 const get_bussiness_news_id = async (req, response) => {
-  var sql = "select * from bussiness_news_ where bussiness_news__id=" + req.params.id
+  var sql = "select * from bussiness_news where bussiness_news_id=" + req.params.id
   try {
     con.query(sql, (err, res) => {
       if (err)
@@ -29,33 +29,23 @@ const add_bussiness_news = async (req, response) => {
   try {
     if (req.user.role_id == 2) {
       let obj = {
-        "bussiness_news_name": req?.body?.bussiness_news_name ? req?.body?.bussiness_news_name : '',
-        "site_id": req?.body?.site_id ? req?.body?.site_id : '',
-        "sequence": req?.body?.sequence ? req?.body?.sequence : '',
-        "status": req?.body?.status ? req?.body?.status : '',
-        "tenders_bussiness_news": req?.body?.tenders_bussiness_news ? req?.body?.tenders_bussiness_news : "0",
-        "no_of_tenders": req?.body?.no_of_tenders ? req?.body?.no_of_tenders : '',
-        "projects_bussiness_news": req?.body?.projects_bussiness_news ? req?.body?.projects_bussiness_news : "0",
-        "no_of_projects": req?.body?.no_of_projects ? req?.body?.no_of_projects : '',
-        "export_to_excel_bussiness_news": req?.body?.export_to_excel_bussiness_news ? req?.body?.export_to_excel_bussiness_news : '',
-        "bussiness_news_cost": req?.body?.bussiness_news_cost ? req?.body?.bussiness_news_cost : '',
-        "addition_user_cost": req?.body?.addition_user_cost ? req?.body?.addition_user_cost : '',
-        "discount_bussiness_news": req?.body?.discount_bussiness_news ? req?.body?.discount_bussiness_news : '',
-        "discount_percentage": req?.body?.discount_percentage ? req?.body?.discount_percentage : '',
-        "date": req?.body?.date ? req?.body?.date : '',
-        "feature_title3": req?.body?.feature_title3 ? req?.body?.feature_title3 : '',
-        "feature_title1": req?.body?.feature_title1 ? req?.body?.feature_title1 : '',
-        "feature_title2": req?.body?.feature_title2 ? req?.body?.feature_title2 : '',
-        "feature_description1": req?.body?.feature_description1 ? req?.body?.feature_description1 : '',
-        "feature_description2": req?.body?.feature_description2 ? req?.body?.feature_description2 : '',
-        "feature_description3": req?.body?.feature_description3 ? req?.body?.feature_description3 : '',
-        "feature_compare1": req?.body?.feature_compare1 ? req?.body?.feature_compare1 : '',
-        "feature_compare2": req?.body?.feature_compare2 ? req?.body?.feature_compare2 : '',
-        "feature_compare3": req?.body?.feature_compare3 ? req?.body?.feature_compare3 : '',
-        "feature_compare4": req?.body?.feature_compare4 ? req?.body?.feature_compare4 : '',
-        "feature_compare5": req?.body?.feature_compare5 ? req?.body?.feature_compare5 : '',
+        bussiness_news_title: req?.body?.bussiness_news_title ? req?.body?.bussiness_news_title : '',
+        bussiness_news_select_sector: req?.body?.bussiness_news_select_sector ? req?.body?.bussiness_news_select_sector : '',
+        bussiness_news_country: req?.body?.bussiness_news_country ? req?.body?.bussiness_news_country : '',
+        bussiness_news_date: req?.body?.bussiness_news_date ? req?.body?.bussiness_news_date : '',
+        bussiness_news_alt_tag: req?.body?.bussiness_news_alt_tag ? req?.body?.bussiness_news_alt_tag : '',
+        bussiness_news_description: req?.body?.bussiness_news_description ? req?.body?.bussiness_news_description : '',
+        bussiness_news_project: req?.body?.bussiness_news_project ? req?.body?.bussiness_news_project : '',
+        bussiness_news_tender: req?.body?.bussiness_news_tender ? req?.body?.bussiness_news_tender : '',
+        bussiness_news_companies: req?.body?.bussiness_news_companies ? req?.body?.bussiness_news_companies : '',
+        seo_title:req?.body?.seo_title ? req?.body?.seo_title : '',
+        seo_description: req?.body?.seo_description ? req?.body?.seo_description : '',
+        seo_keyword: req?.body?.seo_keyword ? req?.body?.seo_keyword : '',
+        seo_slug: req?.body?.seo_slug ? req?.body?.seo_slug : '',
+        bussiness_news_status:req?.body?.bussiness_news_status ? req?.body?.bussiness_news_status : 0,
+        site_id:req?.body?.site_id ? req?.body?.site_id : ''
       }
-      var sql = "insert into bussiness_news_(bussiness_news_name,site_id,sequence,status,tenders_bussiness_news,no_of_tenders,projects_bussiness_news,no_of_projects,export_to_excel_bussiness_news,bussiness_news_cost,addition_user_cost,discount_bussiness_news,discount_percentage,date,feature_title3,feature_title1,feature_title2,feature_description1,feature_description2,feature_description3,feature_compare1,feature_compare2,feature_compare3,feature_compare4,feature_compare5) values ?"
+      var sql = "insert into bussiness_news(bussiness_news_title,bussiness_news_select_sector,bussiness_news_country,bussiness_news_date,bussiness_news_alt_tag,bussiness_news_description,bussiness_news_project,bussiness_news_tender,bussiness_news_companies,seo_title,seo_description,seo_keyword,seo_slug,bussiness_news_status,site_id) values ?"
       var data1 = [Object.values(obj)]
       con.query(sql, [data1], (err, res) => {
         if (err)
@@ -75,33 +65,23 @@ const edit_bussiness_news = async (req, response) => {
   try {
     if (req.user.role_id == 2) {
       let obj = {
-        "bussiness_news_name": req?.body?.bussiness_news_name ? req?.body?.bussiness_news_name : '',
-        "site_id": req?.body?.site_id ? req?.body?.site_id : '',
-        "sequence": req?.body?.sequence ? req?.body?.sequence : '',
-        "status": req?.body?.status ? req?.body?.status : '',
-        "tenders_bussiness_news": req?.body?.tenders_bussiness_news ? req?.body?.tenders_bussiness_news : "0",
-        "no_of_tenders": req?.body?.no_of_tenders ? req?.body?.no_of_tenders : '',
-        "projects_bussiness_news": req?.body?.projects_bussiness_news ? req?.body?.projects_bussiness_news : "0",
-        "no_of_projects": req?.body?.no_of_projects ? req?.body?.no_of_projects : '',
-        "export_to_excel_bussiness_news": req?.body?.export_to_excel_bussiness_news ? req?.body?.export_to_excel_bussiness_news : '',
-        "bussiness_news_cost": req?.body?.bussiness_news_cost ? req?.body?.bussiness_news_cost : '',
-        "addition_user_cost": req?.body?.addition_user_cost ? req?.body?.addition_user_cost : '',
-        "discount_bussiness_news": req?.body?.discount_bussiness_news ? req?.body?.discount_bussiness_news : '',
-        "discount_percentage": req?.body?.discount_percentage ? req?.body?.discount_percentage : '',
-        "date": req?.body?.date ? req?.body?.date : '',
-        "feature_title3": req?.body?.feature_title3 ? req?.body?.feature_title3 : '',
-        "feature_title1": req?.body?.feature_title1 ? req?.body?.feature_title1 : '',
-        "feature_title2": req?.body?.feature_title2 ? req?.body?.feature_title2 : '',
-        "feature_description1": req?.body?.feature_description1 ? req?.body?.feature_description1 : '',
-        "feature_description2": req?.body?.feature_description2 ? req?.body?.feature_description2 : '',
-        "feature_description3": req?.body?.feature_description3 ? req?.body?.feature_description3 : '',
-        "feature_compare1": req?.body?.feature_compare1 ? req?.body?.feature_compare1 : '',
-        "feature_compare2": req?.body?.feature_compare2 ? req?.body?.feature_compare2 : '',
-        "feature_compare3": req?.body?.feature_compare3 ? req?.body?.feature_compare3 : '',
-        "feature_compare4": req?.body?.feature_compare4 ? req?.body?.feature_compare4 : '',
-        "feature_compare5": req?.body?.feature_compare5 ? req?.body?.feature_compare5 : '',
+        bussiness_news_title: req?.body?.bussiness_news_title ? req?.body?.bussiness_news_title : '',
+        bussiness_news_select_sector: req?.body?.bussiness_news_select_sector ? req?.body?.bussiness_news_select_sector : '',
+        bussiness_news_country: req?.body?.bussiness_news_country ? req?.body?.bussiness_news_country : '',
+        bussiness_news_date: req?.body?.bussiness_news_date ? req?.body?.bussiness_news_date : '',
+        bussiness_news_alt_tag: req?.body?.bussiness_news_alt_tag ? req?.body?.bussiness_news_alt_tag : '',
+        bussiness_news_description: req?.body?.bussiness_news_description ? req?.body?.bussiness_news_description : '',
+        bussiness_news_project: req?.body?.bussiness_news_project ? req?.body?.bussiness_news_project : '',
+        bussiness_news_tender: req?.body?.bussiness_news_tender ? req?.body?.bussiness_news_tender : '',
+        bussiness_news_companies: req?.body?.bussiness_news_companies ? req?.body?.bussiness_news_companies : '',
+        seo_title:req?.body?.seo_title ? req?.body?.seo_title : '',
+        seo_description: req?.body?.seo_description ? req?.body?.seo_description : '',
+        seo_keyword: req?.body?.seo_keyword ? req?.body?.seo_keyword : '',
+        seo_slug: req?.body?.seo_slug ? req?.body?.seo_slug : '',
+        bussiness_news_status:req?.body?.bussiness_news_status ? req?.body?.bussiness_news_status : 0,
+        site_id:req?.body?.site_id ? req?.body?.site_id : ''
       }
-      var sql = "update bussiness_news_ set bussiness_news_name=? , site_id=? , sequence=? , status=? , tenders_bussiness_news=? , no_of_tenders=? , projects_bussiness_news=? , no_of_projects=? , export_to_excel_bussiness_news=? , bussiness_news_cost=? , addition_user_cost=? , discount_bussiness_news=? , discount_percentage=? , date=? , feature_title3=? , feature_title1=? , feature_title2=? , feature_description1=? , feature_description2=? , feature_description3=? , feature_compare1=? , feature_compare2=? , feature_compare3=? , feature_compare4=? , feature_compare5=? where bussiness_news__id=?"
+      var sql = "update bussiness_news set bussiness_news_title=? , bussiness_news_select_sector=? , bussiness_news_country=? , bussiness_news_date=? , bussiness_news_alt_tag=? , bussiness_news_description=? , bussiness_news_project=? , bussiness_news_tender=? , bussiness_news_companies=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , bussiness_news_status=? , site_id=? where bussiness_news_id=?"
       var data1 = Object.values(obj)
       data1.push(req.params.id)
       con.query(sql, data1, (err, res) => {
@@ -121,7 +101,7 @@ const edit_bussiness_news = async (req, response) => {
 const delete_bussiness_news = async (req, response) => {
   try {
     if (req.user.role_id == 2) {
-      var sql = "delete from bussiness_news_ where bussiness_news__id=" + req.params.id
+      var sql = "delete from bussiness_news where bussiness_news_id=" + req.params.id
       con.query(sql, (err, res) => {
         if (err)
           response.json(err);
