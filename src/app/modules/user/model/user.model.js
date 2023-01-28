@@ -220,3 +220,21 @@
 //   seo_description text COLLATE utf8mb4_unicode_ci,
 //   seo_keyword varchar(255) COLLATE utf8mb4_unicode_ci,
 //   seo_slug varchar(255) COLLATE utf8mb4_unicode_ci);
+
+
+
+
+
+// create table event(event_id int not null auto_increment primary key,
+//     event_name varchar(255) COLLATE utf8mb4_unicode_ci,
+//     event_select_sector varchar(255) COLLATE utf8mb4_unicode_ci,
+//     event_country varchar(255) COLLATE utf8mb4_unicode_ci,
+//     event_date text COLLATE utf8mb4_unicode_ci,
+//     event_alt_tag text COLLATE utf8mb4_unicode_ci,
+//     event_organiser text COLLATE utf8mb4_unicode_ci,
+//     event_venue text COLLATE utf8mb4_unicode_ci,
+//     mobile_no text COLLATE utf8mb4_unicode_ci,
+//     event_website text COLLATE utf8mb4_unicode_ci,
+//     event_email text COLLATE utf8mb4_unicode_ci,
+//     event_image text COLLATE utf8mb4_unicode_ci
+//     );
