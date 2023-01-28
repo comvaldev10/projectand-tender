@@ -98,33 +98,44 @@ const pending_user = async (req, response) => {
 const add_project = async (req, response) => {
   try {
     if (req.user.role_id == 2) {
-      var sql = `INSERT INTO project_sector_schema(project_sector)VALUE('${req.body.project_sector}')`
-      con.query(sql,(err1, res1) => {
-        if (err1)
-          response.json(err1);
-          var sql1="select * from site_details"
-          con.query(sql1,(err, res2) => {
-            if (err)
-              response.json(err);
-              res2.forEach((a)=>{
-                console.log(a.site_details_id,res1?.insertId,req?.body?.project_sector)
-              var sql2="insert into edit_project_sector(sector_name,site_id,sector_id) values ?"
-              let obj2={
-                sector_name:req?.body?.project_sector?req?.body?.project_sector:'',
-                site_id:a?.site_details_id,
-                sector_id:res1?.insertId?res1?.insertId:'',
-              }
-              var data2 = [Object.values(obj2)]
-              con.query(sql2,[data2], (err, res) => {
-                if (err)
-                  response.json(err);
+      var sql3=`select project_sector from project_sector_schema where project_sector='${req.body.project_sector}'`
+      con.query(sql3, (err, res5) => {
+        if (err)
+          return response.json(err);
+          if(!(res5[0]?.project_sector==undefined))
+          {
+            response.json("already exists")
+          }
+          else
+          {
+            var sql=`INSERT INTO project_sector_schema(project_sector)VALUE('${req.body.project_sector}')`
+            con.query(sql,(err1, res1) => {
+              if (err1)
+                response.json(err1);
+                var sql1="select * from site_details"
+                con.query(sql1,(err, res2) => {
+                  if (err)
+                    response.json(err);
+                    res2.forEach((a)=>{
+                    var sql2="insert into edit_project_sector(sector_name,site_id,sector_id) values ?"
+                    let obj2={
+                      sector_name:req?.body?.project_sector?req?.body?.project_sector:'',
+                      site_id:a?.site_details_id,
+                      sector_id:res1?.insertId?res1?.insertId:'',
+                    }
+                    var data2 = [Object.values(obj2)]
+                    con.query(sql2,[data2], (err, res) => {
+                      if (err)
+                        response.json(err);
+                    })
+                  })
+                })
+            
               })
-            })
+              response.json("inserted")
+          } 
           })
-      
-        })
-        response.json("inserted")
-    }
+        }
     else {
       req.json("unauthorised user").status(401);
     }
@@ -533,7 +544,7 @@ const add_sub_tender = async (req, response) => {
   }
 }
 const edit_project_sector = async (req, response) => {
-  try {
+    try {
     if (req.user.role_id == 2) {
       let obj = {
         sector_name: req?.body?.sector_name ? req?.body?.sector_name : " ",
@@ -630,8 +641,9 @@ const edit_project_sector1 = async (req, response) => {
         inner_page_check:req?.body?.inner_page_check ? req?.body?.inner_page_check : "0"
       }
       var data1 = Object.values(obj)
-      data1.push(req.params.id)
-      var sql = "update edit_project_sector set sector_name=? , alt_tag=? , listing_page_description=? , listing_page_image=? , banner_heading=? , banner_sub_heading=? , section_heading=? , short_description=? , detailed_description=? , inner_page_sector_name=? , inner_page_sector_select=? , inner_page_detailed_description=? , project_type1=? , project_type1_title=? , project_type1_description=? , project_type2=? , project_type2_title=? , project_type2_description=? , graph=? , graph_description=? , industry_report=? , lastest_news=? , lastest_description=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , call_to_action_heading=? , call_to_action_description=? , call_to_action_button_name=? , call_to_action_button_link=? , call_to_action_bar=? , site_id=? , graph_check=? , inner_page_check=? where edit_project_sector_id=?"
+      data1.push(req.query.sector_id)
+      data1.push(req.query.site_id)
+      var sql = "update edit_project_sector set sector_name=? , alt_tag=? , listing_page_description=? , listing_page_image=? , banner_heading=? , banner_sub_heading=? , section_heading=? , short_description=? , detailed_description=? , inner_page_sector_name=? , inner_page_sector_select=? , inner_page_detailed_description=? , project_type1=? , project_type1_title=? , project_type1_description=? , project_type2=? , project_type2_title=? , project_type2_description=? , graph=? , graph_description=? , industry_report=? , lastest_news=? , lastest_description=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , call_to_action_heading=? , call_to_action_description=? , call_to_action_button_name=? , call_to_action_button_link=? , call_to_action_bar=? , site_id=? , graph_check=? , inner_page_check=? where sector_id=? && site_id=?"
       con.query(sql, data1, (err, res) => {
         if (err)
           response.json(err);
@@ -648,7 +660,7 @@ const edit_project_sector1 = async (req, response) => {
 }
 const edit_project_sector2 = async (req, response) => {
   try {
-    var sql = "select * from edit_project_sector where edit_project_sector_id=" + req.params.id
+    var sql = "select * from edit_project_sector where soft_delete='0' && edit_project_sector_id=" + req.params.id
     con.query(sql, (err, res) => {
       if (err)
         return response.json(err);
@@ -661,7 +673,7 @@ const edit_project_sector2 = async (req, response) => {
 }
 const edit_project_sector3 = async (req, response) => {
   try {
-    var sql = "select * from edit_project_sector"
+    var sql = "select * from edit_project_sector where soft_delete='0'"
     con.query(sql, (err, res) => {
       if (err)
         return response.json(err);
