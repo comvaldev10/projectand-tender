@@ -111,8 +111,8 @@ const add_project = async (req, response) => {
               var sql2="insert into edit_project_sector(sector_name,site_id,sector_id) values ?"
               let obj2={
                 sector_name:req?.body?.project_sector?req?.body?.project_sector:'',
+                site_id:a?.site_details_id,
                 sector_id:res1?.insertId?res1?.insertId:'',
-                site_id:a?.site_details_id
               }
               var data2 = [Object.values(obj2)]
               con.query(sql2,[data2], (err, res) => {
