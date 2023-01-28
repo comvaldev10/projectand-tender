@@ -36,7 +36,6 @@ const add_event = async (req, response) => {
         event_alt_tag: req?.body?.event_alt_tag ? req?.body?.event_alt_tag : '',
         event_organiser: req?.body?.event_organiser ? req?.body?.event_organiser : '',
         event_venue: req?.body?.event_venue ? req?.body?.event_venue : '',
-        event_tender: req?.body?.event_tender ? req?.body?.event_tender : '',
         event_companies: req?.body?.event_companies ? req?.body?.event_companies : '',
         mobile_no:req?.body?.mobile_no ? req?.body?.mobile_no : '',
         event_website: req?.body?.event_website ? req?.body?.event_website : '',
