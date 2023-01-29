@@ -145,7 +145,7 @@ const add_project = async (req, response) => {
 const sub_add_project = async (req, response) => {
   try {
     if (req.user.role_id == 2) {
-      var sql3 = `select sub_project_sector from sub_project_sector_schema where sub_project_sector='${req.body.sub_project_sector}'`
+      var sql3 = `select sub_project_sector from sub_project_sector_schema where sub_project_sector='${req.body.sub_project_sector}' && sector_id='${req.body.sector_id}'`
       con.query(sql3, (err, res5) => {
         console.log(res5, "aaa")
         if (err)
@@ -154,7 +154,7 @@ const sub_add_project = async (req, response) => {
           response.json("already exists")
         }
         else {
-          var sql = `INSERT INTO sub_project_sector_schema(sub_project_sector,sector_id)VALUE('${req.body.sub_project_sector}','${req.body.sector_id}')`
+          var sql = `INSERT INTO sub_project_sector_schema(sub_project_sector,sub_sector_id)VALUE('${req.body.sub_sub_project_sector}','${req.body.sub_sector_id}')`
           con.query(sql, (err1, res1) => {
             if (err1)
               response.json(err1);
@@ -163,7 +163,7 @@ const sub_add_project = async (req, response) => {
               if (err)
                 response.json(err);
               res2.forEach((a) => {
-                var sql2 = "insert into edit_project_sub_sector(sub_sector_name,site_id,sub_sector_id,sector_id) values ?"
+                var sql2 = "insert into product(sub_sector_name,site_id,sub_sector_id,sector_id) values ?"
                 let obj2 = {
                   sub_sector_name: req?.body?.sub_project_sector ? req?.body?.sub_project_sector : '',
                   site_id: a?.site_details_id,
@@ -194,12 +194,42 @@ const sub_add_project = async (req, response) => {
 const sub_sub_add_project = async (req, response) => {
   try {
     if (req.user.role_id == 2) {
-      var sql = "INSERT INTO sub_sub_project_sector_schema(sub_sub_project_sector,sub_sector_id) VALUES ?"
-      var data1 = [Object.values(req.body)]
-      con.query(sql, [data1], (err, res) => {
+      var sql3 = `select sub_sub_project_sector from sub_sub_project_sector_schema where sub_sub_project_sector='${req.body.sub_sub_project_sector}' && sub_sector_id='${req.body.sub_sector_id}'`
+      con.query(sql3, (err, res5) => {
+        console.log(res5, "aaa")
         if (err)
-          response.json(err);
-        response.json(res);
+          return response.json(err);
+        if (!(res5[0]?.sub_project_sector == undefined)) {
+          response.json("already exists")
+        }
+        else {
+          var sql = `INSERT INTO sub_sub_project_sector_schema(sub_project_sector,sector_id)VALUE('${req.body.sub_project_sector}','${req.body.sector_id}')`
+          con.query(sql, (err1, res1) => {
+            if (err1)
+              response.json(err1);
+            var sql1 = "select * from site_details"
+            con.query(sql1, (err, res2) => {
+              if (err)
+                response.json(err);
+              res2.forEach((a) => {
+                var sql2 = "insert into edit_project_sub_sector(sub_sector_name,site_id,sub_sector_id,sector_id) values ?"
+                let obj2 = {
+                  sub_sector_name: req?.body?.sub_project_sector ? req?.body?.sub_project_sector : '',
+                  site_id: a?.site_details_id,
+                  sub_sector_id: res1?.insertId ? res1?.insertId : '',
+                  sector_id: req?.body?.sector_id ? req?.body?.sector_id : ''
+                }
+                var data2 = [Object.values(obj2)]
+                con.query(sql2, [data2], (err, res) => {
+                  if (err)
+                    response.json(err);
+                })
+              })
+            })
+
+          })
+          response.json("inserted")
+        }
       })
     }
     else {
