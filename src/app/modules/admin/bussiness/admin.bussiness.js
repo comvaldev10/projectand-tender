@@ -147,14 +147,46 @@ const add_project = async (req, response) => {
 const sub_add_project = async (req, response) => {
   try {
     if (req.user.role_id == 2) {
-      var sql = "INSERT INTO sub_project_sector_schema(sub_project_sector,sector_id) VALUES ?"
-      var data1 = [Object.values(req.body)]
-      con.query(sql, [data1], (err, res) => {
+      var sql3=`select sub_project_sector from sub_project_sector_schema where sub_project_sector='${req.body.sub_project_sector}'`
+      con.query(sql3, (err, res5) => {
+      console.log(res5,"aaa")
         if (err)
-          response.json(err);
-        response.json(res);
-      })
-    }
+          return response.json(err);
+          if(!(res5[0]?.sub_project_sector==undefined))
+          {
+            response.json("already exists")
+          }
+          else
+          {
+            var sql=`INSERT INTO sub_project_sector_schema(sub_project_sector,sector_id)VALUE('${req.body.sub_project_sector}','${req.body.sector_id}')`
+            con.query(sql,(err1, res1) => {
+              if (err1)
+                response.json(err1);
+                var sql1="select * from site_details"
+                con.query(sql1,(err, res2) => {
+                  if (err)
+                    response.json(err);
+                    res2.forEach((a)=>{
+                    var sql2="insert into edit_project_sub_sector(sub_sector_name,site_id,sub_sector_id,sector_id) values ?"
+                    let obj2={
+                      sub_sector_name:req?.body?.sub_project_sector?req?.body?.sub_project_sector:'',
+                      site_id:a?.site_details_id,
+                      sub_sector_id:res1?.insertId?res1?.insertId:'',
+                      sector_id:req?.body?.sector_id?req?.body?.sector_id:''
+                    }
+                    var data2 = [Object.values(obj2)]
+                    con.query(sql2,[data2], (err, res) => {
+                      if (err)
+                        response.json(err);
+                    })
+                  })
+                })
+            
+              })
+              response.json("inserted")
+          } 
+          })
+        }
     else {
       req.json("unauthorised user").status(401);
     }
@@ -636,14 +668,16 @@ const edit_project_sector1 = async (req, response) => {
         call_to_action_button_name: req?.body?.call_to_action_button_name ? req?.body?.call_to_action_button_name : " ",
         call_to_action_button_link: req?.body?.call_to_action_button_link ? req?.body?.call_to_action_button_link : " ",
         call_to_action_bar: req?.body?.call_to_action_bar ? req?.body?.call_to_action_bar : "0",
-        site_id:req?.body?.site_id ? req?.body?.site_id : "",
+        site_id:req?.body?.site_id ? req?.body?.site_id : req.query.site_id,
         graph_check:req?.body?.graph_check ? req?.body?.graph_check : "0",
-        inner_page_check:req?.body?.inner_page_check ? req?.body?.inner_page_check : "0"
+        inner_page_check:req?.body?.inner_page_check ? req?.body?.inner_page_check : "0",
+        publish:req?.body?.publish ? req?.body?.publish : "0",
+        sector_id:req?.body?.sector_id ? req?.body?.sector_id : req.query.sector_id
       }
       var data1 = Object.values(obj)
       data1.push(req.query.sector_id)
       data1.push(req.query.site_id)
-      var sql = "update edit_project_sector set sector_name=? , alt_tag=? , listing_page_description=? , listing_page_image=? , banner_heading=? , banner_sub_heading=? , section_heading=? , short_description=? , detailed_description=? , inner_page_sector_name=? , inner_page_sector_select=? , inner_page_detailed_description=? , project_type1=? , project_type1_title=? , project_type1_description=? , project_type2=? , project_type2_title=? , project_type2_description=? , graph=? , graph_description=? , industry_report=? , lastest_news=? , lastest_description=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , call_to_action_heading=? , call_to_action_description=? , call_to_action_button_name=? , call_to_action_button_link=? , call_to_action_bar=? , site_id=? , graph_check=? , inner_page_check=? where sector_id=? && site_id=?"
+      var sql = "update edit_project_sector set sector_name=? , alt_tag=? , listing_page_description=? , listing_page_image=? , banner_heading=? , banner_sub_heading=? , section_heading=? , short_description=? , detailed_description=? , inner_page_sector_name=? , inner_page_sector_select=? , inner_page_detailed_description=? , project_type1=? , project_type1_title=? , project_type1_description=? , project_type2=? , project_type2_title=? , project_type2_description=? , graph=? , graph_description=? , industry_report=? , lastest_news=? , lastest_description=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , call_to_action_heading=? , call_to_action_description=? , call_to_action_button_name=? , call_to_action_button_link=? , call_to_action_bar=? , site_id=? , graph_check=? , inner_page_check=?, publish=? , sector_id=? where sector_id=? && site_id=?"
       con.query(sql, data1, (err, res) => {
         if (err)
           response.json(err);
@@ -660,7 +694,7 @@ const edit_project_sector1 = async (req, response) => {
 }
 const edit_project_sector2 = async (req, response) => {
   try {
-    var sql = "select * from edit_project_sector where soft_delete='0' && edit_project_sector_id=" + req.params.id
+    var sql = "select * from edit_project_sector where soft_delete='0' && sector_id="+req.query.sector_id+ "&& site_id="+req.query.site_id
     con.query(sql, (err, res) => {
       if (err)
         return response.json(err);
@@ -916,10 +950,14 @@ const edit_project_sub_sector = async (req, response) => {
         call_to_action_sub_title: req?.body?.call_to_action_sub_title ? req?.body?.call_to_action_sub_title : " ",
         call_to_action_button_name: req?.body?.call_to_action_button_name ? req?.body?.call_to_action_button_name : " ",
         call_to_action_button_link: req?.body?.call_to_action_button_link ? req?.body?.call_to_action_button_link : " ",
-        call_to_action_bar: req?.body?.call_to_action_bar ? req?.body?.call_to_action_bar : "0"
+        call_to_action_bar: req?.body?.call_to_action_bar ? req?.body?.call_to_action_bar : "0",
+        publish:req?.body?.publish ? req?.body?.publish : "0",
+        sector_id:req?.body?.sector_id ? req?.body?.sector_id : req.query.sector_id,
+        sub_sector_name: req?.body?.sub_sector_name ? req?.body?.sub_sector_name : "",
+        sub_sector_id:req?.body?.sub_sector_id ? req?.body?.sub_sector_id : req.query.sub_sector_id,
       }
       var data1 = [Object.values(obj)]
-      var sql = "INSERT INTO edit_project_sub_sector(alt_tag,page_image,banner_heading,banner_sub_heading,section_heading,short_description,detailed_description,product_sector_name,product_sector_select,product_detailed_description,project_type1,project_type1_title,project_type1_description,project_type2,project_type2_title,project_type2_description,lastest_sub_title,seo_title,seo_description,seo_keyword,seo_slug,call_to_action_sub_title,call_to_action_button_name,call_to_action_button_link,call_to_action_bar) VALUES ?"
+      var sql = "INSERT INTO edit_project_sub_sector(alt_tag,page_image,banner_heading,banner_sub_heading,section_heading,short_description,detailed_description,product_sector_name,product_sector_select,product_detailed_description,project_type1,project_type1_title,project_type1_description,project_type2,project_type2_title,project_type2_description,lastest_sub_title,seo_title,seo_description,seo_keyword,seo_slug,call_to_action_sub_title,call_to_action_button_name,call_to_action_button_link,call_to_action_bar,publish,sector_id,sub_sector_name) VALUES ?"
       con.query(sql, [data1], (err, res) => {
         if (err)
           response.json(err);
@@ -936,6 +974,7 @@ const edit_project_sub_sector = async (req, response) => {
 }
 const edit_project_sub_sector1 = async (req, response) => {
   try {
+    console.log(req.query,"aa")
     if (req.user.role_id == 2) {
       let obj = {
         alt_tag: req?.body?.alt_tag ? req?.body?.alt_tag : " ",
@@ -962,11 +1001,15 @@ const edit_project_sub_sector1 = async (req, response) => {
         call_to_action_sub_title: req?.body?.call_to_action_sub_title ? req?.body?.call_to_action_sub_title : " ",
         call_to_action_button_name: req?.body?.call_to_action_button_name ? req?.body?.call_to_action_button_name : " ",
         call_to_action_button_link: req?.body?.call_to_action_button_link ? req?.body?.call_to_action_button_link : " ",
-        call_to_action_bar: req?.body?.call_to_action_bar ? req?.body?.call_to_action_bar : "0"
+        call_to_action_bar: req?.body?.call_to_action_bar ? req?.body?.call_to_action_bar : "0",
+        publish:req?.body?.publish ? req?.body?.publish : "0",
+        site_id:req?.body?.site_id ? req?.body?.site_id : req.query.site_id,
+        sub_sector_id:req?.body?.sub_sector_id ? req?.body?.sub_sector_id : req.query.sub_sector_id,
       }
       var data1 = Object.values(obj)
-      data1.push(req.params.id)
-      var sql = "update edit_project_sub_sector set alt_tag=? , page_image=? , banner_heading=? , banner_sub_heading=? , section_heading=? , short_description=? , detailed_description=? , product_sector_name=? , product_sector_select=? , product_detailed_description=? , project_type1=? , project_type1_title=? , project_type1_description=? , project_type2=? , project_type2_title=? , project_type2_description=? , lastest_sub_title=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , call_to_action_sub_title=? , call_to_action_button_name=? , call_to_action_button_link=? , call_to_action_bar=? where edit_project_sub_sector_id=?"
+      data1.push(req.query.site_id)
+      data1.push(req.query.sub_sector_id)
+      var sql = "update edit_project_sub_sector set alt_tag=? , page_image=? , banner_heading=? , banner_sub_heading=? , section_heading=? , short_description=? , detailed_description=? , product_sector_name=? , product_sector_select=? , product_detailed_description=? , project_type1=? , project_type1_title=? , project_type1_description=? , project_type2=? , project_type2_title=? , project_type2_description=? , lastest_sub_title=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , call_to_action_sub_title=? , call_to_action_button_name=? , call_to_action_button_link=? , call_to_action_bar=? , publish=? , site_id=? , sub_sector_id=? where site_id=? && sub_sector_id=?"
       con.query(sql, data1, (err, res) => {
         if (err)
           response.json(err);
@@ -983,7 +1026,7 @@ const edit_project_sub_sector1 = async (req, response) => {
 }
 const edit_project_sub_sector2 = async (req, response) => {
   try {
-    var sql = "select * from edit_project_sub_sector where edit_project_sub_sector_id=" + req.params.id
+    var sql = "select * from edit_project_sub_sector where soft_delete='0' && sub_sector_id="+req.query.sub_sector_id+ "&& site_id="+req.query.site_id
     con.query(sql, (err, res) => {
       if (err)
         return response.json(err);
@@ -1009,7 +1052,7 @@ const edit_project_sub_sector3 = async (req, response) => {
 }
 const edit_project_sub_sector4 = async (req, response) => {
   try {
-    var sql = "delete from edit_project_sub_sector where edit_project_sub_sector_id="+req.params.id
+    var sql = "update edit_project_sub_sector set where edit_project_sub_sector_id="+req.params.id
     con.query(sql, (err, res) => {
       if (err)
         return response.json(err);
