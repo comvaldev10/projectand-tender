@@ -143,12 +143,10 @@ const add_project = async (req, response) => {
   }
 }
 const sub_add_project = async (req, response) => {
-  console.log(req.body,"ss")
   try {
     if (req.user.role_id == 2) {
       var sql3 = `select sub_project_sector from sub_project_sector_schema where sub_project_sector='${req.body.sub_project_sector}' && sector_id='${req.body.sector_id}'`
       con.query(sql3, (err, res5) => {
-        console.log(res5, "aaa")
         if (err)
           return response.json(err);
         if (!(res5[0]?.sub_project_sector == undefined)) {
@@ -158,15 +156,14 @@ const sub_add_project = async (req, response) => {
           var sql = `INSERT INTO sub_project_sector_schema(sub_project_sector,sector_id)VALUE('${req.body.sub_project_sector}','${req.body.sector_id}')`
           con.query(sql, (err1, res1) => {
             if (err1)
-              console.log(res1,"aaa")
-            var sql1 = "select * from site_details"
+              var sql1 = "select * from site_details"
             con.query(sql1, (err, res2) => {
               if (err)
                 response.json(err);
               res2.forEach((a) => {
                 var sql2 = "insert into edit_project_sub_sector(sub_sector_name,site_id,sub_sector_id,sector_id) values ?"
                 let obj2 = {
-                  sub_sector_name:req?.body?.sub_project_sector?req?.body?.sub_project_sector : '',
+                  sub_sector_name: req?.body?.sub_project_sector ? req?.body?.sub_project_sector : '',
                   site_id: a?.site_details_id,
                   sub_sector_id: res1?.insertId ? res1?.insertId : '',
                   sector_id: req?.body?.sector_id ? req?.body?.sector_id : ''
@@ -206,12 +203,11 @@ const sub_sub_add_project = async (req, response) => {
           var sql = `INSERT INTO sub_sub_project_sector_schema(sub_sub_project_sector,sub_sector_id)VALUE('${req.body.sub_sub_project_sector}','${req.body.sub_sector_id}')`
           con.query(sql, (err1, res1) => {
             if (err1)
-            response.json(err1);
+              response.json(err1);
             var sql1 = "select * from site_details"
             con.query(sql1, (err, res2) => {
               if (err)
                 response.json(err);
-                console.group(res2,"ss")
               res2.forEach((a) => {
                 var sql2 = "insert into editproduct(sub_sub_sector_name,site_id,sub_sub_sector_id) values ?"
                 let obj2 = {
@@ -219,7 +215,6 @@ const sub_sub_add_project = async (req, response) => {
                   site_id: a?.site_details_id,
                   sub_sub_sector_id: req?.body?.sub_sector_id ? req?.body?.sub_sector_id : ''
                 }
-                console.log(obj2,"aa")
                 var data2 = [Object.values(obj2)]
                 con.query(sql2, [data2], (err, res) => {
                   if (err)
@@ -731,22 +726,21 @@ const edit_project_sector1 = async (req, response) => {
 const edit_project_sector2 = async (req, response) => {
   try {
     var sql3 = `select soft_delete from project_sector_schema where project_id='${req.query.sector_id}'`
-      con.query(sql3, (err, res5) => {
-        if (err)
-          return response.json(err);
-        if (res5[0]?.soft_delete == '1' || res5[0]?.soft_delete == 1) {
-          response.json("already deleted")
-        }
-        else
-        {
-          var sql = "select * from edit_project_sector inner join project_sector_schema on project_sector_schema.project_id=edit_project_sector.sector_id inner join site_details on site_details.site_details_id=edit_project_sector.site_id  where edit_project_sector.soft_delete='0' && edit_project_sector.sector_id=" + req.query.sector_id + "&& edit_project_sector.site_id=" + req.query.site_id
+    con.query(sql3, (err, res5) => {
+      if (err)
+        return response.json(err);
+      if (res5[0]?.soft_delete == '1' || res5[0]?.soft_delete == 1) {
+        response.json("already deleted")
+      }
+      else {
+        var sql = "select * from edit_project_sector inner join project_sector_schema on project_sector_schema.project_id=edit_project_sector.sector_id inner join site_details on site_details.site_details_id=edit_project_sector.site_id  where edit_project_sector.soft_delete='0' && edit_project_sector.sector_id=" + req.query.sector_id + "&& edit_project_sector.site_id=" + req.query.site_id
         con.query(sql, (err, res) => {
           if (err)
             return response.json(err);
           response.json(res);
         })
-        }
-      })
+      }
+    })
   }
   catch (err) {
     return err
@@ -1191,40 +1185,39 @@ const product_level = async (req, response) => {
 const product_level1 = async (req, response) => {
   try {
     if (req.user.role_id == 2) {
-      let obj = {
-        alt_tag: req?.body?.alt_tag ? req?.body?.alt_tag : " ",
-        page_image: req?.body?.page_image ? req?.body?.page_image : " ",
-        banner_heading: req?.body?.banner_heading ? req?.body?.banner_heading : " ",
-        banner_sub_heading: req?.body?.banner_sub_heading ? req?.body?.banner_sub_heading : " ",
-        section_heading: req?.body?.section_heading ? req?.body?.section_heading : " ",
-        short_description: req?.body?.short_description ? req?.body?.short_description : " ",
-        detailed_description: req?.body?.detailed_description ? req?.body?.detailed_description : " ",
-        product_sector_name: req?.body?.product_sector_name ? req?.body?.product_sector_name : " ",
-        product_sector_select: req?.body?.product_sector_select ? req?.body?.product_sector_select : " ",
-        product_detailed_description: req?.body?.product_detailed_description ? req?.body?.product_detailed_description : " ",
-        project_type1: req?.body?.project_type1 ? req?.body?.project_type1 : " ",
-        project_type1_title: req?.body?.project_type1_title ? req?.body?.project_type1_title : " ",
-        project_type1_description: req?.body?.project_type1_description ? req?.body?.project_type1_description : " ",
-        project_type2: req?.body?.project_type2 ? req?.body?.project_type2 : " ",
-        project_type2_title: req?.body?.project_type2_title ? req?.body?.project_type2_title : " ",
-        project_type2_description: req?.body?.project_type2_description ? req?.body?.project_type2_description : " ",
-        lastest_sub_title: req?.body?.lastest_sub_title ? req?.body?.lastest_sub_title : " ",
-        seo_title: req?.body?.seo_title ? req?.body?.seo_title : " ",
-        seo_description: req?.body?.seo_description ? req?.body?.seo_description : " ",
-        seo_keyword: req?.body?.seo_keyword ? req?.body?.seo_keyword : " ",
-        seo_slug: req?.body?.seo_slug ? req?.body?.seo_slug : " ",
-        call_to_action_sub_title: req?.body?.call_to_action_sub_title ? req?.body?.call_to_action_sub_title : " ",
-        call_to_action_button_name: req?.body?.call_to_action_button_name ? req?.body?.call_to_action_button_name : " ",
-        call_to_action_button_link: req?.body?.call_to_action_button_link ? req?.body?.call_to_action_button_link : " ",
-        call_to_action_bar: req?.body?.call_to_action_bar ? req?.body?.call_to_action_bar : "0"
-      }
-      var data1 = Object.values(obj)
-      data1.push(req.params.id)
-      var sql = "update edit_project_sub_sector set alt_tag=? , page_image=? , banner_heading=? , banner_sub_heading=? , section_heading=? , short_description=? , detailed_description=? , product_sector_name=? , product_sector_select=? , product_detailed_description=? , project_type1=? , project_type1_title=? , project_type1_description=? , project_type2=? , project_type2_title=? , project_type2_description=? , lastest_sub_title=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , call_to_action_sub_title=? , call_to_action_button_name=? , call_to_action_button_link=? , call_to_action_bar=? where edit_project_sub_sector_id=?"
-      con.query(sql, data1, (err, res) => {
+      console.log(req.query,"ll")
+      var sql3 = `select soft_delete from sub_sub_project_sector_schema where sub_sub_project_id='${req.query.sub_sub_sector_id}'`
+      con.query(sql3, (err, res5) => {
         if (err)
-          response.json(err);
-        response.json(res);
+          return response.json(err);
+        if (res5[0]?.soft_delete == '1' || res5[0]?.soft_delete == 1) {
+          response.json("already exists")
+        }
+        else {
+          let obj = {
+            product_name: req?.body?.product_name ? req?.body?.product_name : " ",
+            product_alt_tag: req?.body?.product_alt_tag ? req?.body?.product_alt_tag : "",
+            product_description: req?.body?.product_description ? req?.body?.product_description : "",
+            product_status: req?.body?.product_status ? req?.body?.product_status : "",
+            product_image: req?.body?.product_image ? req?.body?.product_image : "",
+            seo_title: req?.body?.seo_title ? req?.body?.seo_title : " ",
+            seo_description: req?.body?.seo_description ? req?.body?.seo_description : " ",
+            seo_keyword: req?.body?.seo_keyword ? req?.body?.seo_keyword : " ",
+            seo_slug: req?.body?.seo_slug ? req?.body?.seo_slug : " ",
+            publish: req?.body?.publish ? req?.body?.publish : "0",
+            sub_sub_sector_id: req?.body?.sub_sub_sector_id ? req?.body?.sub_sub_sector_id :req.query.sub_sub_sector_id,
+            site_id: req?.body?.site_id ? req?.body?.site_id : req?.query?.site_id
+          }
+          var data1 = Object.values(obj)
+          data1.push(req.query.sub_sub_sector_id)
+          data1.push(req.query.site_id)
+          var sql = "update editproduct set product_name=? , product_alt_tag=? , product_description=? , product_status=? , product_image=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , publish=? , sub_sub_sector_id=?, site_id=? where sub_sub_sector_id=? && site_id=?"
+          con.query(sql, data1, (err, res) => {
+            if (err)
+              response.json(err);
+            response.json(res);
+          })
+        }
       })
     }
     else {
@@ -1237,11 +1230,21 @@ const product_level1 = async (req, response) => {
 }
 const product_level2 = async (req, response) => {
   try {
-    var sql = "select * from edit_project_sub_sector where edit_project_sub_sector_id=" + req.params.id
-    con.query(sql, (err, res) => {
+    var sql3 = `select soft_delete from sub_sub_project_sector_schema where sub_sector_id='${req.query.sub_sector_id}'`
+    con.query(sql3, (err, res5) => {
       if (err)
         return response.json(err);
-      response.json(res);
+      if (res5[0]?.soft_delete == '1' || res5[0]?.soft_delete == 1) {
+        response.json("already deleted")
+      }
+      else {
+        var sql = "select * from editproduct inner join sub_sub_project_sector_schema on sub_sub_project_sector_schema.sub_sub_project_id=editproduct.sub_sub_sector_id inner join site_details on site_details.site_details_id=editproduct.site_id  where editproduct.soft_delete='0' && editproduct.sub_sub_sector_id=" + req.query.sub_sub_sector_id + " && editproduct.site_id=" + req.query.site_id
+        con.query(sql, (err, res) => {
+          if (err)
+            return response.json(err);
+          response.json(res);
+        })
+      }
     })
   }
   catch (err) {
