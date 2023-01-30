@@ -213,13 +213,13 @@ const sub_sub_add_project = async (req, response) => {
                 response.json(err);
                 console.group(res2,"ss")
               res2.forEach((a) => {
-                var sql2 = "insert into editproduct(sub_sub_sector_name,site_id,sub_sector_id) values ?"
+                var sql2 = "insert into editproduct(sub_sub_sector_name,site_id,sub_sub_sector_id) values ?"
                 let obj2 = {
                   sub_sub_sector_name: req?.body?.sub_sub_project_sector ? req?.body?.sub_sub_project_sector : '',
                   site_id: a?.site_details_id,
-                  sub_sector_id: req?.body?.sub_sector_id ? req?.body?.sub_sector_id : ''
+                  sub_sub_sector_id: req?.body?.sub_sector_id ? req?.body?.sub_sector_id : ''
                 }
-                console.log(obj,"aa")
+                console.log(obj2,"aa")
                 var data2 = [Object.values(obj2)]
                 con.query(sql2, [data2], (err, res) => {
                   if (err)
@@ -1026,7 +1026,6 @@ const edit_project_sub_sector1 = async (req, response) => {
       con.query(sql3, (err, res5) => {
         if (err)
           return response.json(err);
-        console.log(res5, "aa")
         if (res5[0]?.soft_delete == '1' || res5[0]?.soft_delete == 1) {
           response.json("already exists")
         }
@@ -1087,7 +1086,6 @@ const edit_project_sub_sector2 = async (req, response) => {
     con.query(sql3, (err, res5) => {
       if (err)
         return response.json(err);
-      console.log(res5, "aa")
       if (res5[0]?.soft_delete == '1' || res5[0]?.soft_delete == 1) {
         response.json("already deleted")
       }
