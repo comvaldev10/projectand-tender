@@ -156,6 +156,7 @@ const sub_add_project = async (req, response) => {
           var sql = `INSERT INTO sub_project_sector_schema(sub_project_sector,sector_id)VALUE('${req.body.sub_project_sector}','${req.body.sector_id}')`
           con.query(sql, (err1, res1) => {
             if (err1)
+            response.json(err1)
               var sql1 = "select * from site_details"
             con.query(sql1, (err, res2) => {
               if (err)
@@ -190,6 +191,7 @@ const sub_add_project = async (req, response) => {
   }
 }
 const sub_sub_add_project = async (req, response) => {
+  console.log(req.body,"www")
   try {
     if (req.user.role_id == 2) {
       var sql3 = `select sub_sub_project_sector from sub_sub_project_sector_schema where sub_sub_project_sector='${req.body.sub_sub_project_sector}' && sub_sector_id='${req.body.sub_sector_id}'`
@@ -204,6 +206,7 @@ const sub_sub_add_project = async (req, response) => {
           con.query(sql, (err1, res1) => {
             if (err1)
               response.json(err1);
+              console.log(res1,"ff")
             var sql1 = "select * from site_details"
             con.query(sql1, (err, res2) => {
               if (err)
