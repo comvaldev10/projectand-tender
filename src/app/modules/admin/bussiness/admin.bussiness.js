@@ -143,6 +143,7 @@ const add_project = async (req, response) => {
   }
 }
 const sub_add_project = async (req, response) => {
+  console.log(req.body,"ss")
   try {
     if (req.user.role_id == 2) {
       var sql3 = `select sub_project_sector from sub_project_sector_schema where sub_project_sector='${req.body.sub_project_sector}' && sector_id='${req.body.sector_id}'`
@@ -154,10 +155,10 @@ const sub_add_project = async (req, response) => {
           response.json("already exists")
         }
         else {
-          var sql = `INSERT INTO sub_project_sector_schema(sub_project_sector,sub_sector_id)VALUE('${req.body.sub_sub_project_sector}','${req.body.sub_sector_id}')`
+          var sql = `INSERT INTO sub_project_sector_schema(sub_project_sector,sector_id)VALUE('${req.body.sub_project_sector}','${req.body.sector_id}')`
           con.query(sql, (err1, res1) => {
             if (err1)
-              response.json(err1);
+              console.log(res1,"aaa")
             var sql1 = "select * from site_details"
             con.query(sql1, (err, res2) => {
               if (err)
@@ -740,7 +741,7 @@ const edit_project_sector2 = async (req, response) => {
         }
         else
         {
-          var sql = "select * from edit_project_sector where soft_delete='0' && sector_id=" + req.query.sector_id + "&& site_id=" + req.query.site_id
+          var sql = "select * from edit_project_sector inner join project_sector_schema on project_sector_schema.project_id=edit_project_sector.sector_id inner join site_details on site_details.site_details_id=edit_project_sector.site_id  where edit_project_sector.soft_delete='0' && edit_project_sector.sector_id=" + req.query.sector_id + "&& edit_project_sector.site_id=" + req.query.site_id
         con.query(sql, (err, res) => {
           if (err)
             return response.json(err);
@@ -1093,7 +1094,7 @@ const edit_project_sub_sector2 = async (req, response) => {
         response.json("already deleted")
       }
       else {
-        var sql = "select * from edit_project_sub_sector where soft_delete='0' && sub_sector_id=" + req.query.sub_sector_id + "&& site_id=" + req.query.site_id
+        var sql = "select * from edit_project_sub_sector inner join sub_project_sector_schema on sub_project_sector_schema.sub_project_id=edit_project_sub_sector.sub_sector_id inner join site_details on site_details.site_details_id=edit_project_sub_sector.site_id where edit_project_sub_sector.soft_delete='0' && edit_project_sub_sector.sub_sector_id=" + req.query.sub_sector_id + " && edit_project_sub_sector.site_id=" + req.query.site_id
         con.query(sql, (err, res) => {
           if (err)
             return response.json(err);
