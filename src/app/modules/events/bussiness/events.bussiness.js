@@ -1,6 +1,6 @@
 var con = require('../../../db/mysql')
 const get_event = async (req, response) => {
-  var sql = "select * from event"
+  var sql = "select * from event where soft_delete=0"
   try {
     con.query(sql, (err, res) => {
       if (err)
@@ -13,7 +13,7 @@ const get_event = async (req, response) => {
   }
 }
 const get_event_id = async (req, response) => {
-  var sql = "select * from event where event_id=" + req.params.id
+  var sql = "select * from event where soft_delete=0 && event_id=" + req.params.id
   try {
     con.query(sql, (err, res) => {
       if (err)
