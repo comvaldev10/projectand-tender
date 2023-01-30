@@ -227,7 +227,6 @@ const sub_sub_add_project = async (req, response) => {
                 })
               })
             })
-
           })
           response.json("inserted")
         }
