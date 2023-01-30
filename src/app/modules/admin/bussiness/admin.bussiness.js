@@ -211,7 +211,7 @@ const sub_sub_add_project = async (req, response) => {
             con.query(sql1, (err, res2) => {
               if (err)
                 response.json(err);
-                console.group(res2m,"ss")
+                console.group(res2,"ss")
               res2.forEach((a) => {
                 var sql2 = "insert into editproduct(sub_sub_sector_name,site_id,sub_sector_id) values ?"
                 let obj2 = {
