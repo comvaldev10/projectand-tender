@@ -65,23 +65,22 @@ const edit_event = async (req, response) => {
   try {
     if (req.user.role_id == 2) {
       let obj = {
-        event_title: req?.body?.event_title ? req?.body?.event_title : '',
+        event_name: req?.body?.event_name ? req?.body?.event_name : '',
         event_select_sector: req?.body?.event_select_sector ? req?.body?.event_select_sector : '',
         event_country: req?.body?.event_country ? req?.body?.event_country : '',
         event_date: req?.body?.event_date ? req?.body?.event_date : '',
         event_alt_tag: req?.body?.event_alt_tag ? req?.body?.event_alt_tag : '',
-        event_description: req?.body?.event_description ? req?.body?.event_description : '',
-        event_project: req?.body?.event_project ? req?.body?.event_project : '',
-        event_tender: req?.body?.event_tender ? req?.body?.event_tender : '',
+        event_organiser: req?.body?.event_organiser ? req?.body?.event_organiser : '',
+        event_venue: req?.body?.event_venue ? req?.body?.event_venue : '',
         event_companies: req?.body?.event_companies ? req?.body?.event_companies : '',
-        seo_title:req?.body?.seo_title ? req?.body?.seo_title : '',
-        seo_description: req?.body?.seo_description ? req?.body?.seo_description : '',
-        seo_keyword: req?.body?.seo_keyword ? req?.body?.seo_keyword : '',
-        seo_slug: req?.body?.seo_slug ? req?.body?.seo_slug : '',
+        mobile_no:req?.body?.mobile_no ? req?.body?.mobile_no : '',
+        event_website: req?.body?.event_website ? req?.body?.event_website : '',
+        event_image: req?.body?.event_image ? req?.body?.event_image : '',
+        event_email: req?.body?.event_email ? req?.body?.event_email : '',
         event_status:req?.body?.event_status ? req?.body?.event_status : 0,
-        site_id:req?.body?.site_id ? req?.body?.site_id : ''
+        site_id:req?.body?.site_id ? req?.body?.site_id : '',
       }
-      var sql = "update event set event_title=? , event_select_sector=? , event_country=? , event_date=? , event_alt_tag=? , event_description=? , event_project=? , event_tender=? , event_companies=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , event_status=? , site_id=? where event_id=?"
+      var sql = "update event set event_name=?,event_select_sector=?,event_country=?,event_date=?,event_alt_tag=?,event_organiser=?,event_venue=?,event_companies=?,mobile_no=?,event_website=?,event_image=?,event_email=?,event_status=?,site_id=? where event_id=?"
       var data1 = Object.values(obj)
       data1.push(req.params.id)
       con.query(sql, data1, (err, res) => {
