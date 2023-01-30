@@ -164,11 +164,12 @@ const sub_add_project = async (req, response) => {
               if (err)
                 response.json(err);
               res2.forEach((a) => {
-                var sql2 = "insert into product(sub_sector_name,site_id,sub_sector_id) values ?"
+                var sql2 = "insert into edit_project_sub_sector(sub_sector_name,site_id,sub_sector_id,sector_id) values ?"
                 let obj2 = {
-                  sub_sector_name: req?.body?.sub_project_sector ? req?.body?.sub_project_sector : '',
+                  sub_sector_name:req?.body?.sub_project_sector?req?.body?.sub_project_sector : '',
                   site_id: a?.site_details_id,
-                  sub_sector_id: req?.body?.sector_id? req?.body?.sector_id: '',
+                  sub_sector_id: res1?.insertId ? res1?.insertId : '',
+                  sector_id: req?.body?.sector_id ? req?.body?.sector_id : ''
                 }
                 var data2 = [Object.values(obj2)]
                 con.query(sql2, [data2], (err, res) => {
@@ -728,7 +729,6 @@ const edit_project_sector1 = async (req, response) => {
     return err
   }
 }
-
 const edit_project_sector2 = async (req, response) => {
   try {
     var sql3 = `select soft_delete from project_sector_schema where project_id='${req.query.sector_id}'`
