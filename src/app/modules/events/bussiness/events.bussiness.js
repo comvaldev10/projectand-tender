@@ -100,6 +100,13 @@ const edit_event = async (req, response) => {
 const delete_event = async (req, response) => {
   try {
     if (req.user.role_id == 2) {
+      var sql1="select soft_delete from event where event_id=" + req.params.id 
+      con.query(sql1, (err, res) => {
+        if (err)
+          response.json(err);
+        console.log(res)
+      })
+
       var sql = "delete from event where event_id=" + req.params.id
       con.query(sql, (err, res) => {
         if (err)
@@ -110,6 +117,7 @@ const delete_event = async (req, response) => {
     else {
       response.json("unauthorised user").status(401);
     }
+
   }
   catch (err) {
     return err

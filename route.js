@@ -3,6 +3,7 @@ const plan_route=require('./src/app/modules/plan/routes/plan.routes')
 const admin_route=require('./src/app/modules/admin/routes/admin.routes')
 const site_route=require('./src/app/modules/site_details/routes/site_details.routes')
 const bussiness_route=require('./src/app/modules/bussinessnews/routes/bussinessnews.routes')
+const event=require('./src/app/modules/events/routes/events.routes')
 module.exports = [{
     path: "/api/user",
     handler: user_route
@@ -22,5 +23,9 @@ module.exports = [{
   {
     path: "/api/bussiness_news",
     handler: bussiness_route
+  },
+  {
+    path: "/api/event",
+    handler:event
   },
 ]
