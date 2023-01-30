@@ -27,6 +27,7 @@ const get_event_id = async (req, response) => {
 }
 const add_event = async (req, response) => {
   try {
+    console.log(req.body,"aa")
     if (req.user.role_id == 2) {
       let obj = {
         event_name: req?.body?.event_name ? req?.body?.event_name : '',
@@ -44,7 +45,7 @@ const add_event = async (req, response) => {
         event_status:req?.body?.event_status ? req?.body?.event_status : 0,
         site_id:req?.body?.site_id ? req?.body?.site_id : '',
       }
-      var sql = "insert into event(event_name,event_select_sector,event_country,event_date,event_alt_tag,event_organiser,event_venue,mobile_no,event_website,seo_title,seo_description,seo_keyword,seo_slug,event_status,site_id) values ?"
+      var sql = "insert into event(event_name,event_select_sector,event_country,event_date,event_alt_tag,event_organiser,event_venue,mobile_no,event_website,event_image,event_image,event_email,event_status,site_id) values ?"
       var data1 = [Object.values(obj)]
       con.query(sql, [data1], (err, res) => {
         if (err)
