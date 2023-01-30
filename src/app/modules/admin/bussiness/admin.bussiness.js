@@ -216,7 +216,7 @@ const sub_sub_add_project = async (req, response) => {
                 let obj2 = {
                   sub_sub_sector_name: req?.body?.sub_sub_project_sector ? req?.body?.sub_sub_project_sector : '',
                   site_id: a?.site_details_id,
-                  sub_sub_sector_id: req?.body?.sub_sector_id ? req?.body?.sub_sector_id : ''
+                  sub_sub_sector_id: res1?.insertId ? res1?.insertId : '',
                 }
                 var data2 = [Object.values(obj2)]
                 con.query(sql2, [data2], (err, res) => {
