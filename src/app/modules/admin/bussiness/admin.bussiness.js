@@ -1268,4 +1268,17 @@ const product_level3 = async (req, response) => {
     return err
   }
 }
-module.exports = { product_level, product_level1, product_level2, product_level3, search_tender, edit_project_sub_sector4, edit_project_sub_sector, edit_project_sub_sector1, edit_project_sub_sector2, edit_project_sub_sector3, delete_sub_project, delete_tender, delete_sub_tender, update_sub_tender, update_tender, update_sub_project, update_sub_sub_project, update_project, edit_project_sector1, edit_project_sector3, add_tender, add_sub_tender, login, add_sub_admin, what_we_do, what_we_do1, what_we_do2, what_we_do3, get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id, edit_project_sector, edit_project_sector2, delete_project, delete_sub_sub_project };
+const product_level4 = async (req, response) => {
+  try {
+    var sql = `select * from editproduct where soft_delete='0' && site_id='${req.params.id}'`
+    con.query(sql, (err, res) => {
+      if (err)
+        return response.json(err);
+      response.json(res);
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+module.exports = { product_level,product_level4, product_level1, product_level2, product_level3, search_tender, edit_project_sub_sector4, edit_project_sub_sector, edit_project_sub_sector1, edit_project_sub_sector2, edit_project_sub_sector3, delete_sub_project, delete_tender, delete_sub_tender, update_sub_tender, update_tender, update_sub_project, update_sub_sub_project, update_project, edit_project_sector1, edit_project_sector3, add_tender, add_sub_tender, login, add_sub_admin, what_we_do, what_we_do1, what_we_do2, what_we_do3, get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id, edit_project_sector, edit_project_sector2, delete_project, delete_sub_sub_project };
