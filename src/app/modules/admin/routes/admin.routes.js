@@ -47,5 +47,5 @@ router.delete('/edit_project_sub_sector/:id',authenticate,edit_project_sub_secto
 router.put('/product_level',authenticate,product_level1)
 router.get('/product_level',product_level2)
 router.delete('/product_level/:id',authenticate,product_level3)
-router.get('/product_level/:id',product_level4)
+router.get('/product_level1/:id',product_level4)
 module.exports = router;
