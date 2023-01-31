@@ -1201,7 +1201,7 @@ const product_level1 = async (req, response) => {
             product_name: req?.body?.product_name ? req?.body?.product_name : " ",
             product_alt_tag: req?.body?.product_alt_tag ? req?.body?.product_alt_tag : "",
             product_description: req?.body?.product_description ? req?.body?.product_description : "",
-            product_status: req?.body?.product_status ? req?.body?.product_status : "",
+            product_status: req?.body?.product_status ? req?.body?.product_status : "0",
             product_image: req?.body?.product_image ? req?.body?.product_image : "",
             seo_title: req?.body?.seo_title ? req?.body?.seo_title : " ",
             seo_description: req?.body?.seo_description ? req?.body?.seo_description : " ",
