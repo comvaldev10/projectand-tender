@@ -1102,7 +1102,8 @@ const edit_project_sub_sector2 = async (req, response) => {
 }
 const edit_project_sub_sector3 = async (req, response) => {
   try {
-    var sql = "select * from edit_project_sub_sector"
+    console.log(req.params.id,"a")
+    var sql = `select * from edit_project_sub_sector where soft_delete='0' && site_id='${req.params.id}'`
     con.query(sql, (err, res) => {
       if (err)
         return response.json(err);
