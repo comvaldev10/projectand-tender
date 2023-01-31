@@ -32,7 +32,7 @@ const add_about = async (req, response) => {
         alt_tag:req?.body?.alt_tag ? req?.body?.alt_tag: '',
         banner_heading: req?.body?.banner_heading ? req?.body?.banner_heading : '',
         banner_image: req?.body?.banner_image ? req?.body?.banner_image : '',
-        about_heading: req?.body?about_heading ? req?.body?.about_heading : '',
+        about_heading: req?.body?.about_heading ? req?.body?.about_heading : '',
         about_description: req?.body?.about_description ? req?.body?.about_description : '',
         success_heading: req?.body?.success_heading ? req?.body?.success_heading : '',
         success_description: req?.body?.success_description ? req?.body?.success_description : '',
@@ -62,20 +62,20 @@ const add_about = async (req, response) => {
         why_you_image: req?.body?.why_you_image ? req?.body?.why_you_image : '',
         ourclent_heading: req?.body?.ourclent_heading ? req?.body?.ourclent_heading : '',
         ourclent_description: req?.body?.ourclent_description ? req?.body?.ourclent_description : '',
-        ourclent_check: req?.body?.ourclent_check ? req?.body?.ourclent_check : '0',
         ourclent_alt_tag: req?.body?.ourclent_alt_tag ? req?.body?.ourclent_alt_tag : '',
         ourclent_image: req?.body?.ourclent_image ? req?.body?.ourclent_image : '',
+        ourclent_check: req?.body?.ourclent_check ? req?.body?.ourclent_check : '0',
         testo_heading: req?.body?.testo_heading ? req?.body?.testo_heading : '',
+        testo_image: req?.body?.testo_image ? req?.body?.testo_image : '',
+        testo_alt: req?.body?.testo_alt ? req?.body?.testo_alt : '',
         testo_descrip: req?.body?.testo_descrip ? req?.body?.testo_descrip : '',
         testo_check: req?.body?.testo_check ? req?.body?.testo_check : '0',
-        testo_alt: req?.body?.testo_alt ? req?.body?.testo_alt : '',
-        testo_image: req?.body?.testo_image ? req?.body?.testo_image : '',
         testo2_check: req?.body?.testo2_check ? req?.body?.testo2_check : '0',
         testo2_input: req?.body?.testo2_input ? req?.body?.testo2_input : '',
-        call_to_action_heading: req?.body?.call_to_action_heading ? req?.body?.call_to_action_heading : " ",
         call_to_action_descrip: req?.body?.call_to_action_descrip ? req?.body?.call_to_action_descrip : " ",
         call_to_action_button_name: req?.body?.call_to_action_button_name ? req?.body?.call_to_action_button_name : " ",
         call_to_action_button_link: req?.body?.call_to_action_button_link ? req?.body?.call_to_action_button_link : " ",
+        call_to_action_heading: req?.body?.call_to_action_heading ? req?.body?.call_to_action_heading : " ",
         call_to_action_bar: req?.body?.call_to_action_bar ? req?.body?.call_to_action_bar : "0",
         seo_title: req?.body?.seo_title ? req?.body?.seo_title : '',
         seo_description: req?.body?.seo_description ? req?.body?.seo_description : '',
@@ -83,10 +83,11 @@ const add_about = async (req, response) => {
         seo_slug: req?.body?.seo_slug ? req?.body?.seo_slug : '',
         latest_heading: req?.body?.latest_heading ? req?.body?.latest_heading : '',
         latest_descrip: req?.body?.latest_descrip ? req?.body?.latest_descrip : '',
-        soft_delete:req?.body?.soft_delete ? req?.body?.soft_delete : '',
+        soft_delete:req?.body?.soft_delete ? req?.body?.soft_delete : '0',
         site_id: req?.body?.site_id ? req?.body?.site_id : '',
+        publish: req?.body?.publish ? req?.body?.publish :'0'
       }
-      var sql = "insert into about(about_name,about_select_sector,about_country,about_date,about_alt_tag,about_organiser,about_venue,about_companies,mobile_no,about_website,about_image,about_email,about_status,site_id) values ?"
+      var sql = "insert into about(alt_tag,banner_heading,bammer_image,about_heading,about_description,success_heading,success_description,success_subscriber1,success_subscriber2,success_year1,success_year2,success_key_region1,success_key_region2,who_heading,who_alt_tag,who_image,who_description,mission_heading,mission_description,mission_our,mission_vision,mission_value,access_heading,access_description,access_button,access_link,why_do_heading,why_do_description,why_do_list,why_do_alt_tag,why_do_image,ourclent_heading,ourclent_description,ourclent_alt_tag,ourclent_image,ourclent_check,testo_heading,testo_image,testo_alt,testo_descrip,test_check,testo2_check,testo2_input,call_to_action_descrip,call_to_action_button_name,call_to_action_button_link,call_to_action_bar,call_to_action_heading,seo_title,seo_description,seo_keyword,seo_slug,lastest_heading,lastest_descrip,soft_delete,site_id,publish) values ?"
       var data1 = [Object.values(obj)]
       con.query(sql, [data1], (err, res) => {
         if (err)

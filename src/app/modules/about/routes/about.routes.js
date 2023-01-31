@@ -6,5 +6,5 @@ router.post('/add_about',authenticate,add_about)
 router.put('/update_about/:id',authenticate,edit_about)
 router.get('/get_about/',get_about)
 router.get('/get_about/:id',get_about_id)
-router.delete('/delete_about/:id',authenticate,delete_plan)
+router.delete('/delete_about/:id',authenticate,delete_about)
 module.exports = router;
