@@ -13,7 +13,7 @@ const get_about = async (req, response) => {
   }
 }
 const get_about_id = async (req, response) => {
-  var sql = "select * from about where soft_delete=0 && about_id=" + req.params.id
+  var sql = "select * from about where soft_delete=0 && site_id=" + req.params.id
   try {
     con.query(sql, (err, res) => {
       if (err)
