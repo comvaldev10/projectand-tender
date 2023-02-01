@@ -6,7 +6,7 @@ const bussiness_route=require('./src/app/modules/bussinessnews/routes/bussinessn
 const event=require('./src/app/modules/events/routes/events.routes')
 const about=require('./src/app/modules/about/routes/about.routes')
 const contact=require('./src/app/modules/contact/routes/contact.routes')
-
+const policy=require('./src/app/modules/policy/routes/policy.routes')
 module.exports = [{
     path: "/api/user",
     handler: user_route
@@ -38,5 +38,9 @@ module.exports = [{
   {
     path: "/api/contact",
     handler:contact
+  },
+  {
+    path: "/api/policy",
+    handler:policy
   },
 ]

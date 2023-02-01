@@ -5,7 +5,7 @@ let router = express.Router();
 
 router.post('/add_bussiness_news',authenticate,add_bussiness_news)
 router.put('/update_bussiness_news/:id',authenticate,edit_bussiness_news)
-router.get('/get_bussiness_news/',get_bussiness_news)
+router.get('/get_bussiness_news/',authenticate,get_bussiness_news)
 router.get('/get_bussiness_news/:id',get_bussiness_news_id)
 router.delete('/delete_bussiness_news/:id',authenticate,delete_bussiness_news)
 module.exports=router;
