@@ -37,6 +37,15 @@
 //         created_at timestamp,
 //         updated_at timestamp)
  
+// create table contact_info(contact_info_id int not null auto_increment primary key,name varchar(255) COLLATE utf8mb4_unicode_ci,
+// company_name varchar(255) COLLATE utf8mb4_unicode_ci,
+// email text COLLATE utf8mb4_unicode_ci,
+//  mobile_no text COLLATE utf8mb4_unicode_ci,
+//  message text COLLATE utf8mb4_unicode_ci,
+//  checkout tinyint(1),
+//  soft_delete tinyint(1),
+//  site_id text COLLATE utf8mb4_unicode_ci
+//  )
         
 // create table project_sector_schema(id int not null auto_increment primary key,
 //     name varchar(255) COLLATE utf8mb4_unicode_ci not null,
