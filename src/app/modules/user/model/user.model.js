@@ -114,14 +114,38 @@
 //     partner_advertisement_start_date text COLLATE utf8mb4_unicode_ci not null,
 //     partner_advertisement_end_date text COLLATE utf8mb4_unicode_ci not null,
 //     partner_advertisement_image text COLLATE utf8mb4_unicode_ci not null,
-//     seo_title varchar(255) COLLATE utf8mb4_unicode_ci not null,
-//     seo_description text COLLATE utf8mb4_unicode_ci not null,
-//     seo_keyword varchar(255) COLLATE utf8mb4_unicode_ci not null,
-//     seo_slug varchar(255) COLLATE utf8mb4_unicode_ci not null);
+    // seo_title varchar(255) COLLATE utf8mb4_unicode_ci not null,
+    // seo_description text COLLATE utf8mb4_unicode_ci not null,
+    // seo_keyword varchar(255) COLLATE utf8mb4_unicode_ci not null,
+    // seo_slug varchar(255) COLLATE utf8mb4_unicode_ci not null);
+
+    // create table policy_info(policy_info_id int not null auto_increment primary key,
+    //     message text COLLATE utf8mb4_unicode_ci,
+    //         seo_title varchar(255) COLLATE utf8mb4_unicode_ci ,
+    //         seo_description text COLLATE utf8mb4_unicode_ci ,
+    //         seo_keyword varchar(255) COLLATE utf8mb4_unicode_ci ,
+    //         seo_slug varchar(255) COLLATE utf8mb4_unicode_ci,
+    //     site_id varchar(255) COLLATE utf8mb4_unicode_ci
+    //      );
 
 
+    // create table cookie_info(cookie_info_id int not null auto_increment primary key,
+    //     message text COLLATE utf8mb4_unicode_ci,
+    //         seo_title varchar(255) COLLATE utf8mb4_unicode_ci ,
+    //         seo_description text COLLATE utf8mb4_unicode_ci ,
+    //         seo_keyword varchar(255) COLLATE utf8mb4_unicode_ci ,
+    //         seo_slug varchar(255) COLLATE utf8mb4_unicode_ci,
+    //     site_id varchar(255) COLLATE utf8mb4_unicode_ci
+    //      );
 
-
+    // create table term_info(term_info_id int not null auto_increment primary key,
+    //     message text COLLATE utf8mb4_unicode_ci,
+    //         seo_title varchar(255) COLLATE utf8mb4_unicode_ci ,
+    //         seo_description text COLLATE utf8mb4_unicode_ci ,
+    //         seo_keyword varchar(255) COLLATE utf8mb4_unicode_ci ,
+    //         seo_slug varchar(255) COLLATE utf8mb4_unicode_ci,
+    //     site_id varchar(255) COLLATE utf8mb4_unicode_ci
+    //      );
 
 // create table edit_project_sector(id int not null auto_increment primary key,
 //     sector_name varchar(255) COLLATE utf8mb4_unicode_ci,
