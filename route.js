@@ -5,6 +5,8 @@ const site_route=require('./src/app/modules/site_details/routes/site_details.rou
 const bussiness_route=require('./src/app/modules/bussinessnews/routes/bussinessnews.routes')
 const event=require('./src/app/modules/events/routes/events.routes')
 const about=require('./src/app/modules/about/routes/about.routes')
+const contact=require('./src/app/modules/contact/routes/contact.routes')
+
 module.exports = [{
     path: "/api/user",
     handler: user_route
@@ -28,8 +30,13 @@ module.exports = [{
   {
     path: "/api/event",
     handler:event
-  },{
+  },
+  {
     path: "/api/about",
     handler:about
+  },
+  {
+    path: "/api/contact",
+    handler:contact
   },
 ]

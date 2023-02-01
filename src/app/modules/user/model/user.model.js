@@ -295,3 +295,24 @@
 //    seo_keyword varchar(255) COLLATE utf8mb4_unicode_ci,
 //    seo_slug varchar(255) COLLATE utf8mb4_unicode_ci
 //    );
+
+
+// create table contact(contact_id int not null auto_increment primary key,
+//     heading varchar(255) COLLATE utf8mb4_unicode_ci,
+//  sub_heading varchar(255) COLLATE utf8mb4_unicode_ci,
+// map_location text COLLATE utf8mb4_unicode_ci,
+// our_address text COLLATE utf8mb4_unicode_ci,
+// get_in_touch text COLLATE utf8mb4_unicode_ci,
+//       call_to_action_descrip text COLLATE utf8mb4_unicode_ci,
+//       call_to_action_button_name varchar(255) COLLATE utf8mb4_unicode_ci,     
+//       call_to_action_button_link varchar(255) COLLATE utf8mb4_unicode_ci,
+//       call_to_action_bar tinyint(1) COLLATE utf8mb4_unicode_ci,
+//       call_to_action_heading text COLLATE utf8mb4_unicode_ci,
+//  seo_title varchar(255) COLLATE utf8mb4_unicode_ci,
+//    seo_description text COLLATE utf8mb4_unicode_ci,
+//    seo_keyword varchar(255) COLLATE utf8mb4_unicode_ci,
+//    seo_slug varchar(255) COLLATE utf8mb4_unicode_ci,
+// site_id text COLLATE utf8mb4_unicode_ci,
+// sot_delete tinyint(1),
+// publish tinyint(1)
+//    );
