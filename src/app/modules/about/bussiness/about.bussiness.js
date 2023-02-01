@@ -1,5 +1,6 @@
 var con = require('../../../db/mysql')
 const get_about = async (req, response) => {
+  
   var sql = "select * from about where soft_delete=0"
   try {
     con.query(sql, (err, res) => {
