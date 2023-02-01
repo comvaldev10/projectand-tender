@@ -13,7 +13,7 @@ const get_event = async (req, response) => {
   }
 }
 const get_event_id = async (req, response) => {
-  var sql = "select * from event where soft_delete=0 && event_id=" + req.params.id
+  var sql = "select * from event where soft_delete=0 && site_id=" + req.params.id
   try {
     con.query(sql, (err, res) => {
       if (err)
@@ -80,7 +80,7 @@ const edit_event = async (req, response) => {
         event_status: req?.body?.event_status ? req?.body?.event_status : 0,
         site_id: req?.body?.site_id ? req?.body?.site_id : '',
       }
-      var sql = "update event set event_name=?,event_select_sector=?,event_country=?,event_date=?,event_alt_tag=?,event_organiser=?,event_venue=?,event_companies=?,mobile_no=?,event_website=?,event_image=?,event_email=?,event_status=?,site_id=? where event_id=?"
+      var sql = "update event set event_name=?,event_select_sector=?,event_country=?,event_date=?,event_alt_tag=?,event_organiser=?,event_venue=?,event_companies=?,mobile_no=?,event_website=?,event_image=?,event_email=?,event_status=?,site_id=? where site_id=?"
       var data1 = Object.values(obj)
       data1.push(req.params.id)
       con.query(sql, data1, (err, res) => {

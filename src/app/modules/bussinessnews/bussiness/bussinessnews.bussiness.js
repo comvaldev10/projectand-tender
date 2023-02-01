@@ -13,7 +13,7 @@ const get_bussiness_news = async (req, response) => {
   }
 }
 const get_bussiness_news_id = async (req, response) => {
-  var sql = "select * from bussiness_news where bussiness_news_id=" + req.params.id
+  var sql = "select * from bussiness_news where site_id=" + req.params.id
   try {
     con.query(sql, (err, res) => {
       if (err)
@@ -81,7 +81,7 @@ const edit_bussiness_news = async (req, response) => {
         bussiness_news_status:req?.body?.bussiness_news_status ? req?.body?.bussiness_news_status : 0,
         site_id:req?.body?.site_id ? req?.body?.site_id : ''
       }
-      var sql = "update bussiness_news set bussiness_news_title=? , bussiness_news_select_sector=? , bussiness_news_country=? , bussiness_news_date=? , bussiness_news_alt_tag=? , bussiness_news_description=? , bussiness_news_project=? , bussiness_news_tender=? , bussiness_news_companies=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , bussiness_news_status=? , site_id=? where bussiness_news_id=?"
+      var sql = "update bussiness_news set bussiness_news_title=? , bussiness_news_select_sector=? , bussiness_news_country=? , bussiness_news_date=? , bussiness_news_alt_tag=? , bussiness_news_description=? , bussiness_news_project=? , bussiness_news_tender=? , bussiness_news_companies=? , seo_title=? , seo_description=? , seo_keyword=? , seo_slug=? , bussiness_news_status=? , site_id=? where site_id=?"
       var data1 = Object.values(obj)
       data1.push(req.params.id)
       con.query(sql, data1, (err, res) => {
