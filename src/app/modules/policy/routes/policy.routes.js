@@ -1,6 +1,6 @@
 let express = require('express');
 const { authenticate } = require('../../../middlewares/jwt.middleware');
-const { get_cookie,get_policy,get_policy_id,add_term,edit_term,add_cookie,edit_cookie,add_policy,edit_policy,delete_cookie,get_cookie_id } = require('../bussiness/policy.bussiness');
+const {get_term,get_term_id,get_cookie,get_policy,get_policy_id,add_term,edit_term,add_cookie,edit_cookie,add_policy,edit_policy,delete_cookie,get_cookie_id } = require('../bussiness/policy.bussiness');
 let router = express.Router();
 
 router.post('/add_cookie',authenticate,add_cookie)
@@ -13,5 +13,7 @@ router.get('/get_cookie',authenticate,get_cookie)
 router.get('/get_cookie/:id',get_cookie_id)
 router.get('/get_policy',authenticate,get_policy)
 router.get('/get_policy/:id',get_policy_id)
+router.get('/get_term',authenticate,get_term)
+router.get('/get_term/:id',get_term_id)
 router.delete('/delete_cookie/:id',authenticate,delete_cookie)
 module.exports=router;

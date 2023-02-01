@@ -55,6 +55,35 @@ const get_policy_id = async (req, response) => {
         return err
     }
 }
+const get_term = async (req, response) => {
+    try {
+        if (req.user.role_id == 2) {
+            var sql = "select * from term_info where soft_delete=0"
+            con.query(sql, (err, res) => {
+                if (err)
+                    response.json(err);
+                response.json(res)
+            })
+        }
+    }
+    catch (err) {
+        return err
+    }
+}
+const get_term_id = async (req, response) => {
+    var sql = "select * from term_info where soft_delete=0 && site_id=" + req.params.id
+    try {
+        con.query(sql, (err, res) => {
+            if (err)
+                response.json(err);
+            response.json(res)
+        })
+    }
+    catch (err) {
+        return err
+    }
+}
+
 const add_cookie = async (req, response) => {
     try {
         if (req.user.role_id == 2) {
@@ -272,4 +301,4 @@ const delete_cookie = async (req, response) => {
         return err
     }
 }
-module.exports = { get_policy_id,get_policy,add_term, edit_term, get_cookie, get_cookie_id, edit_cookie, delete_cookie, add_cookie, add_policy, edit_policy };
+module.exports = {get_term,get_term_id,get_policy_id,get_policy,add_term, edit_term, get_cookie, get_cookie_id, edit_cookie, delete_cookie, add_cookie, add_policy, edit_policy };
