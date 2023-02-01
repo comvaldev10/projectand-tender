@@ -261,17 +261,6 @@ const edit_term = async (req, response) => {
         return err
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 const delete_cookie = async (req, response) => {
     try {
         if (req.user.role_id == 2) {

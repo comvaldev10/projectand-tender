@@ -829,9 +829,16 @@ const update_tender = async (req, response) => {
     con.query(sql, data1, (err, res) => {
       if (err)
         return response.json(err);
+        var sql1=`UPDATE edit_tender  SET tender = ${req.body.tender} WHERE Tender_ID = req.param.id'`
+        con.query(sql1, data1, (err, res) => {
+          if (err)
+            return response.json(err);
+          response.json(res);
+        })
       response.json(res);
     })
   }
+
   catch (err) {
     return err
   }
