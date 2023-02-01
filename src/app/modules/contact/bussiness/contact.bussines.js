@@ -1,13 +1,15 @@
 var con = require('../../../db/mysql')
 const get_contact = async (req, response) => {
-  var sql = "select * from contact where soft_delete=0"
   try {
+    var sql = "select * from contact where soft_delete=0"
+    if (req.user.role_id == 2) {
     con.query(sql, (err, res) => {
       if (err)
         response.json(err);
       response.json(res)
     })
   }
+}
   catch (err) {
     return err
   }
@@ -52,7 +54,7 @@ const add_contact_info = async (req, response) => {
   const get_contact_info = async (req, response) => {
     try {
         if (req.user.role_id == 2) {
-        var sql = "select * from contact_info where soft_delete=0"
+        var sql = "select * from contact_info where soft_delete=0" + req.params.id
           con.query(sql, (err, res) => {
             if (err)
               response.json(err);

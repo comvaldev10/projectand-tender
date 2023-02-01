@@ -1,13 +1,15 @@
 var con = require('../../../db/mysql')
 const get_event = async (req, response) => {
-  var sql = "select * from event where soft_delete=0"
   try {
+    var sql = "select * from event where soft_delete=0"
+    if (req.user.role_id == 2) {
     con.query(sql, (err, res) => {
       if (err)
         response.json(err);
       response.json(res)
     })
   }
+}
   catch (err) {
     return err
   }

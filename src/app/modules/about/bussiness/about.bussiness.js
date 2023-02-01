@@ -3,12 +3,14 @@ const get_about = async (req, response) => {
   
   var sql = "select * from about where soft_delete=0"
   try {
+    if (req.user.role_id == 2) {
     con.query(sql, (err, res) => {
       if (err)
         response.json(err);
       response.json(res)
     })
   }
+}
   catch (err) {
     return err
   }
