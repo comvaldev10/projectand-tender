@@ -9,13 +9,20 @@ app.use(
 );
 
 const cors = require("cors");
-var corsOptions = {
-  origin: '*',
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-  optionsSuccessStatus: 200
-}
-app.use(cors(corsOptions));
+// var corsOptions = {
+//   origin: '*',
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   credentials: true,
+//   optionsSuccessStatus: 200
+// }
+// var corsOptions = {
+//   origin: '*',
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   credentials: true,
+//   optionsSuccessStatus: 200
+// }
+// app.use(cors(corsOptions));
+app.use(cors());
 const path = require('path')
 const router = express.Router();
 const routes = require("./route");
