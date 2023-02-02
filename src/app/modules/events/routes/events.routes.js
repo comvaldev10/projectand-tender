@@ -5,7 +5,7 @@ let router = express.Router();
 
 router.post('/add_event',authenticate,add_event)
 router.put('/update_event/:id',authenticate,edit_event)
-router.get('/get_event/',get_event)
+router.get('/get_event/',authenticate,get_event)
 router.get('/get_event/:id',get_event_id)
 router.delete('/delete_event/:id',authenticate,delete_event)
 module.exports=router;
