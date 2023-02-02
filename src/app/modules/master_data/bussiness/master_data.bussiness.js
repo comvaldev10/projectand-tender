@@ -193,7 +193,7 @@ const delete_company_activity_type = async (req, response) => {
                     response.json("already deleted")
                 }
                 else {
-                    var sql = "update company_activity_type set soft_delete=?  where company_activity_id=?"
+                    var sql = "update company_activity set soft_delete=?  where company_activity_id=?"
                     var data1 = ["1"]
                     data1.push(req.params.id)
                     con.query(sql, data1, (err, res) => {
