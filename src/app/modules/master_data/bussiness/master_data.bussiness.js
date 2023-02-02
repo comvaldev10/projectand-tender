@@ -161,10 +161,10 @@ const edit_company_activity_type = async (req, response) => {
     try {
         if (req.user.role_id == 2) {
             let obj = {
-                company_activity_type: req?.body?.company_activity_type ? req?.body?.company_activity_type : '',
+                company_activity: req?.body?.company_activity ? req?.body?.company_activity : '',
                 soft_delete: req?.body?.soft_delete ? req?.body?.soft_delete : '0',
             }
-            var sql = "update company_activity set company_activity=?,soft_delete=?  where company_activity_type_id=?"
+            var sql = "update company_activity set company_activity=?,soft_delete=?  where company_activity_id=?"
             var data1 = Object.values(obj)
             data1.push(req.params.id)
             con.query(sql, data1, (err, res) => {
@@ -193,7 +193,7 @@ const delete_company_activity_type = async (req, response) => {
                     response.json("already deleted")
                 }
                 else {
-                    var sql = "update company_activity_type set soft_delete=?  where company_activity_type_id=?"
+                    var sql = "update company_activity_type set soft_delete=?  where company_activity_id=?"
                     var data1 = ["1"]
                     data1.push(req.params.id)
                     con.query(sql, data1, (err, res) => {
