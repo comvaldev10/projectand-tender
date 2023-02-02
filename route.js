@@ -7,6 +7,7 @@ const event=require('./src/app/modules/events/routes/events.routes')
 const about=require('./src/app/modules/about/routes/about.routes')
 const contact=require('./src/app/modules/contact/routes/contact.routes')
 const policy=require('./src/app/modules/policy/routes/policy.routes')
+const master=require('./src/app/modules/master_data/routes/master_data.routes')
 module.exports = [{
     path: "/api/user",
     handler: user_route
@@ -42,5 +43,9 @@ module.exports = [{
   {
     path: "/api/policy",
     handler:policy
+  },
+  {
+    path: "/api/master",
+    handler:master
   },
 ]
