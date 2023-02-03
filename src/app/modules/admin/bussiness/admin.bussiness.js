@@ -774,7 +774,7 @@ const edit_project_sector4 = async (req, response) => {
         response.json("already deleted")
       }
       else {
-        var sql = "select * from edit_project_sector inner join project_sector_schema on project_sector_schema.project_id=edit_project_sector.sector_id inner join site_details on site_details.site_details_id=edit_project_sector.site_id inner join sub_project_sector_schema on sub_project_sector_schema.sector_id="+req.query.sector_id  +"where edit_project_sector.soft_delete='0' && edit_project_sector.sector_id=" + req.query.sector_id + "&& edit_project_sector.site_id=" + req.query.site_id
+        var sql = "select * from edit_project_sector inner join project_sector_schema on project_sector_schema.project_id=edit_project_sector.sector_id inner join site_details on site_details.site_details_id=edit_project_sector.site_id inner join sub_project_sector_schema on sub_project_sector_schema.sector_id="+req.query.sector_id  +"where edit_project_sector.soft_delete='0' && edit_project_sector.sector_id=" + req.query.sector_id + " && edit_project_sector.site_id=" + req.query.site_id
         con.query(sql, (err, res) => {
           if (err)
             return response.json(err);
