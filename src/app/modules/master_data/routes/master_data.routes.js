@@ -6,7 +6,14 @@ const { get_company_specialize,add_company_specialize,edit_company_specialize,de
 const { get_what_are_you_interested_for,add_what_are_you_interested_for,edit_what_are_you_interested_for,delete_what_are_you_interested_for,get_what_are_you_interested_for_id } = require('../bussiness/master_data.bussiness');
 const { get_company_type,add_company_type,edit_company_type,delete_company_type,get_company_type_id } = require('../bussiness/master_data.bussiness');
 const { get_company_award,add_company_award,edit_company_award,delete_company_award,get_company_award_id } = require('../bussiness/master_data.bussiness');
+const { get_status,add_status,edit_status,delete_status,get_status_id } = require('../bussiness/master_data.bussiness');
 let router = express.Router();
+
+router.post('/add_status',authenticate,add_status)
+router.put('/update_status/:id',authenticate,edit_status)
+router.get('/get_status/',authenticate,get_status)
+router.get('/get_status/:id',authenticate,get_status_id)
+router.delete('/delete_status/:id',authenticate,delete_status)
 
 router.post('/add_company_award',authenticate,add_company_award)
 router.put('/update_company_award/:id',authenticate,edit_company_award)

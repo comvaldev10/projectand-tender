@@ -642,7 +642,115 @@ const delete_company_award = async (req, response) => {
     }
 }
 
+const get_status = async (req, response) => {
+    try {
+        if (req.user.role_id == 2) {
+            var sql = "select * from status where soft_delete=0"
+            con.query(sql, (err, res) => {
+                if (err)
+                    response.json(err);
+                response.json(res)
+            })
+        }
+    }
+    catch (err) {
+        return err
+    }
+}
+const get_status_id = async (req, response) => {
+    var sql = "select * from status where soft_delete=0 && status_id=" + req.params.id
+    try {
+        con.query(sql, (err, res) => {
+            if (err)
+                response.json(err);
+            response.json(res)
+        })
+    }
+    catch (err) {
+        return err
+    }
+}
+const add_status = async (req, response) => {
+    try {
+        if (req.user.role_id == 2) {
+            let obj = {
+                status: req?.body?.status ? req?.body?.status : '',
+                soft_delete: req?.body?.soft_delete ? req?.body?.soft_delete : '0',
+            }
+            var sql = "insert into status(status,soft_delete) values ?"
+            var data1 = [Object.values(obj)]
+            con.query(sql, [data1], (err, res) => {
+                if (err)
+                    response.json(err);
+                response.json(res)
+            })
+        }
+        else {
+            response.json("unauthorised user").status(401);
+        }
+    }
+    catch (err) {
+        return err
+    }
+}
+const edit_status = async (req, response) => {
+    try {
+        if (req.user.role_id == 2) {
+            let obj = {
+                status: req?.body?.status ? req?.body?.status : '',
+                soft_delete: req?.body?.soft_delete ? req?.body?.soft_delete : '0',
+            }
+            var sql = "update status set status=?,soft_delete=?  where status_id=?"
+            var data1 = Object.values(obj)
+            data1.push(req.params.id)
+            con.query(sql, data1, (err, res) => {
+                if (err)
+                    response.json(err);
+                response.json(res)
+            })
+        }
+        else {
+            response.json("unauthorised user").status(401);
+        }
+    }
+    catch (err) {
+        return err
+    }
+}
+const delete_status = async (req, response) => {
+    try {
+        if (req.user.role_id == 2) {
+            var sql1 = "select soft_delete from status where status_id=" + req.params.id
+            con.query(sql1, (err, res) => {
+                if (err)
+                    response.json(err);
+
+                if ((res[0]?.soft_delete == '1' || res[0]?.soft_delete == 1)) {
+                    response.json("already deleted")
+                }
+                else {
+                    var sql = "update status set soft_delete=?  where status_id=?"
+                    var data1 = ["1"]
+                    data1.push(req.params.id)
+                    con.query(sql, data1, (err, res) => {
+                        if (err)
+                            response.json(err);
+                        response.json(res)
+                    })
+                }
+            })
+        }
+        else {
+            response.json("unauthorised user").status(401);
+        }
+    }
+    catch (err) {
+        return err
+    }
+}
+
 module.exports = {
+    get_status, get_status_id, edit_status, delete_status, add_status,
     get_company_award, get_company_award_id, edit_company_award, delete_company_award, add_company_award,
     get_company_type, get_company_type_id, edit_company_type, delete_company_type, add_company_type,
     get_what_are_you_interested_for, get_what_are_you_interested_for_id, edit_what_are_you_interested_for, delete_what_are_you_interested_for, add_what_are_you_interested_for,
