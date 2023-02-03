@@ -774,7 +774,7 @@ const edit_project_sector4 = async (req, response) => {
         response.json("already deleted")
       }
       else {
-        var sql = "select * from edit_project_sector inner join project_sector_schema on project_sector_schema.project_id=edit_project_sector.sector_id inner join site_details on site_details.site_details_id=edit_project_sector.site_id inner join sub_project_sector_schema on sub_project_sector_schema.sector_id="+req.query.sector_id  +"where edit_project_sector.soft_delete='0' && edit_project_sector.sector_id=" + req.query.sector_id + " && edit_project_sector.site_id=" + req.query.site_id
+        var sql = "select * from edit_project_sector inner join project_sector_schema on project_sector_schema.project_id=edit_project_sector.sector_id inner join site_details on site_details.site_details_id=edit_project_sector.site_id inner join sub_project_sector_schema on sub_project_sector_schema.sector_id="+req.query.sector_id  +" where edit_project_sector.soft_delete='0' && edit_project_sector.sector_id=" + req.query.sector_id + " && edit_project_sector.site_id=" + req.query.site_id
         con.query(sql, (err, res) => {
           if (err)
             return response.json(err);
@@ -1153,6 +1153,29 @@ const edit_project_sub_sector4 = async (req, response) => {
       if (err)
         return response.json(err);
       response.json(res);
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
+const edit_project_sub_sector5 = async (req, response) => {
+  try {
+    var sql3 = `select soft_delete from sub_project_sector_schema where sub_project_id='${req.query.sub_sector_id}'`
+    con.query(sql3, (err, res5) => {
+      if (err)
+        return response.json(err);
+      if (res5[0]?.soft_delete == '1' || res5[0]?.soft_delete == 1) {
+        response.json("already deleted")
+      }
+      else {
+        var sql = "select * from edit_project_sub_sector inner join sub_project_sector_schema on sub_project_sector_schema.sub_project_id=edit_project_sub_sector.sub_sector_id inner join site_details on site_details.site_details_id=edit_project_sub_sector.site_id inner join sub_sub_project_sector_schema on sub_sub_project_sector_schema.sub_sector_id="+ + req.query.sub_sector_id+ " where edit_project_sub_sector.soft_delete='0' && edit_project_sub_sector.sub_sector_id=" + req.query.sub_sector_id + " && edit_project_sub_sector.site_id=" + req.query.site_id
+        con.query(sql, (err, res) => {
+          if (err)
+            return response.json(err);
+          response.json(res);
+        })
+      }
     })
   }
   catch (err) {
