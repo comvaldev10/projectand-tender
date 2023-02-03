@@ -7,7 +7,14 @@ const { get_what_are_you_interested_for,add_what_are_you_interested_for,edit_wha
 const { get_company_type,add_company_type,edit_company_type,delete_company_type,get_company_type_id } = require('../bussiness/master_data.bussiness');
 const { get_company_award,add_company_award,edit_company_award,delete_company_award,get_company_award_id } = require('../bussiness/master_data.bussiness');
 const { get_status,add_status,edit_status,delete_status,get_status_id } = require('../bussiness/master_data.bussiness');
+const { get_tender_type,add_tender_type,edit_tender_type,delete_tender_type,get_tender_type_id } = require('../bussiness/master_data.bussiness');
 let router = express.Router();
+
+router.post('/add_tender_type',authenticate,add_tender_type)
+router.put('/update_tender_type/:id',authenticate,edit_tender_type)
+router.get('/get_tender_type/',authenticate,get_tender_type)
+router.get('/get_tender_type/:id',authenticate,get_tender_type_id)
+router.delete('/delete_tender_type/:id',authenticate,delete_tender_type)
 
 router.post('/add_status',authenticate,add_status)
 router.put('/update_status/:id',authenticate,edit_status)
