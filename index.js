@@ -7,7 +7,6 @@ app.use(
     extended: true
   })
 );
-
 const cors = require("cors");
 // var corsOptions = {
 //   origin: '*',

@@ -5,7 +5,14 @@ const { get_company_activity_type,add_company_activity_type,edit_company_activit
 const { get_company_specialize,add_company_specialize,edit_company_specialize,delete_company_specialize,get_company_specialize_id } = require('../bussiness/master_data.bussiness');
 const { get_what_are_you_interested_for,add_what_are_you_interested_for,edit_what_are_you_interested_for,delete_what_are_you_interested_for,get_what_are_you_interested_for_id } = require('../bussiness/master_data.bussiness');
 const { get_company_type,add_company_type,edit_company_type,delete_company_type,get_company_type_id } = require('../bussiness/master_data.bussiness');
+const { get_company_award,add_company_award,edit_company_award,delete_company_award,get_company_award_id } = require('../bussiness/master_data.bussiness');
 let router = express.Router();
+
+router.post('/add_company_award',authenticate,add_company_award)
+router.put('/update_company_award/:id',authenticate,edit_company_award)
+router.get('/get_company_award/',authenticate,get_company_award)
+router.get('/get_company_award/:id',authenticate,get_company_award_id)
+router.delete('/delete_company_award/:id',authenticate,delete_company_award)
 
 router.post('/add_company_type',authenticate,add_company_type)
 router.put('/update_company_type/:id',authenticate,edit_company_type)
