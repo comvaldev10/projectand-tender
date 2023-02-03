@@ -96,12 +96,14 @@ const pending_user = async (req, response) => {
   }
 }
 const add_project = async (req, response) => {
+  console.log(req.body)
   try {
     if (req.user.role_id == 2) {
       var sql3 = `select project_sector from project_sector_schema where project_sector='${req.body.project_sector}'`
       con.query(sql3, (err, res5) => {
         if (err)
           return response.json(err);
+          console.log(response,"aa")
         if (!(res5[0]?.project_sector == undefined)) {
           response.json("already exists")
         }
