@@ -764,6 +764,29 @@ const edit_project_sector3 = async (req, response) => {
     return err
   }
 }
+const edit_project_sector4 = async (req, response) => {
+  try {
+    var sql3 = `select soft_delete from project_sector_schema where project_id='${req.query.sector_id}'`
+    con.query(sql3, (err, res5) => {
+      if (err)
+        return response.json(err);
+      if (res5[0]?.soft_delete == '1' || res5[0]?.soft_delete == 1) {
+        response.json("already deleted")
+      }
+      else {
+        var sql = "select * from edit_project_sector inner join project_sector_schema on project_sector_schema.project_id=edit_project_sector.sector_id inner join site_details on site_details.site_details_id=edit_project_sector.site_id inner join sub_project_sector_schema on sub_project_sector_schema.sector_id="+req.query.sector_id  +"where edit_project_sector.soft_delete='0' && edit_project_sector.sector_id=" + req.query.sector_id + "&& edit_project_sector.site_id=" + req.query.site_id
+        con.query(sql, (err, res) => {
+          if (err)
+            return response.json(err);
+          response.json(res);
+        })
+      }
+    })
+  }
+  catch (err) {
+    return err
+  }
+}
 const update_project = async (req, response) => {
   try {
     let obj = {
@@ -1290,4 +1313,4 @@ const product_level4 = async (req, response) => {
     return err
   }
 }
-module.exports = { product_level,product_level4, product_level1, product_level2, product_level3, search_tender, edit_project_sub_sector4, edit_project_sub_sector, edit_project_sub_sector1, edit_project_sub_sector2, edit_project_sub_sector3, delete_sub_project, delete_tender, delete_sub_tender, update_sub_tender, update_tender, update_sub_project, update_sub_sub_project, update_project, edit_project_sector1, edit_project_sector3, add_tender, add_sub_tender, login, add_sub_admin, what_we_do, what_we_do1, what_we_do2, what_we_do3, get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id, edit_project_sector, edit_project_sector2, delete_project, delete_sub_sub_project };
+module.exports = { product_level,product_level4, product_level1, product_level2, product_level3, search_tender, edit_project_sub_sector4, edit_project_sub_sector, edit_project_sub_sector1, edit_project_sub_sector2, edit_project_sub_sector3, delete_sub_project, delete_tender, delete_sub_tender, update_sub_tender, update_tender, update_sub_project,edit_project_sector4, update_sub_sub_project, update_project, edit_project_sector1, edit_project_sector3, add_tender, add_sub_tender, login, add_sub_admin, what_we_do, what_we_do1, what_we_do2, what_we_do3, get_sub_tender_by_id, get_tender, get_tender_by_id, get_user, get_sub_sub_project_by_id, get_sub_project_by_id, get_user_by_id, pending_user, add_project, sub_add_project, sub_sub_add_project, complete_user, get_project, get_project_by_id, edit_project_sector, edit_project_sector2, delete_project, delete_sub_sub_project };
