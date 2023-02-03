@@ -675,9 +675,10 @@ const add_status = async (req, response) => {
         if (req.user.role_id == 2) {
             let obj = {
                 status: req?.body?.status ? req?.body?.status : '',
+                type: req?.body?.type ? req?.body?.type : '',
                 soft_delete: req?.body?.soft_delete ? req?.body?.soft_delete : '0',
             }
-            var sql = "insert into status(status,soft_delete) values ?"
+            var sql = "insert into status(status,type,soft_delete) values ?"
             var data1 = [Object.values(obj)]
             con.query(sql, [data1], (err, res) => {
                 if (err)
@@ -698,9 +699,10 @@ const edit_status = async (req, response) => {
         if (req.user.role_id == 2) {
             let obj = {
                 status: req?.body?.status ? req?.body?.status : '',
+                type: req?.body?.type ? req?.body?.type : '',
                 soft_delete: req?.body?.soft_delete ? req?.body?.soft_delete : '0',
             }
-            var sql = "update status set status=?,soft_delete=?  where status_id=?"
+            var sql = "update status set status=?,type=?,soft_delete=?  where status_id=?"
             var data1 = Object.values(obj)
             data1.push(req.params.id)
             con.query(sql, data1, (err, res) => {
